@@ -1,4 +1,9 @@
 *.class
+.classpath
+.project
+.settings/
+log.out
+target/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

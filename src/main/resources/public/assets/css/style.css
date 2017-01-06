@@ -1,0 +1,41 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	background-color: #96B0A3;
+	/*#96B0A3*/
+	/*rgba(150, 176, 163, 0.6),*/
+	/*rgba(150, 176, 163, 0.6)*/
+	background: linear-gradient(
+		rgba(150, 176, 163, 0.8),
+		rgba(150, 176, 163, 0.8)
+		), url("../gfx/paper_2.png"); 
+	color: white;
+	margin: 0 0 75px;
+	/*margin: 0;*/
+	padding: 0;
+}
+
+.footer {
+	font-family: 'Ubuntu', sans-serif;
+	text-align: center;
+	background-color: #8AA296;
+	color: #4F695C;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	font-size: 0.8em;
+	padding: 10px 0;
+}
+
+.unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+}
