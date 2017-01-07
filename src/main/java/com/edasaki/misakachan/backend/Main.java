@@ -15,6 +15,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         startWeb();
+        // testing eclipse git setup
         //        String url = "http://www.mangahere.co/manga/red_storm/c224/2.html";
         //        MangaHere mh = new MangaHere();
         //        if (mh.match(url)) {
