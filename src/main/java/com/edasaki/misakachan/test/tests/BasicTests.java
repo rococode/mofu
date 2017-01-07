@@ -3,7 +3,7 @@ package com.edasaki.misakachan.test.tests;
 import com.edasaki.misakachan.test.Test;
 import com.google.common.truth.Truth;
 
-public class TestTests {
+public class BasicTests {
 
     @Test
     public int alwaysWorks() {

@@ -3,29 +3,34 @@ package com.edasaki.misakachan.test;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import com.edasaki.misakachan.test.tests.TestTests;
+import com.edasaki.misakachan.test.tests.BasicTests;
 
 public class TestRunner {
 
+    private static final Class<?>[] TEST_CLASSES = {
+            BasicTests.class
+    };
+
     public static void main(String[] args) {
-        Class<TestTests> obj = TestTests.class;
         int passed = 0, failed = 0, count = 0, ignore = 0;
-        for (Method method : obj.getDeclaredMethods()) {
-            if (method.isAnnotationPresent(Test.class)) {
-                Annotation annotation = method.getAnnotation(Test.class);
-                Test test = (Test) annotation;
-                if (test.enabled()) {
-                    try {
-                        method.invoke(obj.newInstance());
-                        System.out.printf("%s - Test '%s' - passed %n", ++count, method.getName());
-                        passed++;
-                    } catch (Throwable ex) {
-                        System.out.printf("%s - Test '%s' - failed: %s %n", ++count, method.getName(), ex.getCause());
-                        failed++;
+        for (Class<?> obj : TEST_CLASSES) {
+            for (Method method : obj.getDeclaredMethods()) {
+                if (method.isAnnotationPresent(Test.class)) {
+                    Annotation annotation = method.getAnnotation(Test.class);
+                    Test test = (Test) annotation;
+                    if (test.enabled()) {
+                        try {
+                            method.invoke(obj.newInstance());
+                            System.out.printf("%s - Test '%s.%s' - passed %n", ++count, obj.getName(), method.getName());
+                            passed++;
+                        } catch (Throwable ex) {
+                            System.out.printf("%s - Test '%s.%s' - failed: %s%n", ++count, obj.getName(), method.getName(), ex.getCause());
+                            failed++;
+                        }
+                    } else {
+                        System.out.printf("%s - Test '%s.%s' - ignored%n", ++count, obj.getName(), method.getName());
+                        ignore++;
                     }
-                } else {
-                    System.out.printf("%s - Test '%s' - ignored%n", ++count, method.getName());
-                    ignore++;
                 }
             }
         }
