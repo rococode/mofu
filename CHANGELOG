@@ -1,0 +1,3 @@
+v1.0.0
+- added (this) changelog
+- added Thymeleaf dependency for HTML rendering
