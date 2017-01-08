@@ -53,4 +53,9 @@ public class MangaHere extends AbstractSource {
         return null;
     }
 
+    @Override
+    public String getSourceName() {
+        return "MangaHere";
+    }
+
 }

@@ -4,22 +4,28 @@
 -->
 <html>
 <head>
-	<title>Edasaki</title>
-	<meta charset="utf-8" />
-	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-	<link rel="stylesheet" href="assets/css/style.css" />
-	<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
-	<script src="assets/js/jquery-3.1.1.min.js"></script>
-	<script>
-	
-	</script>
+<title>misakachan</title>
+<meta charset="utf-8" />
+<link rel="icon" type="image/x-icon" href="assets/gfx/favicon.ico" />
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+<script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="assets/js/scripts.js"></script>
 </head>
 <body>
-	<div class="url-input">
-		
+	<img class="logo unselectable" src="assets/gfx/logo.png" />
+	<form id="loader-form" class="loader-form" action="reader" method="get">
+		<input id="load-input-url" type="text" name="url" placeholder="" value="" autocomplete="off" />
+		<br />
+		<button type="submit" value="Load">Load</button>
+	</form>
+	<div class="history">
+		<h1>History</h1>
 	</div>
 	<div class="footer unselectable">
-		&copy; Edasaki 2016
+		<a href="http://edasaki.com">&copy; Edasaki 2017</a> | Please remember to support the original authors and translation groups if you can!
 	</div>
 </body>
 </html>

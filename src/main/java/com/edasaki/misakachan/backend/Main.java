@@ -5,13 +5,25 @@ import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.edasaki.misakachan.backend.source.AbstractSource;
+import com.edasaki.misakachan.backend.source.english.MangaHere;
+
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
-import spark.Route;
 import spark.Spark;
 
 public class Main {
+
+    protected static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         startWeb();
@@ -21,47 +33,61 @@ public class Main {
         //        if (mh.match(url)) {
         //            mh.getChapter(url);
         //        }
-        //        Document doc = Jsoup.connect("http://www.mangahere.co/manga/red_storm/c224/2.html").get();
-        //        Document doc = Jsoup.connect("http://dynasty-scans.com/chapters/how_to_make_a_love_letter#4").get();
-        //        Elements newsHeadlines = doc.select("#mp-itn b a");
-        //        System.out.println(doc);
-        //        Element lastImg = doc.select("img").last();
-        //        System.out.println(lastImg.absUrl("src"));
-        //        Elements options = doc.select("select.wid60 > option");
-        //        for (Element element : options) {
-        //            System.out.println(element.text());
-        //        }
     }
 
-    public static void startWeb() throws IOException, URISyntaxException {
+    public static ModelAndView reader(Request req, Response res) {
+        Map<String, Object> params = new HashMap<>();
+        logger.debug("body: " + req.body());
+        logger.debug(req.queryString());
+        logger.debug(req.queryParams("url"));
+        logger.debug(req.queryParams("name"));
+        params.put("name", req.queryParams("name"));
+        return new ModelAndView(params, "reader");
+    }
+
+    private static final AbstractSource SOURCES[] = {
+            new MangaHere()
+    };
+
+    public static String loadURL(Request req, Response res) {
+        String url = req.body();
+        JSONObject jo = new JSONObject();
+        for (AbstractSource source : SOURCES) {
+            if (source.match(url)) {
+                //stuff
+                jo.put("status", "success");
+                jo.put("site", source.getSourceName());
+                JSONArray arr = new JSONArray();
+                arr.put("http://test.png");
+                arr.put("http://test2.png");
+                jo.put("urls", arr);
+                System.out.println(jo.toString());
+                return jo.toString();
+            }
+        }
+        jo.put("status", "failure");
+        jo.put("reason", "Invalid URL.");
+        return jo.toString();
+    }
+
+    public static void startWeb() {
         Spark.port(10032);
         Spark.staticFileLocation("/public");
-        Spark.get("/hello", new Route() {
-            @Override
-            public Object handle(Request request, Response response) {
-                return "Hsello Spark MVC Framework!<br/> test<font color=\"red\">test red</font>s";
-            }
-        });
+        Spark.staticFiles.expireTime(5);
+        Spark.post("/load", Main::loadURL);
+    }
 
-        Spark.get("/goodbye", new Route() {
-            @Override
-            public Object handle(Request request, Response response) {
-                return "Goodbye Spark MVC Framework!";
-            }
-        });
-
-        Spark.get("/parameter/:param", new Route() {
-            @Override
-            public Object handle(Request request, Response response) {
-                StringBuffer myParam = new StringBuffer(request.params(":param"));
-                return "I reversed your param for ya \"" + myParam.reverse() + "\"";
-            }
-        });
-        Spark.get("/hello", (req, res) -> "blah");
+    public static void launchBrowser() {
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
-            Desktop.getDesktop().browse(new URI("http://127.0.0.1:10032"));
+            try {
+                Desktop.getDesktop().browse(new URI("http://127.0.0.1:10032"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         } else {
-            System.exit(1);
+            throw new UnsupportedOperationException();
         }
     }
 

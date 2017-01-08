@@ -1,3 +1,11 @@
+v1.0.1
+- now only show DEBUG level messages from within misakachan
+- added source names
+- added basic styling and layout for index page
+- added org.json dependency
+- removed templates/ and Thymeleaf dependency - probably won't need it
+- started work on AJAX queries to load pages
+- added favicon and temporary logo
 v1.0.0
 - added (this) changelog
 - added Thymeleaf dependency for HTML rendering

@@ -5,17 +5,10 @@ html {
 
 body {
 	background-color: #96B0A3;
-	/*#96B0A3*/
-	/*rgba(150, 176, 163, 0.6),*/
-	/*rgba(150, 176, 163, 0.6)*/
-	background: linear-gradient(
-		rgba(150, 176, 163, 0.8),
-		rgba(150, 176, 163, 0.8)
-		), url("../gfx/paper_2.png"); 
-	color: white;
+	background: linear-gradient(rgba(150, 176, 163, 0.8), rgba(150, 176, 163, 0.8)), url("../gfx/paper_2.png");
 	margin: 0 0 75px;
-	/*margin: 0;*/
 	padding: 0;
+	color: #4B291A;
 }
 
 .footer {
@@ -38,4 +31,77 @@ body {
 	-ms-user-select: none;
 	user-select: none;
 	cursor: default;
+}
+
+.footer a, a:hover, a:visited, a:active {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+}
+
+.logo {
+	margin: 50px auto 30px auto;
+	display: block;
+}
+
+.loader-form {
+	text-align: center;
+}
+
+.loader-form input[type=text] {
+	font-family: 'Ubuntu', sans-serif;
+	background-image: url('../gfx/Search-48.png');
+	background-size: 25px 25px;
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	padding-left: 45px;
+	margin-left: -45px;
+	outline: none;
+	border-radius: 5px;
+	background-color: #F1E0BF;
+	text-align: center;
+	height: 2em;
+	width: 65%;
+	font-size: 1.3em;
+	margin-bottom: 10px;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	border: 3px solid #ccc;
+	color: black;
+}
+
+.loader-form input[type=text]:focus {
+	border: 3px solid #999;
+}
+
+.loader-form button[type=submit] {
+	font-family: 'Ubuntu', sans-serif;
+	padding: 8px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	cursor: pointer;
+	background-color: #F1E0BF;
+	color: #D5654C;
+	border: 3px solid #8AA296;
+	border-radius: 7px;
+	font-weight: bold;
+	font-size: 1.5em;
+	transition: 0.5s;
+}
+
+.loader-form button[type=submit]:hover {
+	background-color: #F9E8C7;
+}
+
+.history {
+	font-family: 'Comfortaa', cursive;
+	border: 1px solid black;
+	text-align: center;
+}
+
+.history h1 {
+	
 }

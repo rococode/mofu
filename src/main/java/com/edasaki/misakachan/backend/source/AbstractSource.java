@@ -1,9 +1,6 @@
 package com.edasaki.misakachan.backend.source;
 
-import java.awt.Desktop;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,4 +42,6 @@ public abstract class AbstractSource {
     protected abstract List<String> getPageUrls(Document doc);
 
     protected abstract String getName(Document doc);
+    
+    public abstract String getSourceName();
 }
