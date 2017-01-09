@@ -5,8 +5,13 @@ import java.awt.Desktop.Action;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,6 +31,16 @@ public class Main {
     protected static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws IOException, URISyntaxException {
+        JFrame frame = new JFrame("FrameDemo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new JButton("OK"));
+        URL iconURL = Main.class.getResource("/public/assets/gfx/icon256-t.png");
+        logger.debug(iconURL.toString());
+        ImageIcon icon = new ImageIcon(iconURL);
+        frame.setIconImage(icon.getImage());
+        frame.pack();
+        frame.setVisible(true);
+
         startWeb();
         // testing eclipse git setup
         //        String url = "http://www.mangahere.co/manga/red_storm/c224/2.html";

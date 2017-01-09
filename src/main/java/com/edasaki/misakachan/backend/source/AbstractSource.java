@@ -42,6 +42,6 @@ public abstract class AbstractSource {
     protected abstract List<String> getPageUrls(Document doc);
 
     protected abstract String getName(Document doc);
-    
+
     public abstract String getSourceName();
 }

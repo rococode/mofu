@@ -1,4 +1,8 @@
-v1.0.1
+v0.0.3
+- changed patch numbering to start with major patch 0 (gonna switch to 1.x.x on general release to public)
+- added basic testing for making .jar clickable with JFrame
+- added cute misaka icon to JFrame
+v0.0.2
 - now only show DEBUG level messages from within misakachan
 - added source names
 - added basic styling and layout for index page
@@ -6,6 +10,6 @@ v1.0.1
 - removed templates/ and Thymeleaf dependency - probably won't need it
 - started work on AJAX queries to load pages
 - added favicon and temporary logo
-v1.0.0
+v0.0.1
 - added (this) changelog
 - added Thymeleaf dependency for HTML rendering
