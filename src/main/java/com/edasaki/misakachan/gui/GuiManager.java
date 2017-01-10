@@ -2,6 +2,9 @@ package com.edasaki.misakachan.gui;
 
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 import java.net.URI;
 
 import org.slf4j.Logger;
@@ -21,6 +24,8 @@ public class GuiManager {
         frame.setButtonListener((e) -> {
             launchBrowser();
         });
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new EnterKeyDispatcher());
     }
 
     private void launchBrowser() {
@@ -46,6 +51,21 @@ public class GuiManager {
 
     public void updateStatus(String s) {
         frame.println(s);
+    }
+
+    protected class EnterKeyDispatcher implements KeyEventDispatcher {
+        private long last;
+
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_RELEASED && e.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (System.currentTimeMillis() - last < 500)
+                    return false;
+                last = System.currentTimeMillis();
+                launchBrowser();
+            }
+            return false;
+        }
     }
 
 }

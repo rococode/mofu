@@ -1,3 +1,8 @@
+0.0.5 - Jan 9 2017
+- added fileutils to load files from within jar as resource streams (stored as temp files)
+- added font manager for GUI prettiness
+- did a lot of GUI work, improved GUI design/color scheme
+
 0.0.4 - Jan 9 2017
 - modularized code a bit
 - added rudimentary versioning system
