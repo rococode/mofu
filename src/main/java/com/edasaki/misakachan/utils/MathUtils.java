@@ -1,4 +1,4 @@
-package com.edasaki.misakachan.backend.utils;
+package com.edasaki.misakachan.utils;
 
 import java.util.Collections;
 import java.util.List;

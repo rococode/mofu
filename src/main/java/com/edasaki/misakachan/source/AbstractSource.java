@@ -1,4 +1,4 @@
-package com.edasaki.misakachan.backend.source;
+package com.edasaki.misakachan.source;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,8 +9,8 @@ import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.edasaki.misakachan.backend.chapter.Chapter;
-import com.edasaki.misakachan.backend.chapter.Page;
+import com.edasaki.misakachan.chapter.Chapter;
+import com.edasaki.misakachan.chapter.Page;
 
 public abstract class AbstractSource {
 

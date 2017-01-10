@@ -1,4 +1,4 @@
-package com.edasaki.misakachan.backend.source.english;
+package com.edasaki.misakachan.source.english;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.edasaki.misakachan.backend.source.AbstractSource;
+import com.edasaki.misakachan.source.AbstractSource;
 
 public class MangaHere extends AbstractSource {
 

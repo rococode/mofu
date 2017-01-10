@@ -1,4 +1,4 @@
-package com.edasaki.misakachan.backend.chapter;
+package com.edasaki.misakachan.chapter;
 
 public class Page {
     private int num; // page number, one-indexed

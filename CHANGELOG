@@ -1,8 +1,16 @@
-v0.0.3
+0.0.4 - Jan 9 2017
+- modularized code a bit
+- added rudimentary versioning system
+- started working on main GUI a bit
+- added console output system to GUI
+
+0.0.3 - Jan 8 2017
 - changed patch numbering to start with major patch 0 (gonna switch to 1.x.x on general release to public)
 - added basic testing for making .jar clickable with JFrame
 - added cute misaka icon to JFrame
-v0.0.2
+- restructured directories for tests
+
+0.0.2 - Jan 7 2017
 - now only show DEBUG level messages from within misakachan
 - added source names
 - added basic styling and layout for index page
@@ -10,6 +18,7 @@ v0.0.2
 - removed templates/ and Thymeleaf dependency - probably won't need it
 - started work on AJAX queries to load pages
 - added favicon and temporary logo
-v0.0.1
+
+0.0.1 - Jan 7 2017
 - added (this) changelog
 - added Thymeleaf dependency for HTML rendering

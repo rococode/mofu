@@ -1,4 +1,4 @@
-package com.edasaki.misakachan.backend.chapter;
+package com.edasaki.misakachan.chapter;
 
 import java.util.ArrayList;
 import java.util.List;

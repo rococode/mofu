@@ -22,7 +22,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.edasaki.misakachan.backend.Main</mainClass>
+							<mainClass>com.edasaki.misakachan.Launcher</mainClass>
 						</manifest>
 						<manifestEntries>
 							<Built-By>Edasaki</Built-By>
