@@ -7,14 +7,9 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.net.URI;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.edasaki.misakachan.Misaka;
 
 public class GuiManager {
-
-    protected final Logger logger = LoggerFactory.getLogger(GuiManager.class);
 
     private GUIFrame frame;
 

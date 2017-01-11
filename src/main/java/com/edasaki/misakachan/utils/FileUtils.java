@@ -5,15 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.edasaki.misakachan.Launcher;
+import com.edasaki.misakachan.utils.logging.ELog;
 
 import spark.utils.IOUtils;
 
 public class FileUtils {
-    private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
     public static File getResourceAsFile(String path) throws IOException {
         InputStream in = Launcher.class.getResourceAsStream(path);
@@ -24,7 +21,7 @@ public class FileUtils {
         IOUtils.copy(in, out);
         out.close();
 
-        logger.debug("created temp file for " + path + " at " + tempFile.getPath());
+        ELog.debug("created temp file for " + path + " at " + tempFile.getPath());
 
         return tempFile;
     }

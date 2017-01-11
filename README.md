@@ -3,7 +3,7 @@ misakachan is a modern manga reader that can be run on any computer with Java!
 
 It's 2017, and there still isn't a nice, updated manga reader for folks who read manga on their computers. We're left using programs that look and feel like they were designed 5+ years ago (mostly because, well, they were) or just browsing laggy aggregate sites who use ugly and clunky readers to maximize their ad revenue.
 
-Mobile apps are way better than anything available for computer users, and misakachan hopes to close that gap!
+Mobile apps are way better than anything available for computer users, but misakachan hopes to close that gap!
 
 ## Features
 - Runs in your web browser so you can resize & zoom as much as you like!

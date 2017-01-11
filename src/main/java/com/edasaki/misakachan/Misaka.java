@@ -1,21 +1,18 @@
 package com.edasaki.misakachan;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.edasaki.misakachan.gui.GuiManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.english.MangaHere;
+import com.edasaki.misakachan.source.test.TestSource;
 import com.edasaki.misakachan.spark.SparkManager;
 import com.edasaki.misakachan.version.Version;
 
 public class Misaka {
 
     private static final AbstractSource SOURCES[] = {
-            new MangaHere()
+            new MangaHere(),
+            new TestSource(),
     };
-
-    private static final Logger logger = LoggerFactory.getLogger(Misaka.class);
 
     private static Misaka instance;
 

@@ -10,7 +10,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.edasaki.misakachan.chapter.Chapter;
+import com.edasaki.misakachan.chapter.Page;
 import com.edasaki.misakachan.source.AbstractSource;
+import com.edasaki.misakachan.utils.logging.ELog;
 
 public class MangaHere extends AbstractSource {
 
@@ -20,37 +23,37 @@ public class MangaHere extends AbstractSource {
     }
 
     @Override
-    protected int getPageCount(List<String> urls) {
-        return urls.size();
-    }
-
-    @Override
-    protected List<String> getPageUrls(Document doc) {
-        Elements options = doc.select("select.wid60 > option");
-        List<String> pages = new ArrayList<String>();
-        for (Element element : options) {
-            String url = element.attr("value");
-            if (!pages.contains(url))
-                pages.add(url);
-        }
-        List<String> srcs = new ArrayList<String>();
-        for (String url : pages) {
-            logger.debug("Loading page " + url);
-            try {
-                Connection conn = Jsoup.connect(url);
-                Document page = conn.get();
-                String src = page.getElementById("image").attr("src");
-                srcs.add(src);
-            } catch (IOException e) {
-                e.printStackTrace();
+    public Chapter getChapter(String url) {
+        Document doc;
+        try {
+            doc = Jsoup.connect(url).get();
+            Elements dropdownSelector = doc.select("select.wid60 > option");
+            List<String> pageURLs = new ArrayList<String>();
+            for (Element option : dropdownSelector) {
+                String pageURL = option.attr("value");
+                if (!pageURLs.contains(pageURL))
+                    pageURLs.add(pageURL);
             }
+            List<String> srcs = new ArrayList<String>();
+            for (String pageURL : pageURLs) {
+                ELog.debug("Loading page " + pageURL);
+                try {
+                    Connection conn = Jsoup.connect(pageURL);
+                    Document page = conn.get();
+                    String src = page.getElementById("image").attr("src");
+                    srcs.add(src);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            List<Page> pages = Page.convertURLs(srcs);
+            Chapter chapter = new Chapter("mangahere temp name", pages.size(), pages);
+            return chapter;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return srcs;
-    }
-
-    @Override
-    protected String getName(Document doc) {
         return null;
+
     }
 
     @Override

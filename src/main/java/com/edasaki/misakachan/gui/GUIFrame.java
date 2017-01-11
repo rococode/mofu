@@ -22,16 +22,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.edasaki.misakachan.utils.FileUtils;
 
 @SuppressWarnings("serial")
 public class GUIFrame extends JFrame {
     private static final String ICON_URL = "/public/assets/gfx/icon256-t.png";
-
-    protected final Logger logger = LoggerFactory.getLogger(GUIFrame.class);
 
     private JPanel consolePanel;
     private JScrollPane consoleScrollPane;

@@ -1,3 +1,9 @@
+0.0.6 - Jan 10 2017
+- changed up logging - don't really need super fancy logging
+- begin work on reader interface
+- simplified AbstractSource type, adjusted existing implementations (well, there's just one) accordingly
+- added test source - will make it excluded from production builds in future patch
+
 0.0.5 - Jan 9 2017
 - added fileutils to load files from within jar as resource streams (stored as temp files)
 - added font manager for GUI prettiness

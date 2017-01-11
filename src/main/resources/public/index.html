@@ -9,20 +9,41 @@
 <link rel="icon" type="image/x-icon" href="assets/gfx/favicon.ico" />
 <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
 <script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="assets/js/scripts.js"></script>
 </head>
 <body>
-	<img class="logo unselectable" src="assets/gfx/logo.png" />
-	<form id="loader-form" class="loader-form" action="reader" method="get">
-		<input id="load-input-url" type="text" name="url" placeholder="" value="" autocomplete="off" />
-		<br />
-		<button type="submit" value="Load">Load</button>
-	</form>
-	<div class="history">
-		<h1>History</h1>
+	<div id="home-container" class="home-container">
+		<img class="logo unselectable" src="assets/gfx/logo.png" />
+		<form id="loader-form" class="loader-form" action="reader" method="get">
+			<input id="load-input-url" type="text" name="url" placeholder="" value="" autocomplete="off" />
+			<br />
+			<button type="submit" value="Load">Load</button>
+		</form>
+		<div class="history">
+			<h1>History</h1>
+		</div>
+	</div>
+	<div id="reader-container" class="reader-container">
+		<div class="reader-header">Title Here</div>
+		<div class="reader-nav">
+			<div class="reader-nav-el">Previous Chapter</div>
+			<div class="reader-nav-el">Chapter 0/?</div>
+			<div class="reader-nav-el">Next Chapter</div>
+		</div>
+		<div class="reader-pages">
+			<div class="reader-page">
+				<img src="http://edasaki.com/i/test-page.png"></img>
+			</div>
+		</div>
+		<div class="reader-nav">
+			<div class="reader-nav-el">Previous Chapter</div>
+			<div class="reader-nav-el">Chapter 0/?</div>
+			<div class="reader-nav-el">Next Chapter</div>
+		</div>
 	</div>
 	<div class="footer unselectable">
 		<a href="http://edasaki.com">&copy; Edasaki 2017</a> | Please remember to support the original authors and translation groups if you can!

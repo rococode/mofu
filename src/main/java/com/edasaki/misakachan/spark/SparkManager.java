@@ -3,7 +3,10 @@ package com.edasaki.misakachan.spark;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.edasaki.misakachan.chapter.Chapter;
+import com.edasaki.misakachan.chapter.Page;
 import com.edasaki.misakachan.source.AbstractSource;
+import com.edasaki.misakachan.utils.logging.ELog;
 
 import spark.Request;
 import spark.Response;
@@ -32,14 +35,17 @@ public class SparkManager {
         JSONObject jo = new JSONObject();
         for (AbstractSource source : sources) {
             if (source.match(url)) {
-                //stuff
+                ELog.debug("Matched " + source);
                 jo.put("status", "success");
                 jo.put("site", source.getSourceName());
-                JSONArray arr = new JSONArray();
-                arr.put("http://test.png");
-                arr.put("http://test2.png");
-                jo.put("urls", arr);
-                System.out.println(jo.toString());
+                Chapter chapter = source.getChapter(url);
+                jo.put("name", chapter.getChapterName());
+                jo.put("pagecount", chapter.getPageCount());
+                JSONArray urls = new JSONArray();
+                for (Page p : chapter.getPages())
+                    urls.put(p.getURL());
+                jo.put("urls", urls);
+                ELog.debug("Generated JSON " + jo.toString());
                 return jo.toString();
             }
         }

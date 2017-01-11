@@ -23,7 +23,7 @@ public class FontManager {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             Hashtable<TextAttribute, Object> attr = new Hashtable<TextAttribute, Object>();
             attr.put(TextAttribute.KERNING, TextAttribute.KERNING_ON);
-            attr.put(TextAttribute.SIZE, 36f);
+            attr.put(TextAttribute.SIZE, 28f);
             attr.put(TextAttribute.TRACKING, 0);
             font = font.deriveFont(attr);
             ge.registerFont(font);

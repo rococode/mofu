@@ -15,8 +15,17 @@ $(document).ready(function() {
 	$(document).keypress(function(e) {
 		if (e.which == 13) {
 			$("#loader-form").submit();
+		} else if (e.which == 92) {
+			$("#reader-container").toggle();
+			$("#home-container").toggle();
 		}
 	});
+	// temporary
+
+	$("#reader-container").toggle();
+	$("#home-container").toggle();
+
+	// end temporary
 
 	// placeholder stuff
 	var str = "Enter the URL of a manga chapter! Example: http://www.mangahere.co/manga/to_aru_kagaku_no_rail_gun/v11/c080/";

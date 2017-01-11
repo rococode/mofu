@@ -102,6 +102,29 @@ body {
 	text-align: center;
 }
 
-.history h1 {
-	
+.reader-container {
+	display: none;
+}
+
+.reader-header {
+	font-family: 'Crimson Text', serif;
+	display: block;
+	text-align: center;
+	font-size: 2em;
+}
+
+.reader-nav {
+	display: block;
+	text-align: center;
+}
+
+.reader-nav-el {
+	display: inline-block;
+	margin: 0 5px;
+}
+
+.reader-pages {
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
 }
