@@ -1,3 +1,8 @@
+0.0.7 - Jan 11 2017
+- worked on js stuff, now loads in data from webserver
+- added key captures for up/down/left/right nav (scroll up/down & next/prev chapter)
+- CSS work on reader
+
 0.0.6 - Jan 10 2017
 - changed up logging - don't really need super fancy logging
 - begin work on reader interface

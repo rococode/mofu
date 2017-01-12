@@ -11,6 +11,16 @@ body {
 	color: #4B291A;
 }
 
+.unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: default;
+}
+
 .footer {
 	font-family: 'Ubuntu', sans-serif;
 	text-align: center;
@@ -21,16 +31,6 @@ body {
 	width: 100%;
 	font-size: 0.8em;
 	padding: 10px 0;
-}
-
-.unselectable {
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	cursor: default;
 }
 
 .footer a, a:hover, a:visited, a:active {
@@ -106,21 +106,44 @@ body {
 	display: none;
 }
 
-.reader-header {
+.reader-title {
 	font-family: 'Crimson Text', serif;
 	display: block;
 	text-align: center;
 	font-size: 2em;
+	background-color: #8AA296;
+	padding: 5px 0 8px 0;
+	background-color: #8AA296;
+}
+
+.reader-nav-container {
+	width: 100%;
+	position: relative;
+	text-align: center;
+	margin: 10px 0;
 }
 
 .reader-nav {
-	display: block;
+	background-color: #8AA296;
+	padding: 0px 10px;
+	display: inline-block;
 	text-align: center;
+	border: 3px solid #4B291A;
+	font-family: 'Ubuntu Mono', monospace;
+	text-align: center
 }
 
 .reader-nav-el {
 	display: inline-block;
 	margin: 0 5px;
+	vertical-align: center;
+}
+
+.reader-nav-div {
+	background-color: red;
+	width: 1px;
+	display: inline-block;
+	margin-bottom: -3px;
 }
 
 .reader-pages {
