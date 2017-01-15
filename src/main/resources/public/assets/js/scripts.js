@@ -6,7 +6,7 @@ $(document).ready(function() {
 		console.log("height: " + $('.reader-nav').height());
 		$('.reader-nav-div').css('height', $('.reader-nav').height());
 	});
-	
+
 	$("#loader-form").submit(function(e) {
 		// don't allow submit if url is empty
 		if ($("#load-input-url").val() == '') {
@@ -31,6 +31,7 @@ $(document).ready(function() {
 			case 220: // TEMPORARY
 				$("#reader-container").toggle();
 				$("#home-container").toggle();
+				$("#reader-pages").empty();
 				break;
 			case 38:
 			case 87:
@@ -66,7 +67,11 @@ $(document).ready(function() {
 		}
 		$(this).attr('placeholder', str);
 	});
+
+	// debugging stuff below
 	swapToReader();
+	$("#load-input-url").val('a');
+	$("#loader-form").submit();
 });
 
 function swapToReader() {
@@ -85,6 +90,6 @@ function setupReader(json) {
 	console.log(json.urls);
 	for (k in json.urls) {
 		$('#reader-pages').append("<div class=\"reader-page\"><img src=\"" + json.urls[k] + "\" /></div>");
-		$('#reader-pages').append("<div class=\"reader-page-number\">" + (Number(k) + 1) + "/" + json.urls.length + "</div>");
+		$('#reader-pages').append("<div class=\"reader-page-number-container\"><div class=\"reader-page-number\">" + (Number(k) + 1) + "/" + json.urls.length + "</div></div>");
 	}
 }

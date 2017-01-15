@@ -11,6 +11,11 @@ body {
 	color: #4B291A;
 }
 
+img {
+	padding: 0;
+	margin: 0;
+}
+
 .unselectable {
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -125,12 +130,11 @@ body {
 
 .reader-nav {
 	background-color: #8AA296;
-	padding: 0px 10px;
+	padding: 3px 10px;
 	display: inline-block;
 	text-align: center;
 	border: 3px solid #4B291A;
 	font-family: 'Ubuntu Mono', monospace;
-	text-align: center
 }
 
 .reader-nav-el {
@@ -140,14 +144,37 @@ body {
 }
 
 .reader-nav-div {
-	background-color: red;
+	background-color: #4B291A;
 	width: 1px;
 	display: inline-block;
 	margin-bottom: -3px;
 }
 
+.reader-page-number-container {
+	width: 100%;
+	position: relative;
+	text-align: center;
+}
+
+.reader-page-number {
+	font-family: 'Ubuntu Mono', monospace;
+	padding: 2px 10px 3px 10px;
+	margin-top: 1px; margin-bottom : 5px;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 5px;
+	background-color: #8AA296;
+	margin-bottom: 5px;
+}
+
 .reader-pages {
-	margin: 0 auto;
+	margin: 5px auto;
 	width: 100%;
 	text-align: center;
+}
+
+.reader-page {
+	margin: 0 0;
+	padding: 0 0;
 }

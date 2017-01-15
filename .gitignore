@@ -4,6 +4,7 @@
 .settings/
 log.out
 target/
+misaka/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

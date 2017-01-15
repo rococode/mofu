@@ -1,6 +1,8 @@
 package com.edasaki.misakachan;
 
 import com.edasaki.misakachan.gui.GuiManager;
+import com.edasaki.misakachan.persistence.OptionManager;
+import com.edasaki.misakachan.persistence.PersistenceManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.english.MangaHere;
 import com.edasaki.misakachan.source.test.TestSource;
@@ -18,33 +20,48 @@ public class Misaka {
 
     public GuiManager gui;
     public SparkManager spark;
+    public PersistenceManager persist;
+    public OptionManager options;
 
     protected static void initialize(Version version) {
         Misaka m = new Misaka();
-
-        m.gui = new GuiManager();
-        m.gui.showFrame();
-
-        m.updateStatus("Initializing webserver...");
-
-        m.spark = new SparkManager(SOURCES);
-        m.spark.startWebsever();
-
-        m.updateStatus("Webserver successfully started.");
-        m.updateStatus("Now listening on 0.0.0.0:" + m.spark.getPort() + "...");
-
         instance = m;
-        // testing eclipse git setup
-        //        String url = "http://www.mangahere.co/manga/red_storm/c224/2.html";
-        //        MangaHere mh = new MangaHere();
-        //        if (mh.match(url)) {
-        //            mh.getChapter(url);
-        //        }
+        m.init();
+    }
 
+    private void init() {
+        this.gui = new GuiManager();
+        this.gui.showFrame();
+
+        this.persist = new PersistenceManager();
+        this.persist.loadFiles();
+
+        this.options = new OptionManager();
+
+        this.updateStatus("Initializing webserver...");
+
+        this.spark = new SparkManager(SOURCES);
+        this.spark.startWebsever();
+
+        this.updateStatus("Webserver successfully started.");
+        this.updateStatus("Now listening on 0.0.0.0:" + this.spark.getPort() + "...");
     }
 
     public static Misaka getInstance() {
         return instance;
+    }
+
+    public static Misaka instance() {
+        return instance;
+    }
+
+    public static void update(String s) {
+        if (instance != null)
+            instance.updateStatus(s);
+    }
+
+    public static void error(String s) {
+        update("[ERROR] " + s);
     }
 
     public void updateStatus(String s) {

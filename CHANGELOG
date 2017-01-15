@@ -1,3 +1,9 @@
+0.0.8 - Jan 14 2017
+- made a persistent file framework to make it easier to code up stuff that needs to be saved in the future (images, options/preferences, history, etc.)
+- some more CSS work
+- added some convenience methods
+- excluded local persistence folder (/misaka/) from git
+
 0.0.7 - Jan 11 2017
 - worked on js stuff, now loads in data from webserver
 - added key captures for up/down/left/right nav (scroll up/down & next/prev chapter)
