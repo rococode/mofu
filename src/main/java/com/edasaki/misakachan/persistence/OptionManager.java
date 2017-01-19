@@ -10,7 +10,7 @@ import java.util.Scanner;
 import com.edasaki.misakachan.Misaka;
 import com.edasaki.misakachan.persistence.options.Option;
 
-public class OptionManager extends PersistentFileManager {
+public class OptionManager extends AbstractPersistentFileManager {
 
     private HashMap<Option, String> options = new HashMap<Option, String>();
 

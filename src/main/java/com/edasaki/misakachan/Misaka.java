@@ -40,9 +40,9 @@ public class Misaka {
 
         this.updateStatus("Initializing webserver...");
 
+        // Do this last, since we want to be sure everything else is ready
         this.spark = new SparkManager(SOURCES);
         this.spark.startWebsever();
-
         this.updateStatus("Webserver successfully started.");
         this.updateStatus("Now listening on 0.0.0.0:" + this.spark.getPort() + "...");
     }

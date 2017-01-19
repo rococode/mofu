@@ -1,3 +1,8 @@
+0.0.9 - Jan 19 2017
+- added stuff for using SASS for CSS
+- auto transpiler builder included for Eclipse - automatically updates generated CSS on auto builds
+- excluded sass files from JAR builds
+
 0.0.8 - Jan 14 2017
 - made a persistent file framework to make it easier to code up stuff that needs to be saved in the future (images, options/preferences, history, etc.)
 - some more CSS work

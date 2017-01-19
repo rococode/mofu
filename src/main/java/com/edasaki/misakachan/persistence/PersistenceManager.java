@@ -26,7 +26,6 @@ public class PersistenceManager {
 
     public void loadFiles() {
         for (File f : dir.listFiles()) {
-            System.out.println("name: " + f.getName());
             String name = f.getName();
             try {
                 name = name.toUpperCase();

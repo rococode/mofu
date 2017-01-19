@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.edasaki.misakachan.Misaka;
 
-public abstract class PersistentFileManager {
+public abstract class AbstractPersistentFileManager {
     public abstract MisakaFile getFileType();
 
     protected abstract List<String> getSaveContents();
