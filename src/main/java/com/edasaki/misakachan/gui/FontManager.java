@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-import com.edasaki.misakachan.utils.FileUtils;
+import com.edasaki.misakachan.utils.MFileUtils;
 
 public class FontManager {
     private static HashMap<String, Font> loadedFonts = new HashMap<String, Font>();
@@ -18,7 +18,7 @@ public class FontManager {
         if (loadedFonts.containsKey(path))
             return loadedFonts.get(path);
         try {
-            File file = FileUtils.getResourceAsFile(path);
+            File file = MFileUtils.getResourceAsFile(path);
             Font font = Font.createFont(Font.TRUETYPE_FONT, file);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             Hashtable<TextAttribute, Object> attr = new Hashtable<TextAttribute, Object>();

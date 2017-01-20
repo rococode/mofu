@@ -13,7 +13,7 @@ import org.jsoup.select.Elements;
 import com.edasaki.misakachan.chapter.Chapter;
 import com.edasaki.misakachan.chapter.Page;
 import com.edasaki.misakachan.source.AbstractSource;
-import com.edasaki.misakachan.utils.logging.ELog;
+import com.edasaki.misakachan.utils.logging.M;
 
 public class MangaHere extends AbstractSource {
 
@@ -36,7 +36,7 @@ public class MangaHere extends AbstractSource {
             }
             List<String> srcs = new ArrayList<String>();
             for (String pageURL : pageURLs) {
-                ELog.debug("Loading page " + pageURL);
+                M.debug("Loading page " + pageURL);
                 try {
                     Connection conn = Jsoup.connect(pageURL);
                     Document page = conn.get();
@@ -53,7 +53,6 @@ public class MangaHere extends AbstractSource {
             e.printStackTrace();
         }
         return null;
-
     }
 
     @Override

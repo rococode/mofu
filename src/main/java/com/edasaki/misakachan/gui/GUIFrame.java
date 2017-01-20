@@ -22,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import com.edasaki.misakachan.utils.FileUtils;
+import com.edasaki.misakachan.utils.MFileUtils;
 
 @SuppressWarnings("serial")
 public class GUIFrame extends JFrame {
@@ -80,7 +80,7 @@ public class GUIFrame extends JFrame {
 
         ImageIcon icon;
         try {
-            icon = new ImageIcon(FileUtils.getResourceAsFile(ICON_URL).toURI().toURL());
+            icon = new ImageIcon(MFileUtils.getResourceAsFile(ICON_URL).toURI().toURL());
             setIconImage(icon.getImage());
         } catch (IOException e) {
             e.printStackTrace();

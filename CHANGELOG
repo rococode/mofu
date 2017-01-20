@@ -1,3 +1,8 @@
+0.0.10 - Jan 19 2017
+- updated readme.md
+- coded some stuff to search for manga on baka-updates
+- currently prone to rate-limiting b/c it's parsing google. Will consider recoding to use baka-updates search interface (but will need to think about how to determine which link is the right one). Tired now though so I'm going to sleep lol
+
 0.0.9 - Jan 19 2017
 - added stuff for using SASS for CSS
 - auto transpiler builder included for Eclipse - automatically updates generated CSS on auto builds

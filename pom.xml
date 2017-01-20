@@ -28,9 +28,9 @@
 							<Built-By>Edasaki</Built-By>
 						</manifestEntries>
 					</archive>
-                    <excludes>
-                        <exclude>**/sass/*</exclude>
-                    </excludes>
+					<excludes>
+						<exclude>**/sass/*</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>

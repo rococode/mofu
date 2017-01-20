@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import com.edasaki.misakachan.chapter.Chapter;
 import com.edasaki.misakachan.chapter.Page;
 import com.edasaki.misakachan.source.AbstractSource;
-import com.edasaki.misakachan.utils.logging.ELog;
+import com.edasaki.misakachan.utils.logging.M;
 
 import spark.Request;
 import spark.Response;
@@ -35,7 +35,7 @@ public class SparkManager {
         JSONObject jo = new JSONObject();
         for (AbstractSource source : sources) {
             if (source.match(url)) {
-                ELog.debug("Matched " + source);
+                M.debug("Matched " + source);
                 jo.put("status", "success");
                 jo.put("site", source.getSourceName());
                 Chapter chapter = source.getChapter(url);
@@ -45,7 +45,7 @@ public class SparkManager {
                 for (Page p : chapter.getPages())
                     urls.put(p.getURL());
                 jo.put("urls", urls);
-                ELog.debug("Generated JSON " + jo.toString());
+                M.debug("Generated JSON " + jo.toString());
                 return jo.toString();
             }
         }

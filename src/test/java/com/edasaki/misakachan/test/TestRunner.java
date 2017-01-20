@@ -3,15 +3,20 @@ package com.edasaki.misakachan.test;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import com.edasaki.misakachan.test.tests.BakaUpdateTests;
 import com.edasaki.misakachan.test.tests.BasicTests;
+import com.edasaki.misakachan.test.tests.StringUtilTests;
 
 public class TestRunner {
 
     private static final Class<?>[] TEST_CLASSES = {
-            BasicTests.class
+            BasicTests.class,
+            BakaUpdateTests.class,
+            StringUtilTests.class
     };
 
     public static void main(String[] args) {
+        System.setProperty("http.agent", ""); 
         int passed = 0, failed = 0, count = 0, ignore = 0;
         for (Class<?> obj : TEST_CLASSES) {
             for (Method method : obj.getDeclaredMethods()) {
@@ -25,6 +30,7 @@ public class TestRunner {
                             passed++;
                         } catch (Throwable ex) {
                             System.out.printf("%s - Test '%s.%s' - failed: %s%n", ++count, obj.getName(), method.getName(), ex.getCause());
+                            ex.printStackTrace();
                             failed++;
                         }
                     } else {
