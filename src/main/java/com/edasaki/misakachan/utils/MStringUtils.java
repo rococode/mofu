@@ -2,6 +2,24 @@ package com.edasaki.misakachan.utils;
 
 public class MStringUtils {
 
+    public static double similarityMaxContains(String parent, String substring) {
+        parent = parent.toLowerCase();
+        substring = substring.toLowerCase();
+        if (parent.contains(substring))
+            return 1.0;
+        return similarity(parent, substring);
+
+    }
+
+    public static double similarityMaxContainsAlphanumeric(String parent, String substring) {
+        parent = parent.toLowerCase().replaceAll("[^0-9a-zA-Z]", "");
+        substring = substring.toLowerCase().replaceAll("[^0-9a-zA-Z]", "");
+        if (parent.contains(substring))
+            return 1.0;
+        return similarity(parent, substring);
+
+    }
+
     public static double similarity(String s1, String s2) {
         String longer = s1, shorter = s2;
         if (s1.length() < s2.length()) { // longer should always have greater length

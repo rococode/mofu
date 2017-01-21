@@ -8,7 +8,7 @@ public class BakaUpdateManager {
         searcher = new BakaUpdateSearcher();
     }
 
-    public Scanlator getScanlator(String mangaName) {
+    public ScanGroup getScanlator(String mangaName) {
         return searcher.search(mangaName);
     }
 
