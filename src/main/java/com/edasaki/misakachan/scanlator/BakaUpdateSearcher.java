@@ -2,7 +2,9 @@ package com.edasaki.misakachan.scanlator;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.jsoup.Jsoup;
@@ -11,7 +13,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.edasaki.misakachan.utils.MStringUtils;
-import com.edasaki.misakachan.utils.logging.M;
 
 public class BakaUpdateSearcher {
     //    private static final String PREFIX = "http://www.google.com/search?q=";
@@ -34,16 +35,15 @@ public class BakaUpdateSearcher {
     private static final String GROUP_SELECTOR_REGEX = ".*\\Qmangaupdates.com/groups.html?id=\\E.*";
     private static final String GROUP_SELECTOR = "a[href~=" + GROUP_SELECTOR_REGEX + "]";
 
-    protected ScanGroup search(String title) {
+    protected String getURL(String title) {
         title = title.trim();
         Document doc;
-        long start = System.currentTimeMillis();
+        double bestSimilarity = 0;
+        String bestTitle = null;
+        String bestURL = null;
+        int page = 1;
+        HashMap<String, String> mapContainedTitleToURL = new HashMap<String, String>();
         try {
-            double bestSimilarity = 0;
-            String bestTitle = null;
-            String bestURL = null;
-            int page = 1;
-            HashMap<String, String> mapContainedTitleToURL = new HashMap<String, String>();
             do {
                 final String connectionURL = PREFIX + page + SEARCH + URLEncoder.encode(title, CHARSET);
                 doc = Jsoup.connect(connectionURL).userAgent(USER_AGENT).referrer(REFERRER).get();
@@ -88,31 +88,40 @@ public class BakaUpdateSearcher {
                     }
                 }
             }
-            M.debug("Best result for \"" + title + "\": " + bestTitle + " [" + bestURL + "] with a similarity of " + bestSimilarity);
-            if (bestURL != null) {
-                Document detailPage = Jsoup.connect(bestURL).userAgent(USER_AGENT).referrer(REFERRER).get();
-                Elements sCats = detailPage.select(GROUP_SELECTOR);
-                HashMap<Integer, ScanGroup> groups = new HashMap<Integer, ScanGroup>();
-                for (Element e : sCats) {
-                    try {
-                        String href = e.absUrl("href");
-                        int id = Integer.parseInt(href.substring(href.indexOf("?id=") + "?id=".length()).trim());
-                        if (groups.containsKey(id))
-                            continue;
-                        String name = e.text();
-                        ScanGroup sg = new ScanGroup(id, name);
-                        groups.put(id, sg);
-                    } catch (Exception e2) {
-                        e2.printStackTrace();
-                    }
+            //M.debug("Best result for \"" + title + "\": " + bestTitle + " [" + bestURL + "] with a similarity of " + bestSimilarity);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //M.debug("Finished search() in " + (System.currentTimeMillis() - start) + "ms");
+        return bestURL;
+    }
+
+    protected List<ScanGroup> getGroups(String bestURL) {
+        List<ScanGroup> g = new ArrayList<ScanGroup>();
+        try {
+            Document detailPage = Jsoup.connect(bestURL).userAgent(USER_AGENT).referrer(REFERRER).get();
+            Elements sCats = detailPage.select(GROUP_SELECTOR);
+            HashMap<Integer, ScanGroup> groups = new HashMap<Integer, ScanGroup>();
+            for (Element e : sCats) {
+                try {
+                    String href = e.absUrl("href");
+                    int id = Integer.parseInt(href.substring(href.indexOf("?id=") + "?id=".length()).trim());
+                    if (groups.containsKey(id))
+                        continue;
+                    String name = e.text();
+                    ScanGroup sg = new ScanGroup(id, name);
+                    groups.put(id, sg);
+                    g.add(sg);
+                    //                        Document groupPage = Jsoup.connect(href).userAgent(USER_AGENT).referrer(bestURL).get();
+                    //                        groupPage.select(cssQuery)
+                } catch (Exception e2) {
+                    e2.printStackTrace();
                 }
-                System.out.println(groups);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Finished search() in " + (System.currentTimeMillis() - start) + "ms");
-        return null;
+        return g;
     }
 
 }

@@ -9,7 +9,7 @@ public class BakaUpdateManager {
     }
 
     public ScanGroup getScanlator(String mangaName) {
-        return searcher.search(mangaName);
+        return searcher.getGroups(mangaName).get(0);
     }
 
 }

@@ -1,3 +1,11 @@
+0.0.12 - Jan 22 2017
+- added auto SASS formatting builder to eclipse project - it doesn't run on auto build b/c it does some weird stuff if it does
+- converted old style.css to SASS - first time using SASS, pretty cool stuff
+- removed source mapping for SASS - not doing anything complex enough to need it lol
+- fixed extra padding at bottom of image divs - was an issue with vertical-align
+- switched to more modularized var naming for scss _colors
+- as a side note, until release I will only be using the "PATCH" part of semantic versioning. No point doing "MINOR" patches when misaka isn't ready yet anyways and I'm working on this solo :P
+
 0.0.11 - Jan 20 2017
 - recoded BakaUpdateSearcher to search directly within the site instead of using google
 - so far it seems to search with pretty great accuracy - first checks for direct phrase matches, and then compares between those by finding the shortest edit distance

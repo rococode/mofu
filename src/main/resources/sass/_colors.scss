@@ -1,0 +1,24 @@
+// _colors.sass
+// partial to help with auto-formatting in eclipse
+
+$color-background-main: #373737;
+$color-background-dark: #272727;
+$color-background-main-gradient: rgba($color-background-main, 0.8);
+
+$color-text-main: #ccc;
+$color-text-dark: #555;
+
+$color-button-main: #F1E0BF;
+$color-button-hover: #F9E8C7;
+$color-button-text: #D5654C;
+
+/* old edasaki.com-style coloring - consider creating theme system in the future
+$bgColor: #96B0A3;
+$darkBgColor: #8AA296;
+$brownTextColor: #4B291A;
+$darkGreenTextColor: #4F695C;
+$lightBg: #F1E0BF;
+$slightlyLighterBg: #F9E8C7;
+$bgGradient: rgba($bgColor, 0.8);
+$textonlightbg: #D5654C;
+*/

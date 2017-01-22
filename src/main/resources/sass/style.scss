@@ -1,28 +1,23 @@
-/* old edasaki.com-style coloring - consider creating theme system in the future
-$bgColor: #96B0A3;
-$darkBgColor: #8AA296;
-$brownTextColor: #4B291A;
-$darkGreenTextColor: #4F695C;
-$lightBg: #F1E0BF;
-$slightlyLighterBg: #F9E8C7;
-$bgGradient: rgba($bgColor, 0.8);
-$textonlightbg: #D5654C;
-*/
+@import "colors";
+
 html {
   position: relative;
-  min-height: 100%; }
+  min-height: 100%;
+}
 
 body {
-  background-color: #373737;
-  background: linear-gradient(rgba(55, 55, 55, 0.8), rgba(55, 55, 55, 0.8), url("../gfx/paper_2.png"));
+  background-color: $color-background-main;
+  background: linear-gradient($color-background-main-gradient, $color-background-main-gradient, url("../gfx/paper_2.png"));
   margin: 0 0 75px;
   padding: 0;
-  color: #ccc; }
+  color: $color-text-main;
+}
 
 div, img {
   padding: 0;
   margin: 0;
-  vertical-align: bottom; }
+  vertical-align: bottom;
+}
 
 .unselectable {
   -webkit-touch-callout: none;
@@ -31,36 +26,46 @@ div, img {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  cursor: default; }
+  cursor: default;
+}
 
 .footer {
   font-family: 'Ubuntu', sans-serif;
   text-align: center;
-  background-color: #272727;
-  color: #555;
+  background-color: $color-background-dark;
+  color: $color-text-dark;
   position: absolute;
   bottom: 0;
   width: 100%;
   font-size: 0.8em;
-  padding: 10px 0; }
-  .footer a, .footer a:hover, .footer a:visited, .footer a:active {
+  padding: 10px 0;
+
+  a, a:hover, a:visited, a:active {
     text-decoration: none;
     color: inherit;
-    cursor: pointer; }
+    cursor: pointer;
+  }
+}
 
 .logo {
   margin: 50px auto 30px auto;
-  display: block; }
+  display: block;
+}
 
 .loader-form {
-  text-align: center; }
-  .loader-form input[type=text], .loader-form button[type=submit] {
+  text-align: center;
+
+  %common {
     font-family: 'Ubuntu', sans-serif;
-    background-color: #F1E0BF;
+    background-color: $color-button-main;
     -webkit-transition: 0.5s;
     transition: 0.5s;
-    text-align: center; }
-  .loader-form input[type=text] {
+    text-align: center;
+  }
+
+  input[type=text] {
+    @extend %common;
+
     background-image: url("../gfx/Search-48.png");
     background-size: 25px 25px;
     background-position: 10px 10px;
@@ -74,29 +79,41 @@ div, img {
     font-size: 1.3em;
     margin-bottom: 10px;
     border: 3px solid #ccc;
-    color: black; }
-    .loader-form input[type=text]:focus {
-      border: 3px solid #999; }
-  .loader-form button[type=submit] {
+    color: black;
+
+    &:focus {
+      border: 3px solid #999;
+    }
+  }
+
+  button[type=submit] {
+    @extend %common;
+
     padding: 8px 32px;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    color: #D5654C;
-    border: 3px solid #272727;
+    color: $color-button-text;
+    border: 3px solid $color-background-dark;
     border-radius: 7px;
     font-weight: bold;
-    font-size: 1.5em; }
-    .loader-form button[type=submit]:hover {
-      background-color: #F9E8C7; }
+    font-size: 1.5em;
+
+    &:hover {
+      background-color: $color-button-hover;
+    }
+  }
+}
 
 .history {
   font-family: 'Comfortaa', cursive;
   border: 1px solid black;
-  text-align: center; }
+  text-align: center;
+}
 
 .reader-container {
-  display: none; }
+  display: none;
+}
 
 .reader-title {
   font-family: 'Crimson Text', serif;
@@ -104,37 +121,43 @@ div, img {
   text-align: center;
   font-size: 2em;
   padding: 5px 0 8px 0;
-  background-color: #272727; }
+  background-color: $color-background-dark;
+}
 
 .reader-nav-container {
   width: 100%;
   position: relative;
   text-align: center;
-  margin: 10px 0; }
+  margin: 10px 0;
+}
 
 .reader-nav {
-  background-color: #272727;
+  background-color: $color-background-dark;
   padding: 3px 10px;
   display: inline-block;
   text-align: center;
-  border: 3px solid #ccc;
-  font-family: 'Ubuntu Mono', monospace; }
+  border: 3px solid $color-text-main;
+  font-family: 'Ubuntu Mono', monospace;
+}
 
 .reader-nav-el {
   display: inline-block;
   margin: 0 5px;
-  vertical-align: center; }
+  vertical-align: center;
+}
 
 .reader-nav-div {
-  background-color: #ccc;
+  background-color: $color-text-main;
   width: 1px;
   display: inline-block;
-  margin-bottom: -3px; }
+  margin-bottom: -3px;
+}
 
 .reader-page-number-container {
   width: 100%;
   position: relative;
-  text-align: center; }
+  text-align: center;
+}
 
 .reader-page-number {
   font-family: 'Ubuntu Mono', monospace;
@@ -144,13 +167,16 @@ div, img {
   text-align: center;
   vertical-align: middle;
   border-radius: 5px;
-  background-color: #272727; }
+  background-color: $color-background-dark;
+}
 
 .reader-pages {
   margin: 5px auto;
   width: 100%;
-  text-align: center; }
+  text-align: center;
+}
 
 .reader-page {
   margin: 0 0;
-  padding: 0 0; }
+  padding: 0 0;
+}
