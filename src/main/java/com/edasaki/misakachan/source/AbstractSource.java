@@ -9,7 +9,7 @@ public abstract class AbstractSource {
      * @return <code>true</code> if the given URL matches this source's URL pattern
      */
     public abstract boolean match(String url);
-
+    
     public abstract Chapter getChapter(String url);
 
     public abstract String getSourceName();

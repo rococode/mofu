@@ -13,6 +13,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.edasaki.misakachan.utils.MStringUtils;
+import com.edasaki.misakachan.utils.logging.M;
 
 public class BakaUpdateSearcher {
     //    private static final String PREFIX = "http://www.google.com/search?q=";
@@ -88,7 +89,7 @@ public class BakaUpdateSearcher {
                     }
                 }
             }
-            //M.debug("Best result for \"" + title + "\": " + bestTitle + " [" + bestURL + "] with a similarity of " + bestSimilarity);
+            //            M.debug("Best result for \"" + title + "\": " + bestTitle + " [" + bestURL + "] with a similarity of " + bestSimilarity);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,6 +122,7 @@ public class BakaUpdateSearcher {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        M.debug("Got groups: " + g);
         return g;
     }
 

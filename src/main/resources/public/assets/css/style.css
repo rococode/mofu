@@ -1,13 +1,3 @@
-/* old edasaki.com-style coloring - consider creating theme system in the future
-$bgColor: #96B0A3;
-$darkBgColor: #8AA296;
-$brownTextColor: #4B291A;
-$darkGreenTextColor: #4F695C;
-$lightBg: #F1E0BF;
-$slightlyLighterBg: #F9E8C7;
-$bgGradient: rgba($bgColor, 0.8);
-$textonlightbg: #D5654C;
-*/
 html {
   position: relative;
   min-height: 100%; }
@@ -56,7 +46,7 @@ div, img {
   text-align: center; }
   .loader-form input[type=text], .loader-form button[type=submit] {
     font-family: 'Ubuntu', sans-serif;
-    background-color: #F1E0BF;
+    background-color: #ffe57f;
     -webkit-transition: 0.5s;
     transition: 0.5s;
     text-align: center; }
@@ -82,15 +72,16 @@ div, img {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    color: #D5654C;
+    color: #373737;
     border: 3px solid #272727;
     border-radius: 7px;
     font-weight: bold;
     font-size: 1.5em; }
     .loader-form button[type=submit]:hover {
-      background-color: #F9E8C7; }
+      background-color: #ffd740; }
 
 .history {
+  margin-top: 10px;
   font-family: 'Comfortaa', cursive;
   border: 1px solid black;
   text-align: center; }

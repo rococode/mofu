@@ -23,14 +23,14 @@ public class SparkManager {
     public void startWebsever() {
         Spark.port(10032);
         Spark.staticFileLocation("/public");
-        Spark.post("/load", this::loadURL);
+        Spark.post("/load", this::loadRequestedURL);
     }
 
     public int getPort() {
         return Spark.port();
     }
 
-    private String loadURL(Request req, Response res) {
+    private String loadRequestedURL(Request req, Response res) {
         String url = req.body();
         JSONObject jo = new JSONObject();
         for (AbstractSource source : sources) {

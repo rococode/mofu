@@ -1,3 +1,8 @@
+0.0.13 - Jan 22 2017
+- worked on some more styling
+- added my own version of momentum scrolling on WASD/Arrow Keys - actually was a huge pain to code haha
+- multithreaded page crawling - HUGE PERFORMANCE IMPROVEMENT!!!!!! I was super surprised at how much faster it got! A 36 page chapter of Railgun from MangaHere took ~13 seconds to load before; multithreaded, it loads all 36 pages in under a second!
+
 0.0.12 - Jan 22 2017
 - added auto SASS formatting builder to eclipse project - it doesn't run on auto build b/c it does some weird stuff if it does
 - converted old style.css to SASS - first time using SASS, pretty cool stuff

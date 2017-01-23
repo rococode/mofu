@@ -16,6 +16,7 @@ public class TestSource extends AbstractSource {
 
     @Override
     public Chapter getChapter(String url) {
+//        return new MangaHere().getChapter("http://www.mangahere.co/manga/gekkan_shoujo_nozaki_kun/v01/c070/");
         List<String> pages = new ArrayList<String>();
         for (int k = 0; k < 5; k++) {
             try {

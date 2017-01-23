@@ -28,18 +28,18 @@ $(document).ready(function() {
 			case 13:
 				$("#loader-form").submit();
 				break;
-			case 220: // TEMPORARY
+			case 220: // TEMPORARY - FOR DEBUGGING
 				$("#reader-container").toggle();
 				$("#home-container").toggle();
 				$("#reader-pages").empty();
 				break;
 			case 38:
 			case 87:
-				console.log('up');
+				scrollUp();
 				break;
 			case 40:
 			case 83:
-				console.log('down');
+				scrollDown();
 				break;
 			case 39:
 			case 68:
@@ -73,6 +73,56 @@ $(document).ready(function() {
 	$("#load-input-url").val('a');
 	$("#loader-form").submit();
 });
+
+var lastScroll = 0;
+
+var SCROLL_SPEED = 200;
+var SCROLL_AMT = 300;
+
+var consecutiveUp = 0;
+var consecutiveDown = 0;
+
+function scrollUp() {
+	if (time() - lastScroll > SCROLL_SPEED) {
+		if (consecutiveUp < 0) {
+			consecutiveUp = 0;
+		}
+		lastScroll = time();
+		var adjusted = SCROLL_AMT + 100 * consecutiveUp;
+		$('html, body').animate({
+			scrollTop : '+=-' + adjusted
+		}, SCROLL_SPEED, "linear");
+	} else {
+		consecutiveUp++;
+		var consec = setInterval(function() {
+			consecutiveUp--;
+			clearInterval(consec);
+		}, 300);
+	}
+}
+
+function scrollDown() {
+	if (time() - lastScroll > SCROLL_SPEED) {
+		if (consecutiveDown < 0) {
+			consecutiveDown = 0;
+		}
+		lastScroll = time();
+		var adjusted = SCROLL_AMT + 100 * consecutiveDown;
+		$('html, body').animate({
+			scrollTop : '+=' + adjusted
+		}, SCROLL_SPEED, "linear");
+	} else {
+		consecutiveDown++;
+		var consec = setInterval(function() {
+			consecutiveDown--;
+			clearInterval(consec);
+		}, 300);
+	}
+}
+
+function time() {
+	return new Date().getTime();
+}
 
 function swapToReader() {
 	$("#home-container").hide();
