@@ -23,8 +23,12 @@
 		<form id="loader-form" class="loader-form" action="reader" method="get">
 			<input id="load-input-url" type="text" name="url" placeholder="" value="" autocomplete="off" />
 			<br />
-			<button type="submit" value="Load">Load</button>
+			<button type="submit" value="Load">Search</button>
 		</form>
+		<div class="changelog">
+			<h1>Changelog</h1>
+			<textarea id="changelog-text" readonly>blah blah</textarea>
+		</div>
 		<div class="history">
 			<h1>History</h1>
 		</div>
@@ -50,6 +54,23 @@
 				<div class="reader-nav-el">Next Chapter</div>
 			</div>
 		</div>
+	</div>
+	<div id="loading-container" class="loading-container">
+		<div class="loading-display">
+			<div class="sk-folding-cube">
+				<div class="sk-cube1 sk-cube"></div>
+				<div class="sk-cube2 sk-cube"></div>
+				<div class="sk-cube4 sk-cube"></div>
+				<div class="sk-cube3 sk-cube"></div>
+			</div>
+			<div class="loading-text">
+				Loading<div id="loading-dots" class="loading-dots">.</div>
+			</div>
+		</div>
+	</div>
+	<div id="" class="top-bottom-buttons">
+		<span id="to-page-top" class="fa fa-arrow-up"></span>
+		<span id="to-page-bottom" class="fa fa-arrow-down"></span>
 	</div>
 	<div class="footer unselectable">
 		<a href="http://edasaki.com">&copy; Edasaki 2017</a> | Please remember to support the original authors and translation groups if you can!

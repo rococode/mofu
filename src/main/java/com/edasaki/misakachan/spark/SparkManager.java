@@ -1,8 +1,11 @@
 package com.edasaki.misakachan.spark;
 
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.edasaki.misakachan.Misaka;
 import com.edasaki.misakachan.chapter.Chapter;
 import com.edasaki.misakachan.chapter.Page;
 import com.edasaki.misakachan.source.AbstractSource;
@@ -24,10 +27,26 @@ public class SparkManager {
         Spark.port(10032);
         Spark.staticFileLocation("/public");
         Spark.post("/load", this::loadRequestedURL);
+        Spark.get("/changelog", this::loadChangelog);
     }
 
     public int getPort() {
         return Spark.port();
+    }
+
+    private String loadChangelog(Request req, Response res) {
+        JSONObject jo = new JSONObject();
+        List<String> ls = Misaka.instance().changelog.getChangelog();
+        JSONArray lines = new JSONArray();
+        if (ls == null || ls.size() == 0) {
+            lines.put("Failed to fetch latest changelog - probably not a big deal.");
+            jo.put("lines", lines);
+        } else {
+            for (String s : ls)
+                lines.put(s);
+            jo.put("lines", lines);
+        }
+        return jo.toString();
     }
 
     private String loadRequestedURL(Request req, Response res) {

@@ -7,6 +7,18 @@ $(document).ready(function() {
 		$('.reader-nav-div').css('height', $('.reader-nav').height());
 	});
 
+	$("#to-page-top").on('click', function() {
+		$("html, body").animate({
+			scrollTop : 0
+		}, 500);
+	});
+
+	$("#to-page-bottom").on('click', function() {
+		$("html, body").animate({
+			scrollTop : $(document).height()
+		}, 500);
+	});
+
 	$("#loader-form").submit(function(e) {
 		// don't allow submit if url is empty
 		if ($("#load-input-url").val() == '') {
@@ -15,12 +27,22 @@ $(document).ready(function() {
 		// clear input to prevent multiple submission
 		var url = $("#load-input-url").val();
 		$("#load-input-url").val('');
+		swapToLoading();
 		$.post("load", url, function(data, status) {
 			var res = JSON.parse(data);
 			swapToReader();
 			setupReader(res);
 		});
 		return false;
+	});
+
+	$.get("changelog", function(data, status) {
+		var res = JSON.parse(data);
+		var full = "";
+		for ( var i in res.lines) {
+			full += res.lines[i] + "\n";
+		}
+		$("#changelog-text").text(full);
 	});
 
 	$(document).keydown(function(e) {
@@ -43,6 +65,7 @@ $(document).ready(function() {
 				break;
 			case 39:
 			case 68:
+				swapToLoading();
 				console.log('right');
 				break;
 			case 37:
@@ -68,10 +91,24 @@ $(document).ready(function() {
 		$(this).attr('placeholder', str);
 	});
 
+	setInterval(function() {
+		var curr = $('#loading-dots').text();
+		if (curr.length == 0) {
+			curr = ".";
+		} else if (curr.length == 1) {
+			curr = "..";
+		} else if (curr.length == 2) {
+			curr = "...";
+		} else {
+			curr = "";
+		}
+		$('#loading-dots').text(curr);
+	}, 600);
+
 	// debugging stuff below
-	swapToReader();
-	$("#load-input-url").val('a');
-	$("#loader-form").submit();
+	// swapToReader();
+	// $("#load-input-url").val('a');
+	// $("#loader-form").submit();
 });
 
 var lastScroll = 0;
@@ -125,13 +162,21 @@ function time() {
 }
 
 function swapToReader() {
-	$("#home-container").hide();
 	$("#reader-container").show();
+	$("#home-container").hide();
+	$("#loading-container").hide();
 }
 
 function swapToHome() {
-	$("#reader-container").hide();
 	$("#home-container").show();
+	$("#reader-container").hide();
+	$("#loading-container").hide();
+}
+
+function swapToLoading() {
+	$("#loading-container").show();
+	$("#home-container").hide();
+	$("#reader-container").hide();
 }
 
 function setupReader(json) {

@@ -72,6 +72,7 @@ div, img {
     background-repeat: no-repeat;
     padding-left: 45px;
     margin-left: -45px;
+    margin-right: -45px;
     outline: none;
     border-radius: 5px;
     height: 2em;
@@ -180,4 +181,182 @@ div, img {
 .reader-page {
   margin: 0 0;
   padding: 0 0;
+}
+
+.top-bottom-buttons {
+  position: fixed;
+  padding-bottom: 35px;
+  bottom: 10px;
+  left: 15px;
+
+  span {
+    @extend .unselectable;
+
+    &:hover {
+      color: $color-text-hover;
+      cursor: pointer;
+    }
+
+    font-size: 1.75em;
+    display: block;
+  }
+}
+
+.changelog {
+  text-align: center;
+  width: 100%;
+  font-family: 'Ubuntu Mono', monospace;
+
+  h1 {
+    margin: 0 0;
+    padding: 0 0;
+  }
+
+  textarea {
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: scroll;
+    width: 50%;
+    resize: none;
+    height: 100px;
+  }
+}
+
+.loading-container {
+  display: none;
+}
+
+$loadingSquareSize: 85px;
+
+.loading-display {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -$loadingSquareSize - 15px;
+  margin-left: -$loadingSquareSize / 2;
+
+  .loading-text {
+    width: $loadingSquareSize * 1.5;
+    margin-top: 35px;
+    margin-left: -12px;
+    text-align: center;
+    font-size: 1.5em;
+    color: $color-button-main;
+    font-family: 'Ubuntu Mono', monospace;
+  }
+
+  .loading-dots {
+    display: inline-block;
+    width: 25px;
+    margin-left: 3px;
+    text-align: left;
+  }
+}
+
+/*
+    sk-folding-cube code adapted from http://tobiasahlin.com/spinkit/ by Edasaki
+*/
+.sk-folding-cube {
+  margin: 20px auto;
+  width: $loadingSquareSize;
+  height: $loadingSquareSize;
+  position: relative;
+  -webkit-transform: rotateZ(45deg);
+  transform: rotateZ(45deg);
+  background-color: $color-background-main;
+}
+
+.sk-folding-cube .sk-cube {
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.sk-folding-cube .sk-cube:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color-button-main;
+  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+  animation: sk-foldCubeAngle 2.4s infinite linear both;
+  -webkit-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+}
+
+.sk-folding-cube .sk-cube2 {
+  -webkit-transform: scale(1.1) rotateZ(90deg);
+  transform: scale(1.1) rotateZ(90deg);
+}
+
+.sk-folding-cube .sk-cube3 {
+  -webkit-transform: scale(1.1) rotateZ(180deg);
+  transform: scale(1.1) rotateZ(180deg);
+}
+
+.sk-folding-cube .sk-cube4 {
+  -webkit-transform: scale(1.1) rotateZ(270deg);
+  transform: scale(1.1) rotateZ(270deg);
+}
+
+.sk-folding-cube .sk-cube2:before {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.sk-folding-cube .sk-cube3:before {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+.sk-folding-cube .sk-cube4:before {
+  -webkit-animation-delay: 0.9s;
+  animation-delay: 0.9s;
+}
+
+@-webkit-keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  }
+
+  25%, 75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  90%, 100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  }
+
+  25%, 75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  90%, 100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
 }

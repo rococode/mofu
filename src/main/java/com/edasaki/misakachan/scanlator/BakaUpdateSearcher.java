@@ -16,13 +16,9 @@ import com.edasaki.misakachan.utils.MStringUtils;
 import com.edasaki.misakachan.utils.logging.M;
 
 public class BakaUpdateSearcher {
-    //    private static final String PREFIX = "http://www.google.com/search?q=";
-    //    private static final String SUFFIX = "+site:mangaupdates.com";
     private static final String PREFIX = "https://www.mangaupdates.com/series.html?stype=title&orderby=rating&perpage=100&page=";
     private static final String SEARCH = "&search=";
 
-    //    private static final String SELECTOR_REGEX = ".*\\Qurl?q=\\E.*\\Qmangaupdates.com/series.html\\E.*";
-    //    private static final String SELECTOR = "a[href~=" + SELECTOR_REGEX + "]";
     private static final String SELECTOR_REGEX = ".*\\Qmangaupdates.com/series.html?id=\\E.*";
     private static final String SELECTOR = "a[href~=" + SELECTOR_REGEX + "]";
 
@@ -44,6 +40,7 @@ public class BakaUpdateSearcher {
         String bestURL = null;
         int page = 1;
         HashMap<String, String> mapContainedTitleToURL = new HashMap<String, String>();
+        long start = System.currentTimeMillis();
         try {
             do {
                 final String connectionURL = PREFIX + page + SEARCH + URLEncoder.encode(title, CHARSET);
@@ -65,7 +62,8 @@ public class BakaUpdateSearcher {
                             mapContainedTitleToURL.put(bestTitle, bestURL);
                         }
                     }
-                    //check for alphanumeric chars only (mostly to avoid weird dash issues like tomo-chan vs tomochan)
+                    // check for alphanumeric chars only (mostly to avoid weird
+                    // dash issues like tomo-chan vs tomochan)
                     sim = MStringUtils.similarityMaxContainsAlphanumeric(linkName, title);
                     if (sim >= bestSimilarity) {
                         bestSimilarity = sim;
@@ -89,11 +87,12 @@ public class BakaUpdateSearcher {
                     }
                 }
             }
-            //            M.debug("Best result for \"" + title + "\": " + bestTitle + " [" + bestURL + "] with a similarity of " + bestSimilarity);
+            // M.debug("Best result for \"" + title + "\": " + bestTitle + " ["
+            // + bestURL + "] with a similarity of " + bestSimilarity);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //M.debug("Finished search() in " + (System.currentTimeMillis() - start) + "ms");
+        M.debug("Finished search() in " + (System.currentTimeMillis() - start) + "ms");
         return bestURL;
     }
 
@@ -113,8 +112,9 @@ public class BakaUpdateSearcher {
                     ScanGroup sg = new ScanGroup(id, name);
                     groups.put(id, sg);
                     g.add(sg);
-                    //                        Document groupPage = Jsoup.connect(href).userAgent(USER_AGENT).referrer(bestURL).get();
-                    //                        groupPage.select(cssQuery)
+                    // Document groupPage =
+                    // Jsoup.connect(href).userAgent(USER_AGENT).referrer(bestURL).get();
+                    // groupPage.select(cssQuery)
                 } catch (Exception e2) {
                     e2.printStackTrace();
                 }

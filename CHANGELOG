@@ -1,3 +1,9 @@
+0.0.14 - Jan 23 2017
+- added button to go to page top/bottom
+- fixed search bar centering, it was slightly off
+- added a cute loading page for when things are being downloaded from websites
+- added automatic changelog fetching and display
+
 0.0.13 - Jan 22 2017
 - worked on some more styling
 - added my own version of momentum scrolling on WASD/Arrow Keys - actually was a huge pain to code haha

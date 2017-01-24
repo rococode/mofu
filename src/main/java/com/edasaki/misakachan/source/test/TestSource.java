@@ -25,6 +25,11 @@ public class TestSource extends AbstractSource {
                 e.printStackTrace();
             }
         }
+        try {
+            Thread.sleep(5000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Chapter chapter = new Chapter("Test Source M Name", pages.size(), Page.convertURLs(pages));
         return chapter;
     }

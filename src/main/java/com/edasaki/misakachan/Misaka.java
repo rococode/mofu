@@ -8,6 +8,7 @@ import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.english.MangaHere;
 import com.edasaki.misakachan.source.test.TestSource;
 import com.edasaki.misakachan.spark.SparkManager;
+import com.edasaki.misakachan.updates.ChangelogManager;
 import com.edasaki.misakachan.version.Version;
 
 public class Misaka {
@@ -23,7 +24,8 @@ public class Misaka {
     public PersistenceManager persist;
     public OptionManager options;
     public BakaUpdateManager baka;
-
+    public ChangelogManager changelog;
+    
     public SparkManager spark;
 
     protected static void initialize(Version version) {
@@ -42,7 +44,8 @@ public class Misaka {
         this.options = new OptionManager();
 
         this.baka = new BakaUpdateManager();
-
+        this.changelog = new ChangelogManager();
+        
         // Do this last, since we want to be sure everything else is ready
         this.updateStatus("Initializing webserver...");
         this.spark = new SparkManager(SOURCES);
