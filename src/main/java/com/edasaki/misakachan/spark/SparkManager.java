@@ -1,6 +1,9 @@
 package com.edasaki.misakachan.spark;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,7 +11,10 @@ import org.json.JSONObject;
 import com.edasaki.misakachan.Misaka;
 import com.edasaki.misakachan.chapter.Chapter;
 import com.edasaki.misakachan.chapter.Page;
+import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.source.AbstractSource;
+import com.edasaki.misakachan.source.SearchAction;
+import com.edasaki.misakachan.source.SearchResultSet;
 import com.edasaki.misakachan.utils.logging.M;
 
 import spark.Request;
@@ -23,10 +29,11 @@ public class SparkManager {
         this.sources = sources;
     }
 
-    public void startWebsever() {
+    public void startWebserver() {
         Spark.port(10032);
         Spark.staticFileLocation("/public");
         Spark.post("/load", this::loadRequestedURL);
+        Spark.post("/search", this::search);
         Spark.get("/changelog", this::loadChangelog);
     }
 
@@ -70,6 +77,21 @@ public class SparkManager {
         }
         jo.put("status", "failure");
         jo.put("reason", "Invalid URL.");
+        return jo.toString();
+    }
+
+    private String search(Request req, Response res) {
+        String searchPhrase = req.body();
+        JSONObject jo = new JSONObject();
+        List<Callable<SearchResultSet>> searches = new ArrayList<Callable<SearchResultSet>>();
+        for (AbstractSource source : sources) {
+            SearchAction sa = source.getSearch();
+            searches.add(() -> {
+                return sa.search(searchPhrase);
+            });
+        }
+        List<Future<SearchResultSet>> futures = MultiThreadTaskManager.queueTasks(searches);
+        MultiThreadTaskManager.wait(futures);
         return jo.toString();
     }
 

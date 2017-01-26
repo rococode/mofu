@@ -3,18 +3,19 @@ package com.edasaki.misakachan.test;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import com.edasaki.misakachan.test.tests.BakaUpdateTests;
 import com.edasaki.misakachan.test.tests.BasicTests;
+import com.edasaki.misakachan.test.tests.ChangelogTests;
+import com.edasaki.misakachan.test.tests.SiteSearchTests;
 import com.edasaki.misakachan.test.tests.StringUtilTests;
-import com.edasaki.misakachan.test.tests.UpdateTests;
 
 public class TestRunner {
 
     private static final Class<?>[] TEST_CLASSES = {
             BasicTests.class,
-            BakaUpdateTests.class,
+//            BakaUpdateTests.class,
             StringUtilTests.class,
-            UpdateTests.class
+            ChangelogTests.class,
+            SiteSearchTests.class
     };
 
     public static void main(String[] args) {

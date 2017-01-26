@@ -30,7 +30,7 @@ public class BakaUpdateTests {
             { "alice borderland", "59540" },
     };
 
-    @Test
+    @Test(enabled=false)
     public void testSearchFull() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         BakaUpdateSearcher searcher = new BakaUpdateSearcher();
         Method m = searcher.getClass().getDeclaredMethod("getURL", String.class);

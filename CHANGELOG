@@ -1,3 +1,9 @@
+0.0.15 - Jan 25 2017
+- added some multithreading functionality
+- started work on general search function, only have a prototype ready, i'm still working out how it should work for the user
+- added some tests
+- added Discord chat link
+
 0.0.14 - Jan 23 2017
 - added button to go to page top/bottom
 - fixed search bar centering, it was slightly off

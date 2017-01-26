@@ -1,6 +1,157 @@
 package com.edasaki.misakachan.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.PriorityQueue;
+
+import com.edasaki.misakachan.utils.logging.M;
+
 public class MStringUtils {
+
+    @Deprecated
+    public static <T> Map<T, String> getTopResults2(Map<T, List<String>> map, String toMatch, int count) {
+        Map<T, String> bestNames = new HashMap<T, String>();
+        Map<T, Double> bestSims = new HashMap<T, Double>();
+        for (Entry<T, List<String>> e : map.entrySet()) {
+            double bestSimilarity = 0;
+            String bestName = "null";
+            List<String> contained = new ArrayList<String>();
+            for (String s : e.getValue()) {
+                M.debug("checking " + s);
+                double sim = MStringUtils.similarityMaxContains(s, toMatch);
+                M.debug("sim of " + s + " and " + toMatch + ": " + sim);
+                if (sim > bestSimilarity) {
+                    bestName = s;
+                    bestSimilarity = sim;
+                }
+                if (sim == 1.0) {
+                    contained.add(s);
+                }
+                sim = MStringUtils.similarityMaxContainsAlphanumeric(s, toMatch);
+                M.debug("asim of " + s + " and " + toMatch + ": " + sim);
+                if (sim > bestSimilarity) {
+                    bestName = s;
+                    bestSimilarity = sim;
+                }
+                if (sim == 1.0) {
+                    contained.add(s);
+                }
+            }
+            if (contained.size() > 1) {
+                bestSimilarity = 0;
+                for (String s : contained) {
+                    double sim = MStringUtils.similarity(s, toMatch);
+                    if (sim > bestSimilarity) {
+                        bestName = s;
+                        bestSimilarity = sim;
+                    }
+                }
+            }
+            bestNames.put(e.getKey(), bestName);
+            bestSims.put(e.getKey(), bestSimilarity);
+        }
+        M.debug("best NAmes: " + bestNames);
+        M.debug("best Sims: " + bestSims);
+        List<T> topKeys = topNKeysByValue(bestSims, count);
+        Map<T, String> resultMap = new LinkedHashMap<T, String>();
+        for (T link : topKeys) {
+            resultMap.put(link, bestNames.get(link));
+        }
+        return resultMap;
+    }
+
+    @Deprecated
+    public static <T> Map<T, String> getTopResults(Map<T, List<String>> map, String toMatch, int count) {
+        Map<T, String> bestNames = new HashMap<T, String>();
+        for (Entry<T, List<String>> e : map.entrySet()) {
+            double bestSimilarity = 0;
+            String bestName = "null";
+            List<String> contained = new ArrayList<String>();
+            for (String s : e.getValue()) {
+                double sim = MStringUtils.similarityMaxContains(s, toMatch);
+                if (sim > bestSimilarity) {
+                    bestName = s;
+                    bestSimilarity = sim;
+                }
+                sim = MStringUtils.similarityMaxContainsAlphanumeric(s, toMatch);
+                if (sim > bestSimilarity) {
+                    bestName = s;
+                    bestSimilarity = sim;
+                }
+                if (sim == 1.0) {
+                    contained.add(s);
+                }
+            }
+            if (contained.size() > 1) {
+                bestSimilarity = 0;
+                for (String s : contained) {
+                    double sim = MStringUtils.similarity(s, toMatch);
+                    if (sim > bestSimilarity) {
+                        bestName = s;
+                        bestSimilarity = sim;
+                    }
+                }
+            }
+            bestNames.put(e.getKey(), bestName);
+        }
+        M.debug("best Names: " + bestNames);
+
+        PriorityQueue<T> topN = new PriorityQueue<T>(count, new Comparator<T>() {
+            public int compare(T t1, T t2) {
+                String t1Val = bestNames.get(t1);
+                String t2Val = bestNames.get(t2);
+                double sim1_1 = MStringUtils.similarityMaxContains(t1Val, toMatch);
+                double sim1_2 = MStringUtils.similarityMaxContainsAlphanumeric(t1Val, toMatch);
+                double sim2_1 = MStringUtils.similarityMaxContains(t2Val, toMatch);
+                double sim2_2 = MStringUtils.similarityMaxContainsAlphanumeric(t2Val, toMatch);
+                double sim1 = Math.min(sim1_1, sim1_2);
+                double sim2 = Math.min(sim2_1, sim2_2);
+                if (sim1 == 1.0 && sim2 == 1.0) {
+                    sim1 = MStringUtils.similarity(t1Val, toMatch);
+                    sim2 = MStringUtils.similarity(t2Val, toMatch);
+                }
+                int res = Double.compare(sim2, sim1);
+                M.debug("res of compare " + t1Val + " and " + t2Val + ": " + res);
+                return res;
+            }
+        });
+        topN.addAll(bestNames.keySet());
+        M.debug("DEBUG: " + topN);
+        Map<T, String> resultMap = new LinkedHashMap<T, String>();
+        for (int k = 0; k < count; k++) {
+            T next = topN.poll();
+            M.debug("polled " + next);
+            if (next != null && bestNames.containsKey(next)) {
+                resultMap.put(next, bestNames.get(next));
+            }
+        }
+        return resultMap;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> topNKeysByValue(final Map<T, Double> map, int n) {
+        PriorityQueue<T> topN = new PriorityQueue<T>(n, new Comparator<T>() {
+            public int compare(T t1, T t2) {
+                return Double.compare(map.get(t2), map.get(t1));
+            }
+        });
+
+        for (T key : map.keySet()) {
+            if (topN.size() < n)
+                topN.add(key);
+            else if (map.get(topN.peek()) < map.get(key)) {
+                topN.poll();
+                topN.add(key);
+            }
+        }
+        return (List<T>) Arrays.asList(topN.toArray());
+    }
 
     public static double similarityMaxContains(String parent, String substring) {
         parent = parent.toLowerCase();

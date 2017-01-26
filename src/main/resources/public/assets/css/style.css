@@ -194,7 +194,7 @@ div, img {
   .loading-display .loading-dots {
     display: inline-block;
     width: 25px;
-    margin-left: 3px;
+    margin-left: -9px;
     text-align: left; }
 
 /*
@@ -282,3 +282,12 @@ div, img {
     -webkit-transform: perspective(140px) rotateY(180deg);
     transform: perspective(140px) rotateY(180deg);
     opacity: 0; } }
+.discord {
+  display: inline;
+  position: absolute;
+  color: #888;
+  right: 10px; }
+  .discord img {
+    margin-top: -2px;
+    margin-left: 5px;
+    vertical-align: middle; }

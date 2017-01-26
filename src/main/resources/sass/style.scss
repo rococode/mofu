@@ -248,7 +248,7 @@ $loadingSquareSize: 85px;
   .loading-dots {
     display: inline-block;
     width: 25px;
-    margin-left: 3px;
+    margin-left: -9px;
     text-align: left;
   }
 }
@@ -358,5 +358,18 @@ $loadingSquareSize: 85px;
     -webkit-transform: perspective(140px) rotateY(180deg);
     transform: perspective(140px) rotateY(180deg);
     opacity: 0;
+  }
+}
+
+.discord {
+  display: inline;
+  position: absolute;
+  color: $color-text-medium;
+  right: 10px;
+
+  img {
+    margin-top: -2px;
+    margin-left: 5px;
+    vertical-align: middle;
   }
 }

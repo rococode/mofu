@@ -46,13 +46,7 @@ public class MultiThreadTaskManager {
             };
             futures.add(MultiThreadTaskManager.queueTask(c));
         }
-        while (!allReady(futures)) { // lock main thread until fully loaded
-            try {
-                Thread.sleep(100L);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        wait(futures);
         List<Document> docs = new ArrayList<Document>();
         for (Future<Document> f : futures) {
             try {
@@ -62,5 +56,15 @@ public class MultiThreadTaskManager {
             }
         }
         return docs;
+    }
+
+    public static <T> void wait(List<Future<T>> futures) {
+        while (!allReady(futures)) {
+            try {
+                Thread.sleep(100L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
