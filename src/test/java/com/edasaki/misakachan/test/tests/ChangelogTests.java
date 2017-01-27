@@ -1,7 +1,7 @@
 package com.edasaki.misakachan.test.tests;
 
+import com.edasaki.misakachan.changelog.ChangelogManager;
 import com.edasaki.misakachan.test.Test;
-import com.edasaki.misakachan.updates.ChangelogManager;
 
 public class ChangelogTests {
 

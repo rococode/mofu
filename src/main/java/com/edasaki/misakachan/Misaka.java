@@ -1,5 +1,6 @@
 package com.edasaki.misakachan;
 
+import com.edasaki.misakachan.changelog.ChangelogManager;
 import com.edasaki.misakachan.gui.GuiManager;
 import com.edasaki.misakachan.persistence.OptionManager;
 import com.edasaki.misakachan.persistence.PersistenceManager;
@@ -8,7 +9,6 @@ import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.english.MangaHere;
 import com.edasaki.misakachan.source.test.TestSource;
 import com.edasaki.misakachan.spark.SparkManager;
-import com.edasaki.misakachan.updates.ChangelogManager;
 import com.edasaki.misakachan.version.Version;
 
 public class Misaka {

@@ -12,9 +12,18 @@
 <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+<!-- styles needed by jScrollPane - include in your own sites -->
+<link type="text/css" href="assets/css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
 <link rel="stylesheet" href="assets/css/style.css" />
 <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
 <script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
+<!-- the mousewheel plugin -->
+<script type="text/javascript" src="assets/js/jquery.mousewheel.js"></script>
+<!-- the mwheelIntent plugin -->
+<script type="text/javascript" src="assets/js/mwheelIntent.js"></script>
+<!-- the jScrollPane script -->
+<script type="text/javascript" src="assets/js/jquery.jscrollpane.min.js"></script>
+<!--  misakachan stuff -->
 <script type="text/javascript" src="assets/js/scripts.js"></script>
 </head>
 <body>
@@ -26,8 +35,11 @@
 			<button type="submit" value="Load">Search</button>
 		</form>
 		<div class="changelog">
-			<h1>Changelog</h1>
-			<textarea id="changelog-text" readonly>blah blah</textarea>
+			<h1>
+				Changelog <i id="changelog-toggle" class="fa fa-angle-double-down"></i>
+			</h1>
+			<div class="changelog-text" id="changelog-text">
+			</div>
 		</div>
 		<div class="history">
 			<h1>History</h1>
@@ -73,11 +85,25 @@
 			</div>
 		</div>
 	</div>
+	<div id="search-result-container" class="search-result-container">
+        <!--  search bar at top of page on search results page -->
+        <form id="loader-form" class="loader-form" action="reader" method="get">
+            <input id="load-input-url" type="text" name="url" placeholder="" value="" autocomplete="off" />
+            <br />
+            <button type="submit" value="Load">Search</button>
+        </form>
+        <div class="search-results">
+            <div class="search-result">
+                <img src=""/> <!-- picture of manga -->
+                <div class="search-result-name"><a href="">Test Result</a></div>
+            </div>
+        </div>
+	</div>
 	<div class="footer unselectable">
 		<div class="discord">
-			<a href="https://discord.gg/pMucKJ5"> Join us on Discord! <img src="https://discordapp.com/api/guilds/268574742032809985/widget.png?style=shield" /></a>
-        </div>
-		<a href="http://edasaki.com">&copy; Edasaki 2017</a> | Please remember to support the original authors and translation groups if you can!
+			<a href="https://discord.gg/pMucKJ5" target="_blank"> Join us on Discord! <img src="https://discordapp.com/api/guilds/268574742032809985/widget.png?style=shield" /></a>
+		</div>
+		<a href="http://edasaki.com" target="_blank">&copy; Edasaki 2017</a> | Please remember to support the original authors and translation groups if you can!
 	</div>
 </body>
 </html>

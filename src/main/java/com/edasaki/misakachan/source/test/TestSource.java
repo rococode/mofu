@@ -13,7 +13,7 @@ public class TestSource extends AbstractSource {
 
     @Override
     public boolean match(String url) {
-        return true;
+        return url.contains("test");
     }
 
     @Override

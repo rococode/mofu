@@ -71,12 +71,11 @@ div, img {
     background-position: 10px 10px;
     background-repeat: no-repeat;
     padding-left: 45px;
-    margin-left: -45px;
-    margin-right: -45px;
+    padding-right: 45px;
     outline: none;
     border-radius: 5px;
     height: 2em;
-    width: 65%;
+    width: 60%;
     font-size: 1.3em;
     margin-bottom: 10px;
     border: 3px solid #ccc;
@@ -199,26 +198,6 @@ div, img {
 
     font-size: 1.75em;
     display: block;
-  }
-}
-
-.changelog {
-  text-align: center;
-  width: 100%;
-  font-family: 'Ubuntu Mono', monospace;
-
-  h1 {
-    margin: 0 0;
-    padding: 0 0;
-  }
-
-  textarea {
-    white-space: pre;
-    overflow-wrap: normal;
-    overflow-x: scroll;
-    width: 50%;
-    resize: none;
-    height: 100px;
   }
 }
 
@@ -367,9 +346,63 @@ $loadingSquareSize: 85px;
   color: $color-text-medium;
   right: 10px;
 
+  &:hover {
+    color: $color-text-medium-hover;
+  }
+
   img {
     margin-top: -2px;
     margin-left: 5px;
     vertical-align: middle;
   }
+}
+
+.changelog {
+  text-align: center;
+  width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+
+  h1 {
+    font-size: 1.3em;
+    font-weight: normal;
+    margin: 10px 0 5px 0;
+    padding: 0 0;
+  }
+
+  .changelog-text {
+    text-align: left;
+    white-space: pre;
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid $color-text-dark;
+    height: 200px;
+    overflow: auto;
+    padding: 0 0;
+    display: none;
+  }
+  
+  i:hover {
+    @extend .unselectable;
+    color: $color-text-hover;
+    cursor: pointer;
+  }
+  
+  p {
+  padding-top: 5px;
+  padding-left: 7px;
+    margin: 0 0;
+    lineheight: inherit;
+  }
+}
+
+.jspCorner {
+	background-color: $color-background-main;
+}
+
+.jspTrack {
+	background-color: $color-background-main;
+}
+
+.jspDrag {
+	background-color: $color-text-dark;
 }

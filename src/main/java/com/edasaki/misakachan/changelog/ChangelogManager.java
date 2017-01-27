@@ -1,4 +1,4 @@
-package com.edasaki.misakachan.updates;
+package com.edasaki.misakachan.changelog;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class ChangelogManager {
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
             while ((line = in.readLine()) != null) {
-                lines.add(' ' + line);
+                lines.add(line);
             }
             in.close();
         } catch (IOException e) {

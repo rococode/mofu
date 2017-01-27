@@ -3,6 +3,7 @@ package com.edasaki.misakachan.spark;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.json.JSONArray;
@@ -14,6 +15,7 @@ import com.edasaki.misakachan.chapter.Page;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
+import com.edasaki.misakachan.source.SearchResult;
 import com.edasaki.misakachan.source.SearchResultSet;
 import com.edasaki.misakachan.utils.logging.M;
 
@@ -62,7 +64,7 @@ public class SparkManager {
         for (AbstractSource source : sources) {
             if (source.match(url)) {
                 M.debug("Matched " + source);
-                jo.put("status", "success");
+                jo.put("type", "url");
                 jo.put("site", source.getSourceName());
                 Chapter chapter = source.getChapter(url);
                 jo.put("name", chapter.getChapterName());
@@ -75,14 +77,14 @@ public class SparkManager {
                 return jo.toString();
             }
         }
-        jo.put("status", "failure");
-        jo.put("reason", "Invalid URL.");
-        return jo.toString();
+        return search(req, res);
     }
 
     private String search(Request req, Response res) {
         String searchPhrase = req.body();
         JSONObject jo = new JSONObject();
+        jo.put("type", "search");
+        jo.put("searchPhrase", searchPhrase);
         List<Callable<SearchResultSet>> searches = new ArrayList<Callable<SearchResultSet>>();
         for (AbstractSource source : sources) {
             SearchAction sa = source.getSearch();
@@ -92,6 +94,26 @@ public class SparkManager {
         }
         List<Future<SearchResultSet>> futures = MultiThreadTaskManager.queueTasks(searches);
         MultiThreadTaskManager.wait(futures);
+        JSONArray results = new JSONArray();
+        for (Future<SearchResultSet> future : futures) {
+            try {
+                JSONObject src = new JSONObject();
+                SearchResultSet set = future.get();
+                JSONArray srcRes = new JSONArray();
+                for (SearchResult sr : set.getResults()) {
+                    srcRes.put(sr.title);
+                    srcRes.put(sr.url);
+                }
+                src.put(set.getSource(), srcRes);
+                results.put(src);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        jo.put("results", results);
+        M.debug(jo.toString(4));
         return jo.toString();
     }
 

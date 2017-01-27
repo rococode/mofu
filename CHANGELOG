@@ -1,3 +1,10 @@
+0.0.16 - Jan 26 2017
+- more styling changes
+- changelog is now toggle-to-view (hidden by default)
+- added fancy scrollbar and styling to changelog. surprisingly hard to style lol, had to use some js library
+- more work on AJAX stuff for manga searching
+- started work on search result UI
+
 0.0.15 - Jan 25 2017
 - added some multithreading functionality
 - started work on general search function, only have a prototype ready, i'm still working out how it should work for the user

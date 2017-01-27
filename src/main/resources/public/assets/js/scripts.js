@@ -3,7 +3,6 @@ var inReader = false;
 $(document).ready(function() {
 
 	$(window).on('load', function() {
-		console.log("height: " + $('.reader-nav').height());
 		$('.reader-nav-div').css('height', $('.reader-nav').height());
 	});
 
@@ -30,19 +29,46 @@ $(document).ready(function() {
 		swapToLoading();
 		$.post("load", url, function(data, status) {
 			var res = JSON.parse(data);
-			swapToReader();
-			setupReader(res);
+			console.log(res.type);
+			if(res.type != undefined) {
+				if(res.type == "url") {
+					swapToReader();
+					setupReader(res);				
+				} else if(res.type == "search") {
+					console.log('search results');
+				} else {
+					//unknown
+				}
+			} else {
+				// unknown
+			}
 		});
 		return false;
 	});
 
 	$.get("changelog", function(data, status) {
 		var res = JSON.parse(data);
-		var full = "";
+		var full = "<p>";
 		for ( var i in res.lines) {
 			full += res.lines[i] + "\n";
 		}
-		$("#changelog-text").text(full);
+		full += "</p>";
+		$("#changelog-text").html(full);
+	});
+	
+	$('#changelog-toggle').on('click', function() {
+		var e = $('#changelog-toggle');
+		if(e.hasClass('fa-angle-double-down')) {
+			$('#changelog-text').css('display', 'block');
+			$('#changelog-text').jScrollPane();
+			e.removeClass('fa-angle-double-down');
+			e.addClass('fa-angle-double-up');
+		} else {
+			$('#changelog-text').css('display', 'none');
+			e.removeClass('fa-angle-double-up');
+			e.addClass('fa-angle-double-down');
+		}
+		
 	});
 
 	$(document).keydown(function(e) {
@@ -77,7 +103,7 @@ $(document).ready(function() {
 	});
 
 	// placeholder stuff
-	var str = "Enter the URL of a manga chapter! Example: http://www.mangahere.co/manga/to_aru_kagaku_no_rail_gun/v11/c080/";
+	var str = "Enter the name of a manga to search for sources, or type a specific URL to load it immediately!";
 	$('#load-input-url').attr('placeholder', str);
 	$('#load-input-url').val("");
 	$('#load-input-url').focusin(function() {

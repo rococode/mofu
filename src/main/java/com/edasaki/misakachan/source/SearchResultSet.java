@@ -17,6 +17,14 @@ public class SearchResultSet {
         this.results.addAll(results);
     }
 
+    public String getSource() {
+        return this.source;
+    }
+
+    public List<SearchResult> getResults() {
+        return this.results;
+    }
+
     @Override
     public String toString() {
         return source + ": " + results.toString();

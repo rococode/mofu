@@ -14,7 +14,7 @@ div, img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .top-bottom-buttons span {
+.unselectable, .top-bottom-buttons span, .changelog i:hover {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -56,12 +56,11 @@ div, img {
     background-position: 10px 10px;
     background-repeat: no-repeat;
     padding-left: 45px;
-    margin-left: -45px;
-    margin-right: -45px;
+    padding-right: 45px;
     outline: none;
     border-radius: 5px;
     height: 2em;
-    width: 65%;
+    width: 60%;
     font-size: 1.3em;
     margin-bottom: 10px;
     border: 3px solid #ccc;
@@ -158,21 +157,6 @@ div, img {
     .top-bottom-buttons span:hover {
       color: #eee;
       cursor: pointer; }
-
-.changelog {
-  text-align: center;
-  width: 100%;
-  font-family: 'Ubuntu Mono', monospace; }
-  .changelog h1 {
-    margin: 0 0;
-    padding: 0 0; }
-  .changelog textarea {
-    white-space: pre;
-    overflow-wrap: normal;
-    overflow-x: scroll;
-    width: 50%;
-    resize: none;
-    height: 100px; }
 
 .loading-container {
   display: none; }
@@ -287,7 +271,46 @@ div, img {
   position: absolute;
   color: #888;
   right: 10px; }
+  .discord:hover {
+    color: #aaa; }
   .discord img {
     margin-top: -2px;
     margin-left: 5px;
     vertical-align: middle; }
+
+.changelog {
+  text-align: center;
+  width: 100%;
+  font-family: 'Ubuntu', sans-serif; }
+  .changelog h1 {
+    font-size: 1.3em;
+    font-weight: normal;
+    margin: 10px 0 5px 0;
+    padding: 0 0; }
+  .changelog .changelog-text {
+    text-align: left;
+    white-space: pre;
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid #555;
+    height: 200px;
+    overflow: auto;
+    padding: 0 0;
+    display: none; }
+  .changelog i:hover {
+    color: #eee;
+    cursor: pointer; }
+  .changelog p {
+    padding-top: 5px;
+    padding-left: 7px;
+    margin: 0 0;
+    lineheight: inherit; }
+
+.jspCorner {
+  background-color: #373737; }
+
+.jspTrack {
+  background-color: #373737; }
+
+.jspDrag {
+  background-color: #555; }
