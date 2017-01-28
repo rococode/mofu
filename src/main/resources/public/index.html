@@ -29,7 +29,7 @@
 <body>
 	<div id="home-container" class="home-container">
 		<img class="logo unselectable" src="assets/gfx/logo.png" />
-		<form id="loader-form" class="loader-form" action="reader" method="get">
+		<form id="loader-form" class="loader-form">
 			<input id="load-input-url" type="text" name="url" placeholder="" value="" autocomplete="off" />
 			<br />
 			<button type="submit" value="Load">Search</button>
@@ -38,8 +38,7 @@
 			<h1>
 				Changelog <i id="changelog-toggle" class="fa fa-angle-double-down"></i>
 			</h1>
-			<div class="changelog-text" id="changelog-text">
-			</div>
+			<div class="changelog-text" id="changelog-text"></div>
 		</div>
 		<div class="history">
 			<h1>History</h1>
@@ -86,18 +85,14 @@
 		</div>
 	</div>
 	<div id="search-result-container" class="search-result-container">
-        <!--  search bar at top of page on search results page -->
-        <form id="loader-form" class="loader-form" action="reader" method="get">
-            <input id="load-input-url" type="text" name="url" placeholder="" value="" autocomplete="off" />
-            <br />
-            <button type="submit" value="Load">Search</button>
-        </form>
-        <div class="search-results">
-            <div class="search-result">
-                <img src=""/> <!-- picture of manga -->
-                <div class="search-result-name"><a href="">Test Result</a></div>
-            </div>
-        </div>
+		<!--  search bar at top of page on search results page -->
+		<form id="re-search" class="re-search-form">
+			<input id="re-search-url" type="text" name="url" placeholder="" value="" autocomplete="off" />
+			<button type="submit" value="Load">Search</button>
+		</form>
+		<div class="search-results-title">10 Results</div>
+		<div class="search-results">
+		</div>
 	</div>
 	<div class="footer unselectable">
 		<div class="discord">

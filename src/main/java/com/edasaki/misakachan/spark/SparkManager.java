@@ -97,14 +97,17 @@ public class SparkManager {
         JSONArray results = new JSONArray();
         for (Future<SearchResultSet> future : futures) {
             try {
-                JSONObject src = new JSONObject();
                 SearchResultSet set = future.get();
-                JSONArray srcRes = new JSONArray();
+                JSONObject src = new JSONObject();
+                src.put("sourceName", set.getSource());
+                JSONArray linkArr = new JSONArray();
                 for (SearchResult sr : set.getResults()) {
-                    srcRes.put(sr.title);
-                    srcRes.put(sr.url);
+                    JSONObject sro = new JSONObject();
+                    sro.put("title", sr.title);
+                    sro.put("url", sr.url);
+                    linkArr.put(sro);
                 }
-                src.put(set.getSource(), srcRes);
+                src.put("links", linkArr);
                 results.put(src);
             } catch (InterruptedException e) {
                 e.printStackTrace();

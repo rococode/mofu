@@ -30,14 +30,35 @@ $(document).ready(function() {
 		$.post("load", url, function(data, status) {
 			var res = JSON.parse(data);
 			console.log(res.type);
-			if(res.type != undefined) {
-				if(res.type == "url") {
+			if (res.type != undefined) {
+				if (res.type == "url") {
 					swapToReader();
-					setupReader(res);				
-				} else if(res.type == "search") {
+					setupReader(res);
+				} else if (res.type == "search") {
 					console.log('search results');
+					for ( var i in res.results) {
+						var sourceObj = res.results[i];
+						var sourceName = sourceObj.sourceName;
+						var links = sourceObj.links;
+						var html = '<div class="search-source">';
+						html += '<div class="search-source-name"><a href="#">' + sourceName + ' (' + sourceObj.links.length +')</a> <i class="search-source-toggle fa fa-angle-double-up"></i></div>';
+						console.log(sourceName);
+						for ( var j in links) {
+							var title = links[j].title;
+							var url = links[j].url;
+							console.log(title + " " + url);
+							html += '<div class="search-result">';
+							html += '<img src="' + "http://edasaki.com/i/test-page.png" + '" />';
+							html += '<div class="search-result-name">';
+							html += '<a href="' + url + '">' + title + '</a>';
+							html += '</div></div>';
+						}
+						html += '</div>';
+						$('.search-results').append($.parseHTML(html));
+						swapToSearchResult();
+					}
 				} else {
-					//unknown
+					// unknown
 				}
 			} else {
 				// unknown
@@ -55,10 +76,10 @@ $(document).ready(function() {
 		full += "</p>";
 		$("#changelog-text").html(full);
 	});
-	
+
 	$('#changelog-toggle').on('click', function() {
 		var e = $('#changelog-toggle');
-		if(e.hasClass('fa-angle-double-down')) {
+		if (e.hasClass('fa-angle-double-down')) {
 			$('#changelog-text').css('display', 'block');
 			$('#changelog-text').jScrollPane();
 			e.removeClass('fa-angle-double-down');
@@ -68,7 +89,7 @@ $(document).ready(function() {
 			e.removeClass('fa-angle-double-up');
 			e.addClass('fa-angle-double-down');
 		}
-		
+
 	});
 
 	$(document).keydown(function(e) {
@@ -77,9 +98,7 @@ $(document).ready(function() {
 				$("#loader-form").submit();
 				break;
 			case 220: // TEMPORARY - FOR DEBUGGING
-				$("#reader-container").toggle();
-				$("#home-container").toggle();
-				$("#reader-pages").empty();
+				swapToSearchResult();
 				break;
 			case 38:
 			case 87:
@@ -91,7 +110,6 @@ $(document).ready(function() {
 				break;
 			case 39:
 			case 68:
-				swapToLoading();
 				console.log('right');
 				break;
 			case 37:
@@ -117,6 +135,22 @@ $(document).ready(function() {
 		$(this).attr('placeholder', str);
 	});
 
+	$('.search-source-toggle').on('click', function() {
+		console.log('clicked toggle');
+		var e = $(this);
+		if (e.hasClass('fa-angle-double-down')) {
+			e.parent().siblings('.search-result').show();
+			e.removeClass('fa-angle-double-down');
+			e.addClass('fa-angle-double-up');
+			console.log('down');
+		} else {
+			console.log('up');
+			e.parent().siblings('.search-result').hide();
+			e.removeClass('fa-angle-double-up');
+			e.addClass('fa-angle-double-down');
+		}
+	});
+
 	setInterval(function() {
 		var curr = $('#loading-dots').text();
 		if (curr.length == 0) {
@@ -132,9 +166,7 @@ $(document).ready(function() {
 	}, 600);
 
 	// debugging stuff below
-	// swapToReader();
-	// $("#load-input-url").val('a');
-	// $("#loader-form").submit();
+	// swapToSearchResult();
 });
 
 var lastScroll = 0;
@@ -191,18 +223,28 @@ function swapToReader() {
 	$("#reader-container").show();
 	$("#home-container").hide();
 	$("#loading-container").hide();
+	$("#search-result-container").hide();
 }
 
 function swapToHome() {
 	$("#home-container").show();
 	$("#reader-container").hide();
 	$("#loading-container").hide();
+	$("#search-result-container").hide();
 }
 
 function swapToLoading() {
 	$("#loading-container").show();
 	$("#home-container").hide();
 	$("#reader-container").hide();
+	$("#search-result-container").hide();
+}
+
+function swapToSearchResult() {
+	$("#search-result-container").show();
+	$("#home-container").hide();
+	$("#reader-container").hide();
+	$("#loading-container").hide();
 }
 
 function setupReader(json) {

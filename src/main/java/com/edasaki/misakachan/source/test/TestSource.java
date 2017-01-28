@@ -28,7 +28,7 @@ public class TestSource extends AbstractSource {
             }
         }
         try {
-            Thread.sleep(5000L);
+            Thread.sleep(2000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -11,6 +11,7 @@ body {
   margin: 0 0 75px;
   padding: 0;
   color: $color-text-main;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 div, img {
@@ -380,29 +381,163 @@ $loadingSquareSize: 85px;
     padding: 0 0;
     display: none;
   }
-  
+
   i:hover {
     @extend .unselectable;
+
     color: $color-text-hover;
     cursor: pointer;
   }
-  
+
   p {
-  padding-top: 5px;
-  padding-left: 7px;
+    padding-top: 5px;
+    padding-left: 7px;
     margin: 0 0;
     lineheight: inherit;
   }
 }
 
 .jspCorner {
-	background-color: $color-background-main;
+  background-color: $color-background-main;
 }
 
 .jspTrack {
-	background-color: $color-background-main;
+  background-color: $color-background-main;
 }
 
 .jspDrag {
-	background-color: $color-text-dark;
+  background-color: $color-text-dark;
+}
+
+.search-result-container {
+  display: none;
+}
+
+.re-search-form {
+  text-align: center;
+  margin-top: 10px;
+
+  %common {
+    font-family: 'Ubuntu', sans-serif;
+    background-color: $color-button-main;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    text-align: center;
+    font-size: 1.0em;
+  }
+
+  input[type=text] {
+    @extend %common;
+
+    background-image: url("../gfx/Search-48.png");
+    background-size: 25px 25px;
+    background-position: 5px 5px;
+    background-repeat: no-repeat;
+    padding-left: 45px;
+    outline: none;
+    border-radius: 5px;
+    height: 2em;
+    width: 30%;
+    margin-bottom: 10px;
+    border: 3px solid #ccc;
+    color: black;
+    text-align: left;
+
+    &:focus {
+      border: 3px solid #999;
+    }
+  }
+
+  button[type=submit] {
+    @extend %common;
+
+    padding: 8px 16px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    color: $color-button-text;
+    border: 3px solid $color-background-dark;
+    border-radius: 7px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $color-button-hover;
+    }
+  }
+}
+
+.search-results-title {
+  text-align: center;
+  width: 100%;
+  color: $color-text-main;
+  font-size: 2.3em;
+  font-family: 'Ubuntu', sans-serif;
+  margin-bottom: 10px;
+}
+
+.search-results {
+  width: 70%;
+  margin: 5px auto 0;
+  padding-bottom: 5px;
+  background-color: $color-background-med-dark;
+
+  a, a:hover, a:visited, a:active {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  a:hover {
+    color: $color-text-hover;
+  }
+}
+
+.search-source {
+  margin-top: 10px;
+  border: 2px solid $color-background-dark;
+  padding-bottom: 5px;
+}
+
+.search-source-name {
+  text-align: center;
+  width: 100%;
+  padding: 3px 0;
+  font-size: 1.6em;
+  background-color: $color-background-super-dark;
+  margin-bottom: 5px;
+
+  i:hover {
+    @extend .unselectable;
+
+    color: $color-text-hover;
+    cursor: pointer;
+  }
+}
+
+.search-result {
+  padding: 5px;
+  width: 100%;
+  display: table;
+  table-layout: auto;
+
+  .search-result-name {
+    font-size: 1.5em;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 10px;
+    width: 100%;
+    margin-right: -20px;
+  }
+
+  img {
+    margin-left: 7px;
+    max-width: 50px;
+    max-height: 100px;
+    display: table-cell;
+  }
+
+  .alt-names {
+    cursor: default;
+    font-size: 0.7em;
+  }
 }
