@@ -30,6 +30,11 @@ div, img {
   cursor: default;
 }
 
+.hidden-info {
+  display: none;
+  font-size: 1px;
+}
+
 .footer {
   font-family: 'Ubuntu', sans-serif;
   text-align: center;
@@ -492,6 +497,16 @@ $loadingSquareSize: 85px;
   }
 }
 
+.search-result-title {
+  @extend .unselectable;
+
+  cursor: pointer;
+
+  &:hover {
+    color: $color-text-hover;
+  }
+}
+
 .search-source {
   margin-top: 10px;
   border: 2px solid $color-background-dark;
@@ -539,5 +554,52 @@ $loadingSquareSize: 85px;
   .alt-names {
     cursor: default;
     font-size: 0.7em;
+  }
+}
+
+.manga-info-container {
+  $info-width: 50%;
+  $info-height: 50%;
+
+  width: $info-width;
+  height: $info-height;
+  background-color: $color-background-dark;
+  border: 3px solid $color-text-dark;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  /* I have no idea why it's divide by 4 lol, but it works */
+  margin-top: -$info-height / 4;
+  margin-left: -$info-width / 2;
+  padding: 10px;
+
+  .top-wrapper {
+    display: block;
+    overflow: hidden;
+  }
+
+  .title {
+    font-size: 2em;
+  }
+
+  .divider {
+    margin: 10px auto 3px;
+    height: 1px;
+    border-radius: 1px;
+    background-color: $color-text-dark;
+    width: 70%;
+  }
+
+  img {
+    float: right;
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  .chapter-header {
+    text-align: center;
+    width: 100%;
+    font-size: 1.2em;
   }
 }

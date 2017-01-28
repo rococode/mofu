@@ -36,6 +36,7 @@ $(document).ready(function() {
 					setupReader(res);
 				} else if (res.type == "search") {
 					console.log('search results');
+					var count = 0;
 					for ( var i in res.results) {
 						var sourceObj = res.results[i];
 						var sourceName = sourceObj.sourceName;
@@ -44,19 +45,43 @@ $(document).ready(function() {
 						html += '<div class="search-source-name"><a href="#">' + sourceName + ' (' + sourceObj.links.length +')</a> <i class="search-source-toggle fa fa-angle-double-up"></i></div>';
 						console.log(sourceName);
 						for ( var j in links) {
+							count++;
 							var title = links[j].title;
 							var url = links[j].url;
+							var alt = links[j].alt;
 							console.log(title + " " + url);
 							html += '<div class="search-result">';
 							html += '<img src="' + "http://edasaki.com/i/test-page.png" + '" />';
 							html += '<div class="search-result-name">';
-							html += '<a href="' + url + '">' + title + '</a>';
+							html += '<div class="search-result-title">' + title + '</div>';
+							if(alt.length > 0) {
+								html += '<div class="alt-names">Alternate Names: ' + alt + '</div>';
+							}
+							html += '<div class="hidden-info">' + url+ '</div>';
 							html += '</div></div>';
 						}
 						html += '</div>';
 						$('.search-results').append($.parseHTML(html));
-						swapToSearchResult();
 					}
+					$('#search-results-title').text(count + " Result" + (count == 1 ? "" : "s"));
+					$('.search-source-toggle').on('click', function() {
+						console.log('clicked toggle');
+						var e = $(this);
+						if (e.hasClass('fa-angle-double-down')) {
+							e.parent().siblings('.search-result').show();
+							e.removeClass('fa-angle-double-down');
+							e.addClass('fa-angle-double-up');
+						} else {
+							e.parent().siblings('.search-result').hide();
+							e.removeClass('fa-angle-double-up');
+							e.addClass('fa-angle-double-down');
+						}
+					});
+					$('.search-result-title').on('click', function() {
+						console.log($(this).siblings('.hidden-info').text());
+						
+					})
+					swapToSearchResult();
 				} else {
 					// unknown
 				}
@@ -133,22 +158,6 @@ $(document).ready(function() {
 			$(this).css('color', 'black');
 		}
 		$(this).attr('placeholder', str);
-	});
-
-	$('.search-source-toggle').on('click', function() {
-		console.log('clicked toggle');
-		var e = $(this);
-		if (e.hasClass('fa-angle-double-down')) {
-			e.parent().siblings('.search-result').show();
-			e.removeClass('fa-angle-double-down');
-			e.addClass('fa-angle-double-up');
-			console.log('down');
-		} else {
-			console.log('up');
-			e.parent().siblings('.search-result').hide();
-			e.removeClass('fa-angle-double-up');
-			e.addClass('fa-angle-double-down');
-		}
 	});
 
 	setInterval(function() {

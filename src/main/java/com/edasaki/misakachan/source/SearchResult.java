@@ -6,7 +6,7 @@ import java.util.List;
 public class SearchResult {
 
     public final String title;
-    public final List<String> altNames;
+    private final List<String> altNames;
     public final String url;
 
     public SearchResult(String title, List<String> altNames, String url) {
@@ -15,6 +15,19 @@ public class SearchResult {
         if (altNames != null)
             this.altNames.addAll(altNames);
         this.url = url;
+    }
+
+    public String getAltNames() {
+        StringBuilder sb = new StringBuilder();
+        for (String s : altNames) {
+            sb.append(s);
+            sb.append(',');
+            sb.append(' ');
+        }
+        String built = sb.toString().trim();
+        if (built.endsWith(","))
+            built = built.substring(0, built.length() - 1);
+        return built;
     }
 
     @Override

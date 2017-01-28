@@ -15,7 +15,7 @@ div, img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .top-bottom-buttons span, .changelog i:hover, .search-source-name i:hover {
+.unselectable, .top-bottom-buttons span, .changelog i:hover, .search-result-title, .search-source-name i:hover {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -23,6 +23,10 @@ div, img {
   -ms-user-select: none;
   user-select: none;
   cursor: default; }
+
+.hidden-info {
+  display: none;
+  font-size: 1px; }
 
 .footer {
   font-family: 'Ubuntu', sans-serif;
@@ -377,6 +381,11 @@ div, img {
   .search-results a:hover {
     color: #eee; }
 
+.search-result-title {
+  cursor: pointer; }
+  .search-result-title:hover {
+    color: #eee; }
+
 .search-source {
   margin-top: 10px;
   border: 2px solid #272727;
@@ -413,3 +422,35 @@ div, img {
   .search-result .alt-names {
     cursor: default;
     font-size: 0.7em; }
+
+.manga-info-container {
+  width: 50%;
+  height: 50%;
+  background-color: #272727;
+  border: 3px solid #555;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* I have no idea why it's divide by 4 lol, but it works */
+  margin-top: -12.5%;
+  margin-left: -25%;
+  padding: 10px; }
+  .manga-info-container .top-wrapper {
+    display: block;
+    overflow: hidden; }
+  .manga-info-container .title {
+    font-size: 2em; }
+  .manga-info-container .divider {
+    margin: 10px auto 3px;
+    height: 1px;
+    border-radius: 1px;
+    background-color: #555;
+    width: 70%; }
+  .manga-info-container img {
+    float: right;
+    max-width: 200px;
+    max-height: 200px; }
+  .manga-info-container .chapter-header {
+    text-align: center;
+    width: 100%;
+    font-size: 1.2em; }

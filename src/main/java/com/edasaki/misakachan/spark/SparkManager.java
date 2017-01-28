@@ -104,6 +104,7 @@ public class SparkManager {
                 for (SearchResult sr : set.getResults()) {
                     JSONObject sro = new JSONObject();
                     sro.put("title", sr.title);
+                    sro.put("alt", sr.getAltNames());
                     sro.put("url", sr.url);
                     linkArr.put(sro);
                 }

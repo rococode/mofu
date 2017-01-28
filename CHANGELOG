@@ -1,5 +1,10 @@
+0.0.18 - Jan 27 2017
+- added css class for data stored in hidden DOM content
+- made the results count at the top of search results page work
+- started work on manga info popup for search results page
+
 0.0.17 - Jan 27 2017
-- ton of work on search UI, it's almost done!
+- lots of work on search UI, it's almost done! searching properly displays results now!
 
 0.0.16 - Jan 26 2017
 - more styling changes
