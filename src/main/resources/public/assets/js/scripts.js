@@ -42,7 +42,7 @@ $(document).ready(function() {
 						var sourceName = sourceObj.sourceName;
 						var links = sourceObj.links;
 						var html = '<div class="search-source">';
-						html += '<div class="search-source-name"><a href="#">' + sourceName + ' (' + sourceObj.links.length +')</a> <i class="search-source-toggle fa fa-angle-double-up"></i></div>';
+						html += '<div class="search-source-name"><a href="#">' + sourceName + ' (' + sourceObj.links.length + ')</a> <i class="search-source-toggle fa fa-angle-double-up"></i></div>';
 						console.log(sourceName);
 						for ( var j in links) {
 							count++;
@@ -54,10 +54,10 @@ $(document).ready(function() {
 							html += '<img src="' + "http://edasaki.com/i/test-page.png" + '" />';
 							html += '<div class="search-result-name">';
 							html += '<div class="search-result-title">' + title + '</div>';
-							if(alt.length > 0) {
+							if (alt.length > 0) {
 								html += '<div class="alt-names">Alternate Names: ' + alt + '</div>';
 							}
-							html += '<div class="hidden-info">' + url+ '</div>';
+							html += '<div class="hidden-info">' + url + '</div>';
 							html += '</div></div>';
 						}
 						html += '</div>';
@@ -79,7 +79,19 @@ $(document).ready(function() {
 					});
 					$('.search-result-title').on('click', function() {
 						console.log($(this).siblings('.hidden-info').text());
-						
+						$('#loading-container').show();
+						$.post("lookup", $(this).siblings('.hidden-info').text(), function(data, status) {
+							var res = JSON.parse(data);
+							console.log(res.type);
+							if (res.type != undefined) {
+								if (res.type == "url") {
+									swapToReader();
+									setupReader(res);
+								} else {
+									// error
+								}
+							}
+						});
 					})
 					swapToSearchResult();
 				} else {
@@ -114,35 +126,50 @@ $(document).ready(function() {
 			e.removeClass('fa-angle-double-up');
 			e.addClass('fa-angle-double-down');
 		}
-
 	});
 
 	$(document).keydown(function(e) {
 		switch (e.which) {
 			case 13:
-				$("#loader-form").submit();
+				if ($('#home-container').is(":visible")) {
+					$("#loader-form").submit();
+				}
 				break;
 			case 220: // TEMPORARY - FOR DEBUGGING
 				swapToSearchResult();
 				break;
 			case 38:
 			case 87:
-				scrollUp();
+				if ($('#reader-container').is(':visible')) {
+					scrollUp();
+				}
 				break;
 			case 40:
 			case 83:
-				scrollDown();
+				if ($('#reader-container').is(':visible')) {
+					scrollDown();
+				}
 				break;
 			case 39:
 			case 68:
-				console.log('right');
+				if ($('#reader-container').is(':visible')) {
+					console.log('right');
+				}
 				break;
 			case 37:
 			case 65:
-				console.log('left');
+				if ($('#reader-container').is(':visible')) {
+					console.log('left');
+				}
+				break;
+			case 9: // tab
+				if ($('#home-container').is(":visible")) {
+					e.preventDefault();
+					$('#load-input-url').focus();
+				}
 				break;
 		}
-		// console.log("keypress: " + e.which);
+		console.log("keypress: " + e.which);
 	});
 
 	// placeholder stuff
@@ -173,6 +200,16 @@ $(document).ready(function() {
 		}
 		$('#loading-dots').text(curr);
 	}, 600);
+
+	$('#chapter-pane').jScrollPane({
+		autoReinitialise : true
+	});
+
+	$('#manga-info-full-page-container').on('click', function(e) {
+		if (e.target != this)
+			return;
+		$('#manga-info-full-page-container').hide();
+	})
 
 	// debugging stuff below
 	// swapToSearchResult();

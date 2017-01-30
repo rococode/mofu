@@ -7,11 +7,13 @@ public class Version implements Comparable<Version> {
 
     private int major, minor, mini;
 
+    public static final Version UNKNOWN = new Version("0.0.0");
+
     private Version(String s) {
         String[] data = s.split("\\.");
         major = Integer.parseInt(data[0].replaceAll("[^0-9]", ""));
         minor = Integer.parseInt(data[1].replaceAll("[^0-9]", ""));
-        minor = Integer.parseInt(data[2].replaceAll("[^0-9]", ""));
+        mini = Integer.parseInt(data[2].replaceAll("[^0-9]", ""));
     }
 
     public static Version getVersion(String s) {
@@ -21,6 +23,11 @@ public class Version implements Comparable<Version> {
         Version ver = new Version(s);
         versions.put(s, ver);
         return ver;
+    }
+
+    @Override
+    public String toString() {
+        return "v" + major + "." + minor + "." + mini;
     }
 
     @Override

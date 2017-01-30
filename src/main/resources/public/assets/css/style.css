@@ -166,12 +166,25 @@ div, img {
 .loading-container {
   display: none; }
 
+.loading-bg-wrapper {
+  background-color: #373737;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 0 0;
+  width: 382.5px;
+  height: 255px;
+  margin-top: -142.5px;
+  margin-left: -203.25px;
+  border-radius: 10px;
+  border: 3px solid #888; }
+
 .loading-display {
   position: fixed;
   top: 50%;
   left: 50%;
   margin-top: -100px;
-  margin-left: -42.5px; }
+  margin-left: -57.5px; }
   .loading-display .loading-text {
     width: 127.5px;
     margin-top: 35px;
@@ -423,16 +436,23 @@ div, img {
     cursor: default;
     font-size: 0.7em; }
 
+.manga-info-full-page-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0; }
+
 .manga-info-container {
   width: 50%;
-  height: 50%;
+  height: 500px;
   background-color: #272727;
   border: 3px solid #555;
   position: fixed;
   top: 50%;
   left: 50%;
-  /* I have no idea why it's divide by 4 lol, but it works */
-  margin-top: -12.5%;
+  margin-top: -250px;
   margin-left: -25%;
   padding: 10px; }
   .manga-info-container .top-wrapper {
@@ -441,11 +461,11 @@ div, img {
   .manga-info-container .title {
     font-size: 2em; }
   .manga-info-container .divider {
-    margin: 10px auto 3px;
+    margin: 10px auto 10px;
     height: 1px;
     border-radius: 1px;
     background-color: #555;
-    width: 70%; }
+    width: 100%; }
   .manga-info-container img {
     float: right;
     max-width: 200px;
@@ -453,4 +473,15 @@ div, img {
   .manga-info-container .chapter-header {
     text-align: center;
     width: 100%;
-    font-size: 1.2em; }
+    font-size: 1.15em;
+    margin-bottom: 10px; }
+  .manga-info-container .chapters {
+    background-color: #323232;
+    height: 250px;
+    text-align: left;
+    border: 1px solid #555; }
+  .manga-info-container .chapter {
+    width: 100%;
+    padding: 5px 0 5px 5px; }
+    .manga-info-container .chapter:hover {
+      background-color: #272727; }

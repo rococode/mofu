@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 
 import com.edasaki.misakachan.test.tests.BasicTests;
 import com.edasaki.misakachan.test.tests.ChangelogTests;
+import com.edasaki.misakachan.test.tests.MangaHereTests;
 import com.edasaki.misakachan.test.tests.SiteSearchTests;
 import com.edasaki.misakachan.test.tests.StringUtilTests;
 
@@ -15,7 +16,8 @@ public class TestRunner {
 //            BakaUpdateTests.class,
             StringUtilTests.class,
             ChangelogTests.class,
-            SiteSearchTests.class
+            SiteSearchTests.class,
+            MangaHereTests.class,
     };
 
     public static void main(String[] args) {

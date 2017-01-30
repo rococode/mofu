@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.edasaki.misakachan.chapter.Chapter;
 import com.edasaki.misakachan.chapter.Page;
+import com.edasaki.misakachan.chapter.Series;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.source.SearchResult;
@@ -13,6 +14,11 @@ public class TestSource extends AbstractSource {
 
     @Override
     public boolean match(String url) {
+        return url.contains("test");
+    }
+
+    @Override
+    public boolean matchInfo(String url) {
         return url.contains("test");
     }
 
@@ -49,6 +55,11 @@ public class TestSource extends AbstractSource {
             res.add(new SearchResult("test-search-result-" + s + "-3", null, "http://blah.com"));
             return createResultSet(res);
         };
+    }
+
+    @Override
+    public Series getSeries(String url) {
+        return null;
     }
 
 }

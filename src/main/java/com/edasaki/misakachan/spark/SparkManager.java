@@ -37,10 +37,22 @@ public class SparkManager {
         Spark.post("/load", this::loadRequestedURL);
         Spark.post("/search", this::search);
         Spark.get("/changelog", this::loadChangelog);
+        Spark.post("/lookup", this::lookup);
     }
 
     public int getPort() {
         return Spark.port();
+    }
+
+    private String lookup(Request req, Response res) {
+        String url = req.body();
+        JSONObject jo = new JSONObject();
+        for (AbstractSource source : sources) {
+            if (source.matchInfo(url)) {
+
+            }
+        }
+        return jo.toString();
     }
 
     private String loadChangelog(Request req, Response res) {
@@ -73,7 +85,7 @@ public class SparkManager {
                 for (Page p : chapter.getPages())
                     urls.put(p.getURL());
                 jo.put("urls", urls);
-                M.debug("Generated JSON " + jo.toString());
+                //                M.debug("Generated JSON " + jo.toString());
                 return jo.toString();
             }
         }

@@ -7,8 +7,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.edasaki.misakachan.chapter.Chapter;
+import com.edasaki.misakachan.chapter.Series;
 
 public abstract class AbstractSource {
 
@@ -17,6 +19,14 @@ public abstract class AbstractSource {
      * @return <code>true</code> if the given URL matches this source's URL pattern
      */
     public abstract boolean match(String url);
+
+    /**
+     * @param url the url to match
+     * @return <code>true</code> if the given URL matches this source's URL pattern for main pages of manga
+     */
+    public abstract boolean matchInfo(String url);
+
+    public abstract Series getSeries(String url);
 
     public abstract Chapter getChapter(String url);
 
@@ -46,5 +56,12 @@ public abstract class AbstractSource {
             res.add(sr);
         }
         return createResultSet(res);
+    }
+
+    protected String selectFirst(Element ele, String selector) {
+        Elements e = ele.select(selector);
+        if (e.isEmpty())
+            return "";
+        return e.first().text();
     }
 }

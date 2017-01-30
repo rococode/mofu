@@ -1,5 +1,8 @@
 package com.edasaki.misakachan;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.edasaki.misakachan.changelog.ChangelogManager;
 import com.edasaki.misakachan.gui.GuiManager;
 import com.edasaki.misakachan.persistence.OptionManager;
@@ -7,7 +10,6 @@ import com.edasaki.misakachan.persistence.PersistenceManager;
 import com.edasaki.misakachan.scanlator.BakaUpdateManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.english.MangaHere;
-import com.edasaki.misakachan.source.test.TestSource;
 import com.edasaki.misakachan.spark.SparkManager;
 import com.edasaki.misakachan.version.Version;
 
@@ -15,8 +17,10 @@ public class Misaka {
 
     private static final AbstractSource SOURCES[] = {
             new MangaHere(),
-            new TestSource(),
+            //            new TestSource(),
     };
+
+    private static final List<String> MESSAGE_QUEUE = new ArrayList<String>();
 
     private static Misaka instance;
 
@@ -25,7 +29,7 @@ public class Misaka {
     public OptionManager options;
     public BakaUpdateManager baka;
     public ChangelogManager changelog;
-    
+
     public SparkManager spark;
 
     protected static void initialize(Version version) {
@@ -37,6 +41,9 @@ public class Misaka {
     private void init() {
         this.gui = new GuiManager();
         this.gui.showFrame();
+        for (String s : MESSAGE_QUEUE)
+            this.updateStatus(s);
+        MESSAGE_QUEUE.clear();
 
         this.persist = new PersistenceManager();
         this.persist.loadFiles();
@@ -45,7 +52,7 @@ public class Misaka {
 
         this.baka = new BakaUpdateManager();
         this.changelog = new ChangelogManager();
-        
+
         // Do this last, since we want to be sure everything else is ready
         this.updateStatus("Initializing webserver...");
         this.spark = new SparkManager(SOURCES);
@@ -65,6 +72,8 @@ public class Misaka {
     public static void update(String s) {
         if (instance != null)
             instance.updateStatus(s);
+        else
+            MESSAGE_QUEUE.add(s);
     }
 
     public static void error(String s) {

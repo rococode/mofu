@@ -213,12 +213,26 @@ div, img {
 
 $loadingSquareSize: 85px;
 
+.loading-bg-wrapper {
+  background-color: $color-background-main;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 0 0;
+  width: $loadingSquareSize * 4.5;
+  height: $loadingSquareSize * 3;
+  margin-top: -($loadingSquareSize * 3) / 2 - 15px;
+  margin-left: -($loadingSquareSize * 4.5)/2 - 12px;
+  border-radius: 10px;
+  border: 3px solid $color-text-medium;
+}
+
 .loading-display {
   position: fixed;
   top: 50%;
   left: 50%;
   margin-top: -$loadingSquareSize - 15px;
-  margin-left: -$loadingSquareSize / 2;
+  margin-left: -$loadingSquareSize / 2 - 15px;
 
   .loading-text {
     width: $loadingSquareSize * 1.5;
@@ -557,9 +571,18 @@ $loadingSquareSize: 85px;
   }
 }
 
+.manga-info-full-page-container {
+  background-color: rgba(black, 0.7);
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 .manga-info-container {
   $info-width: 50%;
-  $info-height: 50%;
+  $info-height: 500px;
 
   width: $info-width;
   height: $info-height;
@@ -568,9 +591,7 @@ $loadingSquareSize: 85px;
   position: fixed;
   top: 50%;
   left: 50%;
-
-  /* I have no idea why it's divide by 4 lol, but it works */
-  margin-top: -$info-height / 4;
+  margin-top: -$info-height / 2;
   margin-left: -$info-width / 2;
   padding: 10px;
 
@@ -584,11 +605,11 @@ $loadingSquareSize: 85px;
   }
 
   .divider {
-    margin: 10px auto 3px;
+    margin: 10px auto 10px;
     height: 1px;
     border-radius: 1px;
     background-color: $color-text-dark;
-    width: 70%;
+    width: 100%;
   }
 
   img {
@@ -600,6 +621,23 @@ $loadingSquareSize: 85px;
   .chapter-header {
     text-align: center;
     width: 100%;
-    font-size: 1.2em;
+    font-size: 1.15em;
+    margin-bottom: 10px;
+  }
+
+  .chapters {
+    background-color: $color-background-med-dark;
+    height: 250px;
+    text-align: left;
+    border: 1px solid $color-text-dark;
+  }
+
+  .chapter {
+    width: 100%;
+    padding: 5px 0 5px 5px;
+
+    &:hover {
+      background-color: $color-background-dark;
+    }
   }
 }

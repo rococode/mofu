@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 
 import com.edasaki.misakachan.chapter.Chapter;
 import com.edasaki.misakachan.chapter.Page;
+import com.edasaki.misakachan.chapter.Series;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
@@ -26,10 +27,41 @@ public class MangaHere extends AbstractSource {
     }
 
     @Override
-    public Chapter getChapter(String url) {
+    public boolean matchInfo(String url) {
+        return url.contains("mangahere.co/manga/");
+    }
+
+    @Override
+    public Series getSeries(String url) {
         Document doc;
         try {
             M.debug("connecting... ");
+            doc = Jsoup.connect(url).get();
+            M.debug("connected!");
+            Series series = new Series();
+            Element detail = doc.select(".detail_topText").first();
+            series.description = selectFirst(detail, "#hide");
+            series.authors = selectFirst(detail, "a[href^=http://www.mangahere.co/author/]");
+            series.artists = selectFirst(detail, "a[href^=http://www.mangahere.co/artist/]");
+            Elements chapters = doc.select(".detail_list > ul:not([class]) > li");
+            for (Element chapter : chapters) {
+                String cURL = chapter.select("a").first().absUrl("href");
+                String cName = chapter.select("a").first().text();
+                series.addChapter(cName, cURL);
+            }
+            M.debug(series.getChaptersJSON());
+            return series;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Chapter getChapter(String url) {
+        Document doc;
+        try {
+            M.debug("connecting to series... ");
             doc = Jsoup.connect(url).get();
             M.debug("connected!");
             Elements dropdownSelector = doc.select("select.wid60 > option");

@@ -18,7 +18,11 @@ public class MFileUtils {
         tempFile.deleteOnExit();
 
         FileOutputStream out = new FileOutputStream(tempFile);
-        IOUtils.copy(in, out);
+        try {
+            IOUtils.copy(in, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         out.close();
 
         M.debug("created temp file for " + path + " at " + tempFile.getPath());

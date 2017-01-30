@@ -1,7 +1,15 @@
+0.0.19 - Jan 30 2017
+- added automatic update checking - surprisingly difficult to code thanks to my laziness - I didn't want to have to remember to update a variable somewhere every build, so instead I made it so this changelog is automatically included in the compiled JAR. But I didn't really know how to do that so it took a while to figure out the right maven config. And then I had to make sure that I can run it locally still, while also having it able to get the resource stream from the jar. 
+- fixed a typo with version initialization
+- added version string display
+- added message queueing to console to be able to ready messages before the GUI is loaded
+- finished styling for manga info popup, working on the ajax stuff now
+
 0.0.18 - Jan 27 2017
 - added css class for data stored in hidden DOM content
 - made the results count at the top of search results page work
 - started work on manga info popup for search results page
+- disabled TestSource for now
 
 0.0.17 - Jan 27 2017
 - lots of work on search UI, it's almost done! searching properly displays results now!

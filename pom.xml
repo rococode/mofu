@@ -6,6 +6,18 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>${basedir}</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>CHANGELOG</include>
+				</includes>
+			</resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
