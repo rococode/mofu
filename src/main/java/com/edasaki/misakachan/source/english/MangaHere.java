@@ -35,21 +35,28 @@ public class MangaHere extends AbstractSource {
     public Series getSeries(String url) {
         Document doc;
         try {
-            M.debug("connecting... ");
             doc = Jsoup.connect(url).get();
-            M.debug("connected!");
             Series series = new Series();
             Element detail = doc.select(".detail_topText").first();
+            series.imageURL = doc.select(".manga_detail_top").first().select("img.img").first().absUrl("src");
+            series.title = doc.select("meta[property=og:title").first().attr("content");
             series.description = selectFirst(detail, "#hide");
             series.authors = selectFirst(detail, "a[href^=http://www.mangahere.co/author/]");
             series.artists = selectFirst(detail, "a[href^=http://www.mangahere.co/artist/]");
+            Elements labels = detail.select("label");
+            for (Element e : labels) {
+                if (e.text().contains("Genre")) {
+                    series.genres = e.parent().ownText();
+                } else if(e.text().contains("Alternative")) {
+                    series.altNames = e.parent().ownText();
+                }
+            }
             Elements chapters = doc.select(".detail_list > ul:not([class]) > li");
             for (Element chapter : chapters) {
                 String cURL = chapter.select("a").first().absUrl("href");
                 String cName = chapter.select("a").first().text();
                 series.addChapter(cName, cURL);
             }
-            M.debug(series.getChaptersJSON());
             return series;
         } catch (IOException e) {
             e.printStackTrace();

@@ -222,7 +222,7 @@ $loadingSquareSize: 85px;
   width: $loadingSquareSize * 4.5;
   height: $loadingSquareSize * 3;
   margin-top: -($loadingSquareSize * 3) / 2 - 15px;
-  margin-left: -($loadingSquareSize * 4.5)/2 - 12px;
+  margin-left: -($loadingSquareSize * 4.5) / 2 - 12px;
   border-radius: 10px;
   border: 3px solid $color-text-medium;
 }
@@ -578,6 +578,7 @@ $loadingSquareSize: 85px;
   top: 0;
   left: 0;
   right: 0;
+  display: none;
 }
 
 .manga-info-container {

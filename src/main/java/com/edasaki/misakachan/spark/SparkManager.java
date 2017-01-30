@@ -49,9 +49,13 @@ public class SparkManager {
         JSONObject jo = new JSONObject();
         for (AbstractSource source : sources) {
             if (source.matchInfo(url)) {
-
+                jo.put("status", "success");
+                jo.put("series", source.getSeries(url).getSeriesObject());
+                return jo.toString();
             }
         }
+        jo.put("status", "failure");
+        jo.put("reason", "Invalid URL.");
         return jo.toString();
     }
 

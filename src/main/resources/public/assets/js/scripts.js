@@ -82,14 +82,10 @@ $(document).ready(function() {
 						$('#loading-container').show();
 						$.post("lookup", $(this).siblings('.hidden-info').text(), function(data, status) {
 							var res = JSON.parse(data);
-							console.log(res.type);
-							if (res.type != undefined) {
-								if (res.type == "url") {
-									swapToReader();
-									setupReader(res);
-								} else {
-									// error
-								}
+							$('#loading-container').hide();
+							if (res.series != undefined) {
+								var ser = res.series;
+								populateContainer(ser);
 							}
 						});
 					})
@@ -210,6 +206,8 @@ $(document).ready(function() {
 			return;
 		$('#manga-info-full-page-container').hide();
 	})
+	
+	$('#manga-info-full-page-container').hide();
 
 	// debugging stuff below
 	// swapToSearchResult();
@@ -301,4 +299,23 @@ function setupReader(json) {
 		$('#reader-pages').append("<div class=\"reader-page\"><img src=\"" + json.urls[k] + "\" /></div>");
 		$('#reader-pages').append("<div class=\"reader-page-number-container\"><div class=\"reader-page-number\">" + (Number(k) + 1) + "/" + json.urls.length + "</div></div>");
 	}
+}
+
+function populateContainer(series) {
+	var e = $('#manga-info-container');
+	e.find('.title').text(series.title);
+	e.find('.alt').text(series.altNames);
+	e.find('.genre').text(series.genres);
+	e.find('.author').text(series.authors);
+	e.find('.desc').text(series.description);
+	e.find('img').attr('src', series.imageURL);
+//    jo.put("imageURL", imageURL);
+//    jo.put("title", title);
+//    jo.put("authors", authors);
+//    jo.put("artists", artists);
+//    jo.put("genres", genres);
+//    jo.put("altNames", altNames);
+//    jo.put("description", description);
+//    jo.put("chapters", getChaptersJSON());
+	$('#manga-info-full-page-container').show();
 }

@@ -1,4 +1,8 @@
-0.0.19 - Jan 30 2017
+0.0.20 - Jan 29 2017
+- finished json serialization for Series objects
+- mostly wrapped up manga popup display! just need to finish chapters and a bit of formatting stuff
+
+0.0.19 - Jan 29 2017
 - added automatic update checking - surprisingly difficult to code thanks to my laziness - I didn't want to have to remember to update a variable somewhere every build, so instead I made it so this changelog is automatically included in the compiled JAR. But I didn't really know how to do that so it took a while to figure out the right maven config. And then I had to make sure that I can run it locally still, while also having it able to get the resource stream from the jar. 
 - fixed a typo with version initialization
 - added version string display

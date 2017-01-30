@@ -7,15 +7,30 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class Series {
+    public String imageURL;
     public String title;
     public String authors;
     public String artists;
     public String genres;
+    public String altNames;
     public String description;
     private List<ChapterListing> chapters = new ArrayList<ChapterListing>();
 
     public void addChapter(String name, String url) {
         chapters.add(new ChapterListing(name, url));
+    }
+
+    public JSONObject getSeriesObject() {
+        JSONObject jo = new JSONObject();
+        jo.put("imageURL", imageURL);
+        jo.put("title", title);
+        jo.put("authors", authors);
+        jo.put("artists", artists);
+        jo.put("genres", genres);
+        jo.put("altNames", altNames);
+        jo.put("description", description);
+        jo.put("chapters", getChaptersJSON());
+        return jo;
     }
 
     public JSONArray getChaptersJSON() {
