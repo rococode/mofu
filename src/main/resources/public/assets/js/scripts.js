@@ -23,80 +23,9 @@ $(document).ready(function() {
 		if ($("#load-input-url").val() == '') {
 			return false;
 		}
-		// clear input to prevent multiple submission
 		var url = $("#load-input-url").val();
 		$("#load-input-url").val('');
-		swapToLoading();
-		$.post("load", url, function(data, status) {
-			var res = JSON.parse(data);
-			console.log(res.type);
-			if (res.type != undefined) {
-				if (res.type == "url") {
-					swapToReader();
-					setupReader(res);
-				} else if (res.type == "search") {
-					console.log('search results');
-					var count = 0;
-					for ( var i in res.results) {
-						var sourceObj = res.results[i];
-						var sourceName = sourceObj.sourceName;
-						var links = sourceObj.links;
-						var html = '<div class="search-source">';
-						html += '<div class="search-source-name"><a href="#">' + sourceName + ' (' + sourceObj.links.length + ')</a> <i class="search-source-toggle fa fa-angle-double-up"></i></div>';
-						console.log(sourceName);
-						for ( var j in links) {
-							count++;
-							var title = links[j].title;
-							var url = links[j].url;
-							var alt = links[j].alt;
-							console.log(title + " " + url);
-							html += '<div class="search-result">';
-							html += '<img src="' + "http://edasaki.com/i/test-page.png" + '" />';
-							html += '<div class="search-result-name">';
-							html += '<div class="search-result-title">' + title + '</div>';
-							if (alt.length > 0) {
-								html += '<div class="alt-names">Alternate Names: ' + alt + '</div>';
-							}
-							html += '<div class="hidden-info">' + url + '</div>';
-							html += '</div></div>';
-						}
-						html += '</div>';
-						$('.search-results').append($.parseHTML(html));
-					}
-					$('#search-results-title').text(count + " Result" + (count == 1 ? "" : "s"));
-					$('.search-source-toggle').on('click', function() {
-						console.log('clicked toggle');
-						var e = $(this);
-						if (e.hasClass('fa-angle-double-down')) {
-							e.parent().siblings('.search-result').show();
-							e.removeClass('fa-angle-double-down');
-							e.addClass('fa-angle-double-up');
-						} else {
-							e.parent().siblings('.search-result').hide();
-							e.removeClass('fa-angle-double-up');
-							e.addClass('fa-angle-double-down');
-						}
-					});
-					$('.search-result-title').on('click', function() {
-						console.log($(this).siblings('.hidden-info').text());
-						$('#loading-container').show();
-						$.post("lookup", $(this).siblings('.hidden-info').text(), function(data, status) {
-							var res = JSON.parse(data);
-							$('#loading-container').hide();
-							if (res.series != undefined) {
-								var ser = res.series;
-								populateContainer(ser);
-							}
-						});
-					})
-					swapToSearchResult();
-				} else {
-					// unknown
-				}
-			} else {
-				// unknown
-			}
-		});
+		loadInReader(url);
 		return false;
 	});
 
@@ -206,7 +135,7 @@ $(document).ready(function() {
 			return;
 		$('#manga-info-full-page-container').hide();
 	})
-	
+
 	$('#manga-info-full-page-container').hide();
 
 	// debugging stuff below
@@ -292,7 +221,6 @@ function swapToSearchResult() {
 }
 
 function setupReader(json) {
-	alert(JSON.stringify(json));
 	$("#reader-title").html(json.name);
 	console.log(json.urls);
 	for (k in json.urls) {
@@ -307,15 +235,114 @@ function populateContainer(series) {
 	e.find('.alt').text(series.altNames);
 	e.find('.genre').text(series.genres);
 	e.find('.author').text(series.authors);
+	e.find('.artist').text(series.artists);
 	e.find('.desc').text(series.description);
 	e.find('img').attr('src', series.imageURL);
-//    jo.put("imageURL", imageURL);
-//    jo.put("title", title);
-//    jo.put("authors", authors);
-//    jo.put("artists", artists);
-//    jo.put("genres", genres);
-//    jo.put("altNames", altNames);
-//    jo.put("description", description);
-//    jo.put("chapters", getChaptersJSON());
+	var pane = $('#chapter-pane .jspPane');
+	var ct = 0;
+	for (i in series.chapters) {
+		var chap = series.chapters[i];
+		pane.append('<div class="chapter">Chapter ' + chap.name + '<div class="hidden-info">' + chap.url + '</div></div>');
+		ct++;
+	}
+	e.find('.chapter').on('click', function() {
+		var chap = $(this);
+		var url = chap.find('.hidden-info').text();
+		loadInReader(url);
+	});
+	e.find('.chapter-header').text(ct + " Chapter" + (ct == 1 ? "" : "s") + " available from " + series.source);
 	$('#manga-info-full-page-container').show();
+}
+
+function loadInReader(url) {
+	console.log("Loading url in reader: " + url);
+	swapToLoading();
+	$.post("load", url, function(data, status) {
+		var res = JSON.parse(data);
+		console.log(res.type);
+		if (res.type != undefined) {
+			if (res.type == "url") {
+				swapToReader();
+				setupReader(res);
+			} else if (res.type == "search") {
+				console.log('search results');
+				var count = 0;
+				var uniqueId = 1;
+				var idUrlPairs = [];
+				for ( var i in res.results) {
+					var sourceObj = res.results[i];
+					var sourceName = sourceObj.sourceName;
+					var links = sourceObj.links;
+					var html = '<div class="search-source">';
+					html += '<div class="search-source-name"><a href="#">' + sourceName + ' (' + sourceObj.links.length + ')</a> <i class="search-source-toggle fa fa-angle-double-up"></i></div>';
+					console.log(sourceName);
+					for ( var j in links) {
+						count++;
+						var title = links[j].title;
+						var url = links[j].url;
+						var alt = links[j].alt;
+						console.log(title + " " + url);
+						html += '<div class="search-result">';
+						var id = 'search-result-image-' + uniqueId++;
+						html += '<img id="' + id + '"src="' + "http://edasaki.com/i/test-page.png" + '" />';
+						html += '<div class="search-result-name">';
+						html += '<div class="search-result-title">' + title + '</div>';
+						if (alt.length > 0) {
+							html += '<div class="alt-names">Alternate Names: ' + alt + '</div>';
+						}
+						html += '<div class="hidden-info">' + url + '</div>';
+						html += '</div></div>';
+						idUrlPairs.push({
+							id : id,
+							url : url
+						});
+					}
+					html += '</div>';
+					$('.search-results').append($.parseHTML(html));
+				}
+				$('#search-results-title').text(count + " Result" + (count == 1 ? "" : "s"));
+				$('.search-source-toggle').on('click', function() {
+					console.log('clicked toggle');
+					var e = $(this);
+					if (e.hasClass('fa-angle-double-down')) {
+						e.parent().siblings('.search-result').show();
+						e.removeClass('fa-angle-double-down');
+						e.addClass('fa-angle-double-up');
+					} else {
+						e.parent().siblings('.search-result').hide();
+						e.removeClass('fa-angle-double-up');
+						e.addClass('fa-angle-double-down');
+					}
+				});
+				$('.search-result-title').on('click', function() {
+					console.log($(this).siblings('.hidden-info').text());
+					$('#loading-container').show();
+					$.post("lookup", $(this).siblings('.hidden-info').text(), function(data, status) {
+						var res = JSON.parse(data);
+						$('#loading-container').hide();
+						if (res.series != undefined) {
+							var ser = res.series;
+							populateContainer(ser);
+						}
+					});
+				})
+				swapToSearchResult();
+				$.post("fetchResultImages", JSON.stringify(idUrlPairs), function(data, status) {
+					var res = JSON.parse(data);
+					for ( var i in res) {
+						var obj = res[i];
+						try {
+							$('#' + obj.id).attr('src', obj.imgUrl);
+						} catch (err) {
+							console.log('error loading image for ' + obj);
+						}
+					}
+				});
+			} else {
+				// unknown
+			}
+		} else {
+			// unknown
+		}
+	});
 }

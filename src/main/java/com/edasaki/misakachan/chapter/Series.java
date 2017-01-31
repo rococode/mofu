@@ -1,5 +1,6 @@
 package com.edasaki.misakachan.chapter;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,22 +15,56 @@ public class Series {
     public String genres;
     public String altNames;
     public String description;
+    public String source;
+    private JSONArray scanlatorArr;
     private List<ChapterListing> chapters = new ArrayList<ChapterListing>();
+
+    private boolean processed = false;
 
     public void addChapter(String name, String url) {
         chapters.add(new ChapterListing(name, url));
     }
 
+    private void postProcess() {
+        processed = true;
+        for (Field f : Series.class.getFields()) {
+            if (f.getType() == String.class) {
+                try {
+                    f.set(this, ((String) f.get(this)).trim());
+                } catch (IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //        String url = Misaka.getInstance().baka.getURL(this.title);
+        //        JSONArray jo = new JSONArray();
+        //        if (url != null) {
+        //            List<ScanGroup> groups = Misaka.instance().baka.getScanlator(url);
+        //            if (groups != null) {
+        //                for (ScanGroup sg : groups) {
+        //                    jo.put(sg.getJSONObject());
+        //                }
+        //            }
+        //        }
+        //        this.scanlatorArr = jo;
+    }
+
     public JSONObject getSeriesObject() {
+        if (!processed) {
+            postProcess();
+        }
         JSONObject jo = new JSONObject();
         jo.put("imageURL", imageURL);
         jo.put("title", title);
-        jo.put("authors", authors);
-        jo.put("artists", artists);
-        jo.put("genres", genres);
-        jo.put("altNames", altNames);
+        jo.put("authors", (authors.contains(",") || authors.contains(";") ? "Authors: " : "Author: ") + authors);
+        jo.put("artists", (artists.contains(",") || artists.contains(";") ? "Artists: " : "Artist: ") + artists);
+        jo.put("genres", (genres.contains(",") || genres.contains(";") ? "Genres: " : "Genre: ") + genres);
+        jo.put("altNames", altNames.length() == 0 ? "Alt Names: None" : (altNames.contains(",") || altNames.contains(";") ? "Alternate Names: " : "Alternate Name: ") + altNames);
         jo.put("description", description);
+        jo.put("source", source);
         jo.put("chapters", getChaptersJSON());
+        if (this.scanlatorArr != null)
+            jo.put("scanlator", this.scanlatorArr);
         return jo;
     }
 

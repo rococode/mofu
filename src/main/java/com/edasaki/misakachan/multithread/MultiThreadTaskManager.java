@@ -30,7 +30,7 @@ public class MultiThreadTaskManager {
         return futures;
     }
 
-    public static <T> boolean allReady(List<Future<T>> futures) {
+    public static <T> boolean allReady(Collection<Future<T>> futures) {
         for (Future<T> f : futures)
             if (!f.isDone())
                 return false;
@@ -58,7 +58,7 @@ public class MultiThreadTaskManager {
         return docs;
     }
 
-    public static <T> void wait(List<Future<T>> futures) {
+    public static <T> void wait(Collection<Future<T>> futures) {
         while (!allReady(futures)) {
             try {
                 Thread.sleep(100L);

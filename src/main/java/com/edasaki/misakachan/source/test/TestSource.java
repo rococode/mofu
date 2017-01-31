@@ -3,6 +3,8 @@ package com.edasaki.misakachan.source.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.nodes.Document;
+
 import com.edasaki.misakachan.chapter.Chapter;
 import com.edasaki.misakachan.chapter.Page;
 import com.edasaki.misakachan.chapter.Series;
@@ -59,6 +61,11 @@ public class TestSource extends AbstractSource {
 
     @Override
     public Series getSeries(String url) {
+        return null;
+    }
+
+    @Override
+    public String getImageURL(Document doc) {
         return null;
     }
 

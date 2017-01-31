@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -34,13 +35,15 @@ public abstract class AbstractSource {
 
     public abstract SearchAction getSearch();
 
+    public abstract String getImageURL(Document doc);
+
     @Override
     public String toString() {
         return this.getSourceName();
     }
 
     protected SearchResultSet createResultSet() {
-        return new SearchResultSet(getSourceName());
+        return new SearchResultSet(this);
     }
 
     protected SearchResultSet createResultSet(Collection<SearchResult> results) {

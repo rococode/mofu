@@ -1,13 +1,18 @@
 package com.edasaki.misakachan.spark;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import com.edasaki.misakachan.Misaka;
 import com.edasaki.misakachan.chapter.Chapter;
@@ -27,8 +32,15 @@ public class SparkManager {
 
     private AbstractSource[] sources;
 
+    private static final Map<String, String> cachedURLToImage = new HashMap<String, String>();
+
+    private List<SearchResultSet> lastSearchResults;
+    private int currSearchId;
+    private static int SEARCH_COUNTER = 1;
+
     public SparkManager(AbstractSource[] sources) {
         this.sources = sources;
+        this.lastSearchResults = new ArrayList<SearchResultSet>();
     }
 
     public void startWebserver() {
@@ -38,6 +50,7 @@ public class SparkManager {
         Spark.post("/search", this::search);
         Spark.get("/changelog", this::loadChangelog);
         Spark.post("/lookup", this::lookup);
+        Spark.post("/fetchResultImages", this::fetchResultImages);
     }
 
     public int getPort() {
@@ -57,6 +70,37 @@ public class SparkManager {
         jo.put("status", "failure");
         jo.put("reason", "Invalid URL.");
         return jo.toString();
+    }
+
+    private String fetchResultImages(Request req, Response res) {
+        JSONArray ja = new JSONArray();
+        JSONArray urlArray = new JSONArray(req.body());
+        for (int k = 0; k < urlArray.length(); k++) {
+            int counter = 0;
+            JSONObject obj = urlArray.getJSONObject(k);
+            String id = obj.getString("id");
+            String url = obj.getString("url");
+            M.debug("requested " + id + ", " + url);
+            while (!cachedURLToImage.containsKey(url)) {
+                if (counter > 5 * 10) { //5 is one second, max 5 sec hang
+                    break;
+                }
+                try {
+                    M.debug("waiting...");
+                    counter++;
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            M.debug("found! " + cachedURLToImage.get(url));
+            JSONObject jo = new JSONObject();
+            jo.put("id", id);
+            jo.put("imgUrl", cachedURLToImage.getOrDefault(url, "http://edasaki.com/i/test-page.png"));
+            ja.put(jo);
+        }
+        return ja.toString();
+
     }
 
     private String loadChangelog(Request req, Response res) {
@@ -97,6 +141,7 @@ public class SparkManager {
     }
 
     private String search(Request req, Response res) {
+        this.currSearchId = SparkManager.SEARCH_COUNTER++;
         String searchPhrase = req.body();
         JSONObject jo = new JSONObject();
         jo.put("type", "search");
@@ -114,6 +159,7 @@ public class SparkManager {
         for (Future<SearchResultSet> future : futures) {
             try {
                 SearchResultSet set = future.get();
+                lastSearchResults.add(set);
                 JSONObject src = new JSONObject();
                 src.put("sourceName", set.getSource());
                 JSONArray linkArr = new JSONArray();
@@ -133,8 +179,33 @@ public class SparkManager {
             }
         }
         jo.put("results", results);
-        M.debug(jo.toString(4));
+        prefetchImages();
         return jo.toString();
+    }
+
+    private void prefetchImages() {
+        for (SearchResultSet set : this.lastSearchResults) {
+            MultiThreadTaskManager.queueTask(() -> {
+                Map<String, Future<String>> individualFutures = new HashMap<String, Future<String>>();
+                AbstractSource src = set.getAbstractSource();
+                for (SearchResult s : set.getResults()) {
+                    Future<String> f = MultiThreadTaskManager.queueTask(() -> {
+                        String url = s.url;
+                        Document doc = Jsoup.connect(url).get();
+                        String img = src.getImageURL(doc);
+                        return img;
+                    });
+                    individualFutures.put(s.url, f);
+                }
+                MultiThreadTaskManager.wait(individualFutures.values());
+                for (Entry<String, Future<String>> e : individualFutures.entrySet()) {
+                    cachedURLToImage.put(e.getKey(), e.getValue().get());
+                }
+                this.lastSearchResults.remove(set);
+                M.debug("Cached image URLs: " + cachedURLToImage);
+                return true;
+            });
+        }
     }
 
 }

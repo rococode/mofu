@@ -1,5 +1,7 @@
 package com.edasaki.misakachan.scanlator;
 
+import java.util.List;
+
 public class BakaUpdateManager {
 
     private BakaUpdateSearcher searcher;
@@ -8,8 +10,13 @@ public class BakaUpdateManager {
         searcher = new BakaUpdateSearcher();
     }
 
-    public ScanGroup getScanlator(String mangaName) {
-        return searcher.getGroups(mangaName).get(0);
+    public String getURL(String title) {
+        return searcher.getURL(title);
+    }
+
+    public List<ScanGroup> getScanlator(String mangaName) {
+//        searcher.getGroups(mangaName);
+        return null;
     }
 
 }

@@ -2,16 +2,18 @@ package com.edasaki.misakachan.scanlator;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.Future;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.utils.MStringUtils;
 import com.edasaki.misakachan.utils.logging.M;
 
@@ -33,6 +35,7 @@ public class BakaUpdateSearcher {
     private static final String GROUP_SELECTOR = "a[href~=" + GROUP_SELECTOR_REGEX + "]";
 
     protected String getURL(String title) {
+        M.debug("searching for " + title);
         title = title.trim();
         Document doc;
         double bestSimilarity = 0;
@@ -45,6 +48,7 @@ public class BakaUpdateSearcher {
             do {
                 final String connectionURL = PREFIX + page + SEARCH + URLEncoder.encode(title, CHARSET);
                 doc = Jsoup.connect(connectionURL).userAgent(USER_AGENT).referrer(REFERRER).get();
+                M.debug("connecting to " + connectionURL);
                 if (doc.html().contains("There are no") || doc.html().contains("make your query more restrictive.")) // search complete
                     break;
                 Elements links = doc.select(SELECTOR);
@@ -93,11 +97,12 @@ public class BakaUpdateSearcher {
             e.printStackTrace();
         }
         M.debug("Finished search() in " + (System.currentTimeMillis() - start) + "ms");
+        M.debug("best url: " + bestURL);
         return bestURL;
     }
 
-    protected List<ScanGroup> getGroups(String bestURL) {
-        List<ScanGroup> g = new ArrayList<ScanGroup>();
+    protected Map<ScanGroup, List<String>> getGroups(String bestURL) {
+        M.debug("getting groups from " + bestURL);
         try {
             Document detailPage = Jsoup.connect(bestURL).userAgent(USER_AGENT).referrer(REFERRER).get();
             Elements sCats = detailPage.select(GROUP_SELECTOR);
@@ -111,7 +116,6 @@ public class BakaUpdateSearcher {
                     String name = e.text();
                     ScanGroup sg = new ScanGroup(id, name);
                     groups.put(id, sg);
-                    g.add(sg);
                     // Document groupPage =
                     // Jsoup.connect(href).userAgent(USER_AGENT).referrer(bestURL).get();
                     // groupPage.select(cssQuery)
@@ -119,11 +123,23 @@ public class BakaUpdateSearcher {
                     e2.printStackTrace();
                 }
             }
+            Map<ScanGroup, Future<List<String>>> chapters = new HashMap<ScanGroup, Future<List<String>>>();
+            for (ScanGroup sg : groups.values()) {
+                Future<List<String>> f = MultiThreadTaskManager.queueTask(() -> {
+                    Document doc = Jsoup.connect(sg.url).get();
+                    //                    return conn.get();
+                    return null;
+                });
+                chapters.put(sg, f);
+            }
+            MultiThreadTaskManager.wait(chapters.values());
+            for (Entry<ScanGroup, Future<List<String>>> e : chapters.entrySet()) {
+
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        M.debug("Got groups: " + g);
-        return g;
+        return new HashMap<>();
     }
 
 }

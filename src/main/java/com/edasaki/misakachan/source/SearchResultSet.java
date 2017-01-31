@@ -5,16 +5,22 @@ import java.util.Collection;
 import java.util.List;
 
 public class SearchResultSet {
+    private final AbstractSource aSource;
     private final String source;
     private List<SearchResult> results;
 
-    public SearchResultSet(String source) {
-        this.source = source;
+    public SearchResultSet(AbstractSource source) {
+        this.aSource = source;
+        this.source = source.getSourceName();
         this.results = new ArrayList<SearchResult>();
     }
 
     public void addResults(Collection<SearchResult> results) {
         this.results.addAll(results);
+    }
+
+    public AbstractSource getAbstractSource() {
+        return this.aSource;
     }
 
     public String getSource() {

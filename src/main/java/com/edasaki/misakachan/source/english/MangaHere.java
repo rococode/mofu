@@ -37,17 +37,18 @@ public class MangaHere extends AbstractSource {
         try {
             doc = Jsoup.connect(url).get();
             Series series = new Series();
+            series.source = this.getSourceName();
             Element detail = doc.select(".detail_topText").first();
             series.imageURL = doc.select(".manga_detail_top").first().select("img.img").first().absUrl("src");
             series.title = doc.select("meta[property=og:title").first().attr("content");
-            series.description = selectFirst(detail, "#hide");
+            series.description = detail.select("#show").first().ownText();
             series.authors = selectFirst(detail, "a[href^=http://www.mangahere.co/author/]");
             series.artists = selectFirst(detail, "a[href^=http://www.mangahere.co/artist/]");
             Elements labels = detail.select("label");
             for (Element e : labels) {
                 if (e.text().contains("Genre")) {
                     series.genres = e.parent().ownText();
-                } else if(e.text().contains("Alternative")) {
+                } else if (e.text().contains("Alternative")) {
                     series.altNames = e.parent().ownText();
                 }
             }
@@ -160,7 +161,6 @@ public class MangaHere extends AbstractSource {
                                 associatedNames.add(s);
                         }
                     }
-                    M.debug(associatedNames);
                     linkMap.put(link, associatedNames);
                 }
                 return createResultSet(linkMap);
@@ -169,6 +169,11 @@ public class MangaHere extends AbstractSource {
             }
             return createResultSet();
         };
+    }
+
+    @Override
+    public String getImageURL(Document doc) {
+        return doc.select(".manga_detail_top").first().select("img.img").first().absUrl("src");
     }
 
 }
