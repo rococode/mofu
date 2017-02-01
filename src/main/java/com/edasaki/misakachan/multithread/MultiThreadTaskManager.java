@@ -11,9 +11,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import com.edasaki.misakachan.utils.MCacheUtils;
 
 public class MultiThreadTaskManager {
 
@@ -41,8 +41,7 @@ public class MultiThreadTaskManager {
         List<Future<Document>> futures = new ArrayList<Future<Document>>();
         for (String pageURL : urls) {
             Callable<Document> c = () -> {
-                Connection conn = Jsoup.connect(pageURL);
-                return conn.get();
+                return MCacheUtils.getDocument(pageURL);
             };
             futures.add(MultiThreadTaskManager.queueTask(c));
         }

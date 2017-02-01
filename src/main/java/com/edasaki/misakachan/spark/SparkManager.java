@@ -22,6 +22,7 @@ import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.source.SearchResult;
 import com.edasaki.misakachan.source.SearchResultSet;
+import com.edasaki.misakachan.utils.MCacheUtils;
 import com.edasaki.misakachan.utils.logging.M;
 
 import spark.Request;
@@ -191,7 +192,7 @@ public class SparkManager {
                 for (SearchResult s : set.getResults()) {
                     Future<String> f = MultiThreadTaskManager.queueTask(() -> {
                         String url = s.url;
-                        Document doc = Jsoup.connect(url).get();
+                        Document doc = MCacheUtils.getDocument(url);
                         String img = src.getImageURL(doc);
                         return img;
                     });

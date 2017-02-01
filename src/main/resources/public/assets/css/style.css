@@ -45,7 +45,8 @@ div, img {
 
 .logo {
   margin: 50px auto 30px auto;
-  display: block; }
+  display: block;
+  max-width: 40%; }
 
 .loader-form {
   text-align: center; }

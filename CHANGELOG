@@ -2,6 +2,7 @@
 - mostly wrapped up scanlator group stuff, will add it to info panel in next patch
 - added images for each manga to search results - another surprisingly tricky to code thing, because it turns out some/most sites don't show images on the search results page so I have to fetch the image from each manga page, which needs to be multithreaded..
 - fixed mangahere descriptions to pull the full description
+- implemented document caching for faster loading (5 minute cache)
 
 0.0.20 - Jan 29 2017
 - finished json serialization for Series objects
