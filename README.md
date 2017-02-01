@@ -1,20 +1,28 @@
 # misakachan
 misakachan is a modern manga reader that can be run on any computer with Java! 
 
-It's 2017, and there still isn't a nice, updated manga reader for folks who read manga on their computers. We're left using programs that look and feel like they were designed 5+ years ago (mostly because, well, they were) or just browsing laggy aggregate sites who use ugly and clunky readers to maximize their ad revenue.
+There aren't really any nice readers for folks who read manga on their computers. We're left using programs that look and feel like they were designed 5+ years ago (mostly because, well, they were) or just browsing laggy aggregate sites that use ugly and clunky readers to maximize their ad revenue.
 
-Mobile apps are way better than anything available for computer users, but misakachan hopes to close that gap!
+Mobile apps are way better than anything available for computer users - just look at how much [tachiyomi](https://github.com/inorichi/tachiyomi) can do! 
+
+misakachan hopes to close the gap and provide more functionality to folks who read manga on their computers.
+
+Join us on Discord for sneak peeks at upcoming features, or to give me suggestions! I'm almost always online and try to respond to everyone :)
+
+[<img src="https://discordapp.com/api/guilds/268574742032809985/widget.png?style=shield">](https://discord.gg/pMucKJ5)  
 
 ## Features
 - Runs in your web browser so you can resize & zoom as much as you like!
+- Automatically loads full chapters in
+- Attempt to automatically find the scanlators for a manga (and credit them if found)
+- Search for manga and select chapters to automatically load
 
 ### Planned Features
-- Automatically loads full chapters in
 - Vertical (one long page) & horizontal (page by page) reading modes
 - One click to download loaded chapters to disk for future reading
 - Track reading progress and automatically check for new chapters
 - Load manga downloaded outside of misakachan (.zip, .rar, etc.)
-- Attempt to automatically find the scanlators for a manga (and credit them if found)
+- ... and much, much more! I plan to use this myself, and only the best will do if I'm gonna use it :^)
 
 ## Supported Sources
 - MangaHere.co
@@ -31,6 +39,20 @@ Mobile apps are way better than anything available for computer users, but misak
 
 
 ## FAQs
+
+### Is this ready for use?
+If misakachan is still on version 0.x.x (the first number is a 0), then it hasn't been formally released yet and I can't make any guarantees on the stability. Feel free to play around with it, though!
+
+### How does this work?
+misakachan is downloaded as a `.jar` file - check "Setup" above for more specific details.
+
+SECTION INCOMPLETE, WILL BE MORE DETAILED SOONISH!!
+
+### Do you accept pull requests?
+Not at the moment. The code is just way too disorganized at this stage, and I'm always refactoring things. I'll start accepting PRs when things are a bit more stable.
+
+### How is misakachan stylized?
+Just like that, lowercase m and no dash. I'm not really a fan of uppercase when it comes to romanizations, dunno why. Lowercase m looks cuter!
 
 ### Hey! This is mean to scanlators.
 I think everyone acknowledges that scanlators do all the hard work when it comes to translating manga. I say this as a translator myself - I TL a couple Japanese web novels in my spare time at [Project Accelerator](http://project-accelerator.net/) and have worked on a few manga translations as well.
