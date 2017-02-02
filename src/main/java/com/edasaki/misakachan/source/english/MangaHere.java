@@ -128,7 +128,6 @@ public class MangaHere extends AbstractSource {
                 List<String> associatedNames = new ArrayList<String>();
                 associatedNames.add(link.attr("rel"));
                 if (altText.contains("...")) {
-                    M.debug(altText + " requires extra parsing");
                     Document detailed = MCacheUtils.getDocument(link.absUrl("href"));
                     Elements altNameLabel = detailed.select("label:contains(Alternative Name)");
                     for (Element altNameLabelEle : altNameLabel) {

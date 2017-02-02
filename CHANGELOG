@@ -1,6 +1,11 @@
+0.0.24 - Feb 2 2017
+- fixed bug: search results not clearing
+- fixed bug: generating unique ids for search result images
+
 0.0.23 - Feb 1 2017
 - made manga titles auto-resize
 - added scrollbar for long manga descriptions
+- implemented search bar on search results page
 
 0.0.22 - Feb 1 2017
 - implemented document caching for faster loading (5 minute cache)

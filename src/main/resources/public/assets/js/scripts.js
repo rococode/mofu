@@ -150,13 +150,13 @@ $(document).ready(function() {
 		$('#manga-info-full-page-container').hide();
 	})
 	// debugging stuff below
-	swapToSearchResult();
-	$('#manga-info-full-page-container').show();
-	fit($('.title'), em(2.2));
-	var newWidth = $('#manga-info-container').width() - $('#manga-info-img').width() - 15;
-	console.log('calced width ' + newWidth);
-	$('.manga-description-container').width(newWidth);
-	$('.manga-description-container').jScrollPane({contentWidth: '0px'});
+//	swapToSearchResult();
+//	$('#manga-info-full-page-container').show();
+//	fit($('.title'), em(2.2));
+//	var newWidth = $('#manga-info-container').width() - $('#manga-info-img').width() - 15;
+//	console.log('calced width ' + newWidth);
+//	$('.manga-description-container').width(newWidth);
+//	$('.manga-description-container').jScrollPane({contentWidth: '0px'});
 });
 
 function em(input) {
@@ -306,6 +306,8 @@ function populateContainer(series) {
 	$('.manga-description-container').jScrollPane({contentWidth: '0px'});
 }
 
+var uniqueId = 1;
+
 function loadInReader(url) {
 	console.log("Loading url in reader: " + url);
 	swapToLoading();
@@ -317,17 +319,16 @@ function loadInReader(url) {
 				swapToReader();
 				setupReader(res);
 			} else if (res.type == "search") {
-				console.log('search results');
 				var count = 0;
-				var uniqueId = 1;
 				var idUrlPairs = [];
+				$('.search-results').empty();
 				for ( var i in res.results) {
 					var sourceObj = res.results[i];
 					var sourceName = sourceObj.sourceName;
 					var links = sourceObj.links;
+					console.log('found ' + links);
 					var html = '<div class="search-source">';
 					html += '<div class="search-source-name"><a href="#">' + sourceName + ' (' + sourceObj.links.length + ')</a> <i class="search-source-toggle fa fa-angle-double-up"></i></div>';
-					console.log(sourceName);
 					for ( var j in links) {
 						count++;
 						var title = links[j].title;
