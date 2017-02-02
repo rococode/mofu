@@ -599,11 +599,11 @@ $loadingSquareSize: 85px;
 
   .top-wrapper {
     display: block;
-    overflow: hidden;
   }
 
   .title {
     font-size: 2em;
+    font-weight: bold;
   }
 
   .divider {
@@ -618,6 +618,7 @@ $loadingSquareSize: 85px;
     float: right;
     max-width: 200px;
     max-height: 200px;
+    margin-left: 3px;
   }
 
   .chapter-header {
@@ -641,5 +642,13 @@ $loadingSquareSize: 85px;
     &:hover {
       background-color: $color-background-dark;
     }
+  }
+
+  .textFitted {
+    display: block !important;
+  }
+
+  .manga-description-container {
+    height: 75px;
   }
 }

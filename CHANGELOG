@@ -1,3 +1,7 @@
+0.0.23 - Feb 1 2017
+- made manga titles auto-resize
+- added scrollbar for long manga descriptions
+
 0.0.22 - Feb 1 2017
 - implemented document caching for faster loading (5 minute cache)
 - added new logo!

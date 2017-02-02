@@ -29,6 +29,17 @@ $(document).ready(function() {
 		return false;
 	});
 
+	$("#re-search-form").submit(function(e) {
+		// don't allow submit if url is empty
+		if ($("#re-search-url").val() == '') {
+			return false;
+		}
+		var url = $("#re-search-url").val();
+		$("#re-search-url").val('');
+		loadInReader(url);
+		return false;
+	});
+
 	$.get("changelog", function(data, status) {
 		var res = JSON.parse(data);
 		var full = "<p>";
@@ -91,10 +102,13 @@ $(document).ready(function() {
 				if ($('#home-container').is(":visible")) {
 					e.preventDefault();
 					$('#load-input-url').focus();
+				} else if ($('#search-result-container').is(":visible")) {
+					e.preventDefault();
+					$('#re-search-url').focus();
 				}
 				break;
 		}
-		console.log("keypress: " + e.which);
+		// console.log("keypress: " + e.which);
 	});
 
 	// placeholder stuff
@@ -135,12 +149,43 @@ $(document).ready(function() {
 			return;
 		$('#manga-info-full-page-container').hide();
 	})
-
-	$('#manga-info-full-page-container').hide();
-
 	// debugging stuff below
-	// swapToSearchResult();
+	swapToSearchResult();
+	$('#manga-info-full-page-container').show();
+	fit($('.title'), em(2.2));
+	var newWidth = $('#manga-info-container').width() - $('#manga-info-img').width() - 15;
+	console.log('calced width ' + newWidth);
+	$('.manga-description-container').width(newWidth);
+	$('.manga-description-container').jScrollPane({contentWidth: '0px'});
 });
+
+function em(input) {
+	var emSize = parseFloat($("body").css("font-size"));
+	return (emSize * input);
+}
+
+function fit(e, height) {
+	var original = e.css('font-size');
+	if (e.data('original-font-size') == undefined) {
+		e.data('original-font-size', original);
+		console.log('undefined');
+	} else {
+		original = e.data('original-font-size');
+	}
+	console.log('data for ' + e.text() + ':' + e.data('original-font-size'));
+	e.height(height);
+	textFit(e, {
+		multiLine : true,
+		reProcess : true,
+	});
+	var element = e.children('.textFitted');
+	element.css('display', 'block');
+	if (parseFloat(element.css('font-size')) > parseFloat(original)) {
+		element.css('font-size', original);
+		console.log('reset to max');
+	}
+	// e.height('auto');
+}
 
 var lastScroll = 0;
 
@@ -239,6 +284,7 @@ function populateContainer(series) {
 	e.find('.desc').text(series.description);
 	e.find('img').attr('src', series.imageURL);
 	var pane = $('#chapter-pane .jspPane');
+	pane.empty();
 	var ct = 0;
 	for (i in series.chapters) {
 		var chap = series.chapters[i];
@@ -252,6 +298,12 @@ function populateContainer(series) {
 	});
 	e.find('.chapter-header').text(ct + " Chapter" + (ct == 1 ? "" : "s") + " available from " + series.source);
 	$('#manga-info-full-page-container').show();
+	$('#manga-description-container').jScrollPane();
+	fit($('.title'), em(2.2));
+	var newWidth = $('#manga-info-container').width() - $('#manga-info-img').width() - 15;
+	console.log('calced width ' + newWidth);
+	$('.manga-description-container').width(newWidth);
+	$('.manga-description-container').jScrollPane({contentWidth: '0px'});
 }
 
 function loadInReader(url) {

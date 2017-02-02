@@ -458,10 +458,10 @@ div, img {
   margin-left: -25%;
   padding: 10px; }
   .manga-info-container .top-wrapper {
-    display: block;
-    overflow: hidden; }
+    display: block; }
   .manga-info-container .title {
-    font-size: 2em; }
+    font-size: 2em;
+    font-weight: bold; }
   .manga-info-container .divider {
     margin: 10px auto 10px;
     height: 1px;
@@ -471,7 +471,8 @@ div, img {
   .manga-info-container img {
     float: right;
     max-width: 200px;
-    max-height: 200px; }
+    max-height: 200px;
+    margin-left: 3px; }
   .manga-info-container .chapter-header {
     text-align: center;
     width: 100%;
@@ -487,3 +488,7 @@ div, img {
     padding: 5px 0 5px 5px; }
     .manga-info-container .chapter:hover {
       background-color: #272727; }
+  .manga-info-container .textFitted {
+    display: block !important; }
+  .manga-info-container .manga-description-container {
+    height: 75px; }

@@ -11,7 +11,6 @@ import java.util.concurrent.Future;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.edasaki.misakachan.Misaka;
@@ -23,7 +22,6 @@ import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.source.SearchResult;
 import com.edasaki.misakachan.source.SearchResultSet;
 import com.edasaki.misakachan.utils.MCacheUtils;
-import com.edasaki.misakachan.utils.logging.M;
 
 import spark.Request;
 import spark.Response;
@@ -36,8 +34,6 @@ public class SparkManager {
     private static final Map<String, String> cachedURLToImage = new HashMap<String, String>();
 
     private List<SearchResultSet> lastSearchResults;
-    private int currSearchId;
-    private static int SEARCH_COUNTER = 1;
 
     public SparkManager(AbstractSource[] sources) {
         this.sources = sources;
@@ -81,20 +77,17 @@ public class SparkManager {
             JSONObject obj = urlArray.getJSONObject(k);
             String id = obj.getString("id");
             String url = obj.getString("url");
-            M.debug("requested " + id + ", " + url);
             while (!cachedURLToImage.containsKey(url)) {
                 if (counter > 5 * 10) { //5 is one second, max 5 sec hang
                     break;
                 }
                 try {
-                    M.debug("waiting...");
                     counter++;
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            M.debug("found! " + cachedURLToImage.get(url));
             JSONObject jo = new JSONObject();
             jo.put("id", id);
             jo.put("imgUrl", cachedURLToImage.getOrDefault(url, "http://edasaki.com/i/test-page.png"));
@@ -124,7 +117,6 @@ public class SparkManager {
         JSONObject jo = new JSONObject();
         for (AbstractSource source : sources) {
             if (source.match(url)) {
-                M.debug("Matched " + source);
                 jo.put("type", "url");
                 jo.put("site", source.getSourceName());
                 Chapter chapter = source.getChapter(url);
@@ -134,7 +126,6 @@ public class SparkManager {
                 for (Page p : chapter.getPages())
                     urls.put(p.getURL());
                 jo.put("urls", urls);
-                //                M.debug("Generated JSON " + jo.toString());
                 return jo.toString();
             }
         }
@@ -142,7 +133,6 @@ public class SparkManager {
     }
 
     private String search(Request req, Response res) {
-        this.currSearchId = SparkManager.SEARCH_COUNTER++;
         String searchPhrase = req.body();
         JSONObject jo = new JSONObject();
         jo.put("type", "search");
@@ -203,7 +193,6 @@ public class SparkManager {
                     cachedURLToImage.put(e.getKey(), e.getValue().get());
                 }
                 this.lastSearchResults.remove(set);
-                M.debug("Cached image URLs: " + cachedURLToImage);
                 return true;
             });
         }
