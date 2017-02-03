@@ -1,3 +1,9 @@
+0.0.26 - Feb 2 2017
+- top/bottom arrows are now slightly lower and sticky. the code to make them sticky but not overflow into the footer is actually pretty wacky, may try to improve in the future altho it seems to work quite well (surprisingly hard to make it not have weird snaps)
+- added a super basic light theme (for personal use only at the moment - official builds will only have the dark theme until I add a theme switcher)
+- added a download button (doesn't do anything yet, just sits there looking cute)
+- fixed a bug with the above padded fixed divs (need to account for children for whatever reason) - now works super smoothly for both the arrows and the download button!
+
 0.0.25 - Feb 2 2017
 - added auto search result sorting by similarity to search term
 - refactored manga info formatting (pluralization, etc.) from backend to frontend

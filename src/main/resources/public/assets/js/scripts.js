@@ -149,7 +149,12 @@ $(document).ready(function() {
 			return;
 		$('#manga-info-full-page-container').hide();
 	})
+
+	addBottomPadding($('#top-bottom-buttons'), 50);
+	addBottomPadding($('#download-button'), 50);
+
 	// debugging stuff below
+	swapToReader();
 	// swapToSearchResult();
 	// $('#manga-info-full-page-container').show();
 	// fit($('.title'), em(2.2));
@@ -159,6 +164,56 @@ $(document).ready(function() {
 	// $('.manga-description-container').width(newWidth);
 	// $('.manga-description-container').jScrollPane({contentWidth: '0px'});
 });
+
+// function checkPadding(element, botPadding) {
+// var elementTop = element.offset().top;
+// var elementBottom = elementTop + element.outerHeight();
+// var viewportTop = $(window).scrollTop();
+// var viewportBottom = viewportTop + $(window).height();
+// console.log(viewportBottom);
+// return elementTop > viewportTop && elementBottom + parseFloat(botPadding) - 1 < viewportBottom;
+// };
+//
+// function checkNeedsAbs(element, padding) {
+// var elementTop = element.offset().top;
+// var elementBottom = elementTop + element.outerHeight();
+// var limit = $('html').height() - $('.footer').outerHeight() - padding;
+// console.log('top ' + elementTop + ' bottom ' + elementBottom + ' limit ' + limit);
+// return elementBottom > limit;
+// }
+
+function check(element, padding) {
+	var viewportTop = $(window).scrollTop();
+	var bot = element.data('original-bottom') == undefined ? 0 : parseFloat(element.data('original-bottom'));
+	// console.log(element.children().length + ', ');
+	var viewportBottom = viewportTop + $(window).height() - element.outerHeight() / element.children().length - bot;
+	var limit = $('html').height() - $('.footer').outerHeight() - padding;
+	// console.log(viewportBottom + ', ' + limit + ', ' + bot);
+	return viewportBottom > limit;
+}
+
+function addBottomPadding(element, padding) {
+	$(window).scroll(function(e) {
+		// var noReset = element.data('original-bottom') == undefined || checkPadding(element, element.data('original-bottom'));
+		// var needsAbsolute = checkNeedsAbs(element, padding + (element.data('original-bottom') == undefined ? 0 : parseFloat(element.data('original-bottom'))));
+		// console.log(noReset + ' ' + needsAbsolute);
+		// if (noReset && needsAbsolute) {
+		if (check(element, padding)) {
+			if (element.data('original-bottom') == undefined) {
+				element.data('original-bottom', element.css('bottom'));
+			}
+			element.css({
+				position : 'absolute',
+				bottom : padding
+			});
+		} else {
+			element.css({
+				position : 'fixed',
+				bottom : element.data('original-bottom')
+			});
+		}
+	});
+};
 
 function em(input) {
 	var emSize = parseFloat($("body").css("font-size"));

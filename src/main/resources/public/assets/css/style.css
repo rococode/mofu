@@ -3,11 +3,11 @@ html {
   min-height: 100%; }
 
 body {
-  background-color: #373737;
-  background: linear-gradient(rgba(55, 55, 55, 0.8), rgba(55, 55, 55, 0.8), url("../gfx/paper_2.png"));
-  margin: 0 0 75px;
+  background-color: #fff;
+  background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8), url("../gfx/paper_2.png"));
+  margin: 0 0 50px;
   padding: 0;
-  color: #ccc;
+  color: #222;
   font-family: 'Ubuntu', sans-serif; }
 
 div, img {
@@ -15,7 +15,7 @@ div, img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .top-bottom-buttons span, .changelog i:hover, .search-result-title, .search-source-name i:hover {
+.unselectable, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -31,8 +31,8 @@ div, img {
 .footer {
   font-family: 'Ubuntu', sans-serif;
   text-align: center;
-  background-color: #272727;
-  color: #555;
+  background-color: #ddd;
+  color: #000;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -52,7 +52,7 @@ div, img {
   text-align: center; }
   .loader-form input[type=text], .loader-form button[type=submit] {
     font-family: 'Ubuntu', sans-serif;
-    background-color: #ffe57f;
+    background-color: #aaa;
     -webkit-transition: 0.5s;
     transition: 0.5s;
     text-align: center; }
@@ -78,13 +78,13 @@ div, img {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    color: #373737;
-    border: 3px solid #272727;
+    color: #fff;
+    border: 3px solid #ddd;
     border-radius: 7px;
     font-weight: bold;
     font-size: 1.5em; }
     .loader-form button[type=submit]:hover {
-      background-color: #ffd740; }
+      background-color: #bbb; }
 
 .history {
   margin-top: 10px;
@@ -101,7 +101,7 @@ div, img {
   text-align: center;
   font-size: 2em;
   padding: 5px 0 8px 0;
-  background-color: #272727; }
+  background-color: #ddd; }
 
 .reader-nav-container {
   width: 100%;
@@ -110,11 +110,11 @@ div, img {
   margin: 10px 0; }
 
 .reader-nav {
-  background-color: #272727;
+  background-color: #ddd;
   padding: 3px 10px;
   display: inline-block;
   text-align: center;
-  border: 3px solid #ccc;
+  border: 3px solid #222;
   font-family: 'Ubuntu Mono', monospace; }
 
 .reader-nav-el {
@@ -123,7 +123,7 @@ div, img {
   vertical-align: center; }
 
 .reader-nav-div {
-  background-color: #ccc;
+  background-color: #222;
   width: 1px;
   display: inline-block;
   margin-bottom: -3px; }
@@ -141,7 +141,7 @@ div, img {
   text-align: center;
   vertical-align: middle;
   border-radius: 5px;
-  background-color: #272727; }
+  background-color: #ddd; }
 
 .reader-pages {
   margin: 5px auto;
@@ -154,21 +154,31 @@ div, img {
 
 .top-bottom-buttons {
   position: fixed;
-  padding-bottom: 35px;
   bottom: 10px;
-  left: 15px; }
+  left: 20px; }
   .top-bottom-buttons span {
     font-size: 1.75em;
     display: block; }
     .top-bottom-buttons span:hover {
-      color: #eee;
+      color: #444;
+      cursor: pointer; }
+
+.download-button {
+  position: fixed;
+  bottom: 10px;
+  right: 20px; }
+  .download-button span {
+    font-size: 1.75em;
+    display: block; }
+    .download-button span:hover {
+      color: #444;
       cursor: pointer; }
 
 .loading-container {
   display: none; }
 
 .loading-bg-wrapper {
-  background-color: #373737;
+  background-color: #fff;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -178,7 +188,7 @@ div, img {
   margin-top: -142.5px;
   margin-left: -203.25px;
   border-radius: 10px;
-  border: 3px solid #888; }
+  border: 3px solid #555; }
 
 .loading-display {
   position: fixed;
@@ -192,7 +202,7 @@ div, img {
     margin-left: -12px;
     text-align: center;
     font-size: 1.5em;
-    color: #ffe57f;
+    color: #aaa;
     font-family: 'Ubuntu Mono', monospace; }
   .loading-display .loading-dots {
     display: inline-block;
@@ -210,7 +220,7 @@ div, img {
   position: relative;
   -webkit-transform: rotateZ(45deg);
   transform: rotateZ(45deg);
-  background-color: #373737; }
+  background-color: #fff; }
 
 .sk-folding-cube .sk-cube {
   float: left;
@@ -228,7 +238,7 @@ div, img {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #ffe57f;
+  background-color: #aaa;
   -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
   animation: sk-foldCubeAngle 2.4s infinite linear both;
   -webkit-transform-origin: 100% 100%;
@@ -288,10 +298,10 @@ div, img {
 .discord {
   display: inline;
   position: absolute;
-  color: #888;
+  color: #555;
   right: 10px; }
   .discord:hover {
-    color: #aaa; }
+    color: #777; }
   .discord img {
     margin-top: -2px;
     margin-left: 5px;
@@ -311,13 +321,13 @@ div, img {
     white-space: pre;
     width: 50%;
     margin: 0 auto;
-    border: 1px solid #555;
+    border: 1px solid #000;
     height: 200px;
     overflow: auto;
     padding: 0 0;
     display: none; }
   .changelog i:hover {
-    color: #eee;
+    color: #444;
     cursor: pointer; }
   .changelog p {
     padding-top: 5px;
@@ -326,13 +336,13 @@ div, img {
     lineheight: inherit; }
 
 .jspCorner {
-  background-color: #373737; }
+  background-color: #fff; }
 
 .jspTrack {
-  background-color: #373737; }
+  background-color: #fff; }
 
 .jspDrag {
-  background-color: #555; }
+  background-color: #000; }
 
 .search-result-container {
   display: none; }
@@ -342,7 +352,7 @@ div, img {
   margin-top: 10px; }
   .re-search-form input[type=text], .re-search-form button[type=submit] {
     font-family: 'Ubuntu', sans-serif;
-    background-color: #ffe57f;
+    background-color: #aaa;
     -webkit-transition: 0.5s;
     transition: 0.5s;
     text-align: center;
@@ -368,17 +378,17 @@ div, img {
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-    color: #373737;
-    border: 3px solid #272727;
+    color: #fff;
+    border: 3px solid #ddd;
     border-radius: 7px;
     font-weight: bold; }
     .re-search-form button[type=submit]:hover {
-      background-color: #ffd740; }
+      background-color: #bbb; }
 
 .search-results-title {
   text-align: center;
   width: 100%;
-  color: #ccc;
+  color: #222;
   font-size: 2.3em;
   font-family: 'Ubuntu', sans-serif;
   margin-bottom: 10px; }
@@ -387,22 +397,22 @@ div, img {
   width: 70%;
   margin: 5px auto 0;
   padding-bottom: 5px;
-  background-color: #323232; }
+  background-color: #eee; }
   .search-results a, .search-results a:hover, .search-results a:visited, .search-results a:active {
     text-decoration: none;
     color: inherit;
     cursor: pointer; }
   .search-results a:hover {
-    color: #eee; }
+    color: #444; }
 
 .search-result-title {
   cursor: pointer; }
   .search-result-title:hover {
-    color: #eee; }
+    color: #444; }
 
 .search-source {
   margin-top: 10px;
-  border: 2px solid #272727;
+  border: 2px solid #ddd;
   padding-bottom: 5px; }
 
 .search-source-name {
@@ -410,10 +420,10 @@ div, img {
   width: 100%;
   padding: 3px 0;
   font-size: 1.6em;
-  background-color: #171717;
+  background-color: #ccc;
   margin-bottom: 5px; }
   .search-source-name i:hover {
-    color: #eee;
+    color: #444;
     cursor: pointer; }
 
 .search-result {
@@ -450,8 +460,8 @@ div, img {
   width: 50%;
   min-height: 520px;
   height: auto;
-  background-color: #272727;
-  border: 3px solid #555;
+  background-color: #ddd;
+  border: 3px solid #000;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -467,7 +477,7 @@ div, img {
     margin: 10px auto 8px;
     height: 1px;
     border-radius: 1px;
-    background-color: #555;
+    background-color: #000;
     width: 100%; }
   .manga-info-container img {
     float: right;
@@ -480,10 +490,10 @@ div, img {
     font-size: 1.15em;
     margin-bottom: 10px; }
   .manga-info-container .chapters {
-    background-color: #323232;
+    background-color: #eee;
     height: 250px;
     text-align: left;
-    border: 1px solid #555; }
+    border: 1px solid #000; }
   .manga-info-container .chapter-bottom-padding {
     height: 5px;
     width: 100%; }
@@ -491,7 +501,7 @@ div, img {
     width: 100%;
     padding: 5px 0 5px 5px; }
     .manga-info-container .chapter:hover {
-      background-color: #272727; }
+      background-color: #ddd; }
   .manga-info-container .textFitted {
     display: block !important; }
   .manga-info-container .manga-description-container {

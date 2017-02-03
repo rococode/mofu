@@ -1,4 +1,4 @@
-@import "colors";
+@import "colors_light";
 
 html {
   position: relative;
@@ -8,7 +8,7 @@ html {
 body {
   background-color: $color-background-main;
   background: linear-gradient($color-background-main-gradient, $color-background-main-gradient, url("../gfx/paper_2.png"));
-  margin: 0 0 75px;
+  margin: 0 0 50px;
   padding: 0;
   color: $color-text-main;
   font-family: 'Ubuntu', sans-serif;
@@ -191,9 +191,26 @@ div, img {
 
 .top-bottom-buttons {
   position: fixed;
-  padding-bottom: 35px;
   bottom: 10px;
-  left: 15px;
+  left: 20px;
+
+  span {
+    @extend .unselectable;
+
+    &:hover {
+      color: $color-text-hover;
+      cursor: pointer;
+    }
+
+    font-size: 1.75em;
+    display: block;
+  }
+}
+
+.download-button {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
 
   span {
     @extend .unselectable;
