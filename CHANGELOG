@@ -1,3 +1,11 @@
+0.0.25 - Feb 2 2017
+- added auto search result sorting by similarity to search term
+- refactored manga info formatting (pluralization, etc.) from backend to frontend
+- fixed issue with chapter overlay coming up over the image if there is no description using a micro clearfix
+- fixed resizing issue on manga info display
+- shifted manga display up a bit
+- tweaked padding a bit on different parts of the info display
+
 0.0.24 - Feb 2 2017
 - fixed bug: search results not clearing
 - fixed bug: generating unique ids for search result images

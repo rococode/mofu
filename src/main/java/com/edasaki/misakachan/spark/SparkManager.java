@@ -150,6 +150,7 @@ public class SparkManager {
         for (Future<SearchResultSet> future : futures) {
             try {
                 SearchResultSet set = future.get();
+                set.sort(searchPhrase);
                 lastSearchResults.add(set);
                 JSONObject src = new JSONObject();
                 src.put("sourceName", set.getSource());

@@ -584,16 +584,17 @@ $loadingSquareSize: 85px;
 
 .manga-info-container {
   $info-width: 50%;
-  $info-height: 500px;
+  $info-height: 520px;
 
   width: $info-width;
-  height: $info-height;
+  min-height: $info-height;
+  height: auto;
   background-color: $color-background-dark;
   border: 3px solid $color-text-dark;
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-top: -$info-height / 2;
+  margin-top: -$info-height / 1.5;
   margin-left: -$info-width / 2;
   padding: 10px;
 
@@ -607,7 +608,7 @@ $loadingSquareSize: 85px;
   }
 
   .divider {
-    margin: 10px auto 10px;
+    margin: 10px auto 8px;
     height: 1px;
     border-radius: 1px;
     background-color: $color-text-dark;
@@ -634,6 +635,11 @@ $loadingSquareSize: 85px;
     text-align: left;
     border: 1px solid $color-text-dark;
   }
+  
+  .chapter-bottom-padding {
+    height: 5px;
+    width: 100%;
+  }
 
   .chapter {
     width: 100%;
@@ -651,4 +657,29 @@ $loadingSquareSize: 85px;
   .manga-description-container {
     height: 75px;
   }
+  
+  .alt, .genre, .author, .artist {
+  margin-bottom: 3px;}
+}
+
+
+/**
+* micro-clearfix
+*/
+.cf:before,
+.cf:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.cf:after {
+  clear: both;
+}
+
+/**
+* For IE 6/7 only
+* Include this rule to trigger hasLayout and contain floats.
+*/
+.cf {
+  *zoom: 1;
 }

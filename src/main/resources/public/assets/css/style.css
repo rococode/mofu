@@ -448,13 +448,14 @@ div, img {
 
 .manga-info-container {
   width: 50%;
-  height: 500px;
+  min-height: 520px;
+  height: auto;
   background-color: #272727;
   border: 3px solid #555;
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-top: -250px;
+  margin-top: -346.66667px;
   margin-left: -25%;
   padding: 10px; }
   .manga-info-container .top-wrapper {
@@ -463,7 +464,7 @@ div, img {
     font-size: 2em;
     font-weight: bold; }
   .manga-info-container .divider {
-    margin: 10px auto 10px;
+    margin: 10px auto 8px;
     height: 1px;
     border-radius: 1px;
     background-color: #555;
@@ -483,6 +484,9 @@ div, img {
     height: 250px;
     text-align: left;
     border: 1px solid #555; }
+  .manga-info-container .chapter-bottom-padding {
+    height: 5px;
+    width: 100%; }
   .manga-info-container .chapter {
     width: 100%;
     padding: 5px 0 5px 5px; }
@@ -492,3 +496,25 @@ div, img {
     display: block !important; }
   .manga-info-container .manga-description-container {
     height: 75px; }
+  .manga-info-container .alt, .manga-info-container .genre, .manga-info-container .author, .manga-info-container .artist {
+    margin-bottom: 3px; }
+
+/**
+* micro-clearfix
+*/
+.cf:before,
+.cf:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.cf:after {
+  clear: both; }
+
+/**
+* For IE 6/7 only
+* Include this rule to trigger hasLayout and contain floats.
+*/
+.cf {
+  *zoom: 1; }

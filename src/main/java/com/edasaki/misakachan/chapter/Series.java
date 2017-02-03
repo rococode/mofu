@@ -56,10 +56,10 @@ public class Series {
         JSONObject jo = new JSONObject();
         jo.put("imageURL", imageURL);
         jo.put("title", title);
-        jo.put("authors", (authors.contains(",") || authors.contains(";") ? "Authors: " : "Author: ") + authors);
-        jo.put("artists", (artists.contains(",") || artists.contains(";") ? "Artists: " : "Artist: ") + artists);
-        jo.put("genres", (genres.contains(",") || genres.contains(";") ? "Genres: " : "Genre: ") + genres);
-        jo.put("altNames", altNames.length() == 0 ? "Alt Names: None" : (altNames.contains(",") || altNames.contains(";") ? "Alternate Names: " : "Alternate Name: ") + altNames);
+        jo.put("authors", authors);
+        jo.put("artists", artists);
+        jo.put("genres", genres);
+        jo.put("altNames", altNames);
         jo.put("description", description);
         jo.put("source", source);
         jo.put("chapters", getChaptersJSON());
