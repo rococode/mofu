@@ -48,10 +48,36 @@ public class SparkManager {
         Spark.get("/changelog", this::loadChangelog);
         Spark.post("/lookup", this::lookup);
         Spark.post("/fetchResultImages", this::fetchResultImages);
+        Spark.post("/download", this::downloadSingle);
     }
 
     public int getPort() {
         return Spark.port();
+    }
+
+    private String downloadSingle(Request req, Response res) {
+        JSONObject result = new JSONObject();
+        try {
+            JSONObject o = new JSONObject(req.body());
+            String title = o.getString("mangaName").trim();
+            String source = o.getString("source");
+            int chapterNumber = o.getInt("chapterNumber");
+            JSONArray arr = o.getJSONArray("arr");
+            Object[][] pages = new Object[arr.length()][2];
+            for (int k = 0; k < arr.length(); k++) {
+                JSONObject obj = arr.getJSONObject(k);
+                int pageNumber = obj.getInt("number");
+                String src = obj.getString("src");
+                pages[k] = new Object[] { pageNumber, src };
+            }
+            Misaka.instance().persist.saveChapter(title, source, chapterNumber, pages);
+            result.put("status", "success");
+            return result.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        result.put("status", "failure");
+        return result.toString();
     }
 
     private String lookup(Request req, Response res) {
@@ -118,9 +144,11 @@ public class SparkManager {
         for (AbstractSource source : sources) {
             if (source.match(url)) {
                 jo.put("type", "url");
-                jo.put("site", source.getSourceName());
+                jo.put("source", source.getSourceName());
                 Chapter chapter = source.getChapter(url);
-                jo.put("name", chapter.getChapterName());
+                jo.put("mangaName", chapter.getMangaTitle());
+                jo.put("chapterName", chapter.getChapterName());
+                jo.put("chapterNumber", chapter.getChapterNumber());
                 jo.put("pagecount", chapter.getPageCount());
                 JSONArray urls = new JSONArray();
                 for (Page p : chapter.getPages())

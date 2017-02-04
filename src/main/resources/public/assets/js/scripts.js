@@ -150,11 +150,39 @@ $(document).ready(function() {
 		$('#manga-info-full-page-container').hide();
 	})
 
+	$('#download-button-icon').on('click', function() {
+		console.log('zz');
+		var arr = [];
+		var mangaName = $("#reader-title").text();
+		var source = $('#info-source').text();
+		var chapterNumber = $('#info-chapter');
+		$('.reader-page').each(function(index) {
+			var page = $(this);
+			console.log(page);
+			var src = page.find('img').attr('src');
+			console.log('found src ' + src + ' for page ' + index);
+			arr.push({
+				number : index,
+				src : src
+			});
+		});
+		var obj = {
+			arr : arr,
+			mangaName : mangaName,
+			source : source,
+			chapterNumber : chapterNumber
+		};
+		console.log(JSON.stringify(arr));
+		$.post("download", JSON.stringify(obj), function(data, status) {
+			var res = JSON.parse(data);
+		});
+	});
+
 	addBottomPadding($('#top-bottom-buttons'), 50);
 	addBottomPadding($('#download-button'), 50);
 
 	// debugging stuff below
-	swapToReader();
+	// swapToReader();
 	// swapToSearchResult();
 	// $('#manga-info-full-page-container').show();
 	// fit($('.title'), em(2.2));
@@ -322,7 +350,10 @@ function swapToSearchResult() {
 }
 
 function setupReader(json) {
-	$("#reader-title").html(json.name);
+	$("#reader-title").html(json.mangaName);
+	$('#info-source').html(json.source);
+	$('#info-chapter').html(json.chapterNumber);
+	$('#reader-pages').empty();
 	console.log(json.urls);
 	for (k in json.urls) {
 		$('#reader-pages').append("<div class=\"reader-page\"><img src=\"" + json.urls[k] + "\" /></div>");

@@ -167,12 +167,17 @@ div, img {
   position: fixed;
   bottom: 10px;
   right: 20px; }
+  .download-button div {
+    display: inline-block;
+    visibility: hidden; }
   .download-button span {
     font-size: 1.75em;
     display: block; }
     .download-button span:hover {
       color: #444;
       cursor: pointer; }
+      .download-button span:hover div {
+        visibility: visible; }
 
 .loading-container {
   display: none; }

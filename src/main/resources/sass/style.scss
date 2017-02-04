@@ -212,10 +212,18 @@ div, img {
   bottom: 10px;
   right: 20px;
 
+  div {
+    display: inline-block;
+    visibility: hidden;
+  }
+
   span {
     @extend .unselectable;
 
     &:hover {
+    
+        div {
+        visibility: visible;}
       color: $color-text-hover;
       cursor: pointer;
     }
@@ -652,7 +660,7 @@ $loadingSquareSize: 85px;
     text-align: left;
     border: 1px solid $color-text-dark;
   }
-  
+
   .chapter-bottom-padding {
     height: 5px;
     width: 100%;
@@ -674,19 +682,23 @@ $loadingSquareSize: 85px;
   .manga-description-container {
     height: 75px;
   }
-  
-  .alt, .genre, .author, .artist {
-  margin-bottom: 3px;}
-}
 
+  .alt, .genre, .author, .artist {
+    margin-bottom: 3px;
+  }
+}
 
 /**
 * micro-clearfix
 */
 .cf:before,
 .cf:after {
-  content: " "; /* 1 */
-  display: table; /* 2 */
+  content: " ";
+
+  /* 1 */
+  display: table;
+
+  /* 2 */
 }
 
 .cf:after {

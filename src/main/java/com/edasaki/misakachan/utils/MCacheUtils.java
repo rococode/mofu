@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.edasaki.misakachan.utils.logging.M;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -23,7 +22,6 @@ public class MCacheUtils {
         documentCache = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build(new CacheLoader<String, Document>() {
             public Document load(String url) {
                 try {
-                    M.debug("Connecting to " + url + "...");
                     return Jsoup.connect(url).get();
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -1,3 +1,7 @@
+0.0.27 - Feb 3 2017
+- fixed clearing pages on new chapter
+- started work on chapter downloading (almost done with it I think, just a couple last bugs to iron out)
+
 0.0.26 - Feb 2 2017
 - top/bottom arrows are now slightly lower and sticky. the code to make them sticky but not overflow into the footer is actually pretty wacky, may try to improve in the future altho it seems to work quite well (surprisingly hard to make it not have weird snaps)
 - added a super basic light theme (for personal use only at the moment - official builds will only have the dark theme until I add a theme switcher)

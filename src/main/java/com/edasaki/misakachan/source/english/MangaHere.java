@@ -62,6 +62,7 @@ public class MangaHere extends AbstractSource {
 
     @Override
     public Chapter getChapter(String url) {
+        M.debug("gettting " + url);
         Document doc = MCacheUtils.getDocument(url);
         if (doc == null)
             return null;
@@ -72,12 +73,16 @@ public class MangaHere extends AbstractSource {
             if (!pageURLs.contains(pageURL))
                 pageURLs.add(pageURL);
         }
-        String title = "Unknown Title";
+        String mangaTitle = "Unknown Manga";
+        String chapterTitle = "Unknown Chapter";
+        int chapterNum = 0;
         for (Element e : doc.select("div.title > h1 > a")) {
             String txt = e.text().trim();
-            if (!txt.matches(".* [0-9]+"))
+            if (!txt.matches(".* +[0-9]+"))
                 continue;
-            title = txt.substring(0, txt.lastIndexOf(' '));
+            mangaTitle = txt.substring(0, txt.lastIndexOf(' '));
+            chapterTitle = txt;
+            chapterNum = Integer.parseInt(txt.substring(txt.lastIndexOf(' ') + 1).trim());
             break;
         }
         List<String> srcs = new ArrayList<String>();
@@ -88,7 +93,7 @@ public class MangaHere extends AbstractSource {
         }
         System.out.println("finished parsing pages in " + (System.currentTimeMillis() - start) + "ms");
         List<Page> pages = Page.convertURLs(srcs);
-        Chapter chapter = new Chapter(title, pages.size(), pages);
+        Chapter chapter = new Chapter(mangaTitle, chapterTitle, chapterNum, pages);
         return chapter;
     }
 
