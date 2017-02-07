@@ -18,6 +18,7 @@ import com.edasaki.misakachan.utils.MCacheUtils;
 public class MultiThreadTaskManager {
 
     private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
+    private static final ExecutorService ORDERED_EXECUTOR = Executors.newFixedThreadPool(4);
 
     public static <T> Future<T> queueTask(Callable<T> callable) {
         return EXECUTOR.submit(callable);
@@ -60,10 +61,21 @@ public class MultiThreadTaskManager {
     public static <T> void wait(Collection<Future<T>> futures) {
         while (!allReady(futures)) {
             try {
-                Thread.sleep(100L);
+                Thread.sleep(20L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static <T> Future<T> queueTaskOrdered(Callable<T> callable) {
+        return ORDERED_EXECUTOR.submit(callable);
+    }
+
+    public static <T> List<Future<T>> queueTasksOrdered(Collection<Callable<T>> callables) {
+        List<Future<T>> futures = new ArrayList<Future<T>>();
+        for (Callable<T> c : callables)
+            futures.add(ORDERED_EXECUTOR.submit(c));
+        return futures;
     }
 }

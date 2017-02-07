@@ -155,7 +155,7 @@ $(document).ready(function() {
 		var arr = [];
 		var mangaName = $("#reader-title").text();
 		var source = $('#info-source').text();
-		var chapterNumber = $('#info-chapter');
+		var chapterNumber = $('#info-chapter').text();
 		$('.reader-page').each(function(index) {
 			var page = $(this);
 			console.log(page);

@@ -22,6 +22,7 @@ import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.source.SearchResult;
 import com.edasaki.misakachan.source.SearchResultSet;
 import com.edasaki.misakachan.utils.MCacheUtils;
+import com.edasaki.misakachan.utils.logging.M;
 
 import spark.Request;
 import spark.Response;
@@ -59,9 +60,10 @@ public class SparkManager {
         JSONObject result = new JSONObject();
         try {
             JSONObject o = new JSONObject(req.body());
+            M.debug(o.toString(4));
             String title = o.getString("mangaName").trim();
             String source = o.getString("source");
-            int chapterNumber = o.getInt("chapterNumber");
+            int chapterNumber = Integer.parseInt(o.getString("chapterNumber"));
             JSONArray arr = o.getJSONArray("arr");
             Object[][] pages = new Object[arr.length()][2];
             for (int k = 0; k < arr.length(); k++) {

@@ -17,8 +17,10 @@ public class MCacheUtils {
 
     private static LoadingCache<String, Document> documentCache;
 
-    private static void initialize() {
-        initialized = true;
+    private synchronized static void initialize() {
+        if (initialized) {
+            return;
+        }
         documentCache = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build(new CacheLoader<String, Document>() {
             public Document load(String url) {
                 try {
@@ -29,11 +31,19 @@ public class MCacheUtils {
                 return null;
             }
         });
+        initialized = true;
+    }
+
+    static {
+        initialize();
     }
 
     public static Document getDocument(String url) {
         if (!initialized) {
             initialize();
+        }
+        if (url == null) {
+            return null;
         }
         try {
             return documentCache.get(url);

@@ -2,21 +2,24 @@ package com.edasaki.misakachan.scanlator;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.edasaki.misakachan.Misaka;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.utils.MCacheUtils;
 import com.edasaki.misakachan.utils.MStringUtils;
-import com.edasaki.misakachan.utils.logging.M;
+import com.edasaki.misakachan.utils.MTimer;
 
 public class BakaUpdateSearcher {
     private static final String PREFIX = "https://www.mangaupdates.com/series.html?stype=title&orderby=rating&perpage=100&page=";
@@ -32,70 +35,86 @@ public class BakaUpdateSearcher {
     private static final String GROUP_SELECTOR_REGEX = ".*\\Qmangaupdates.com/groups.html?id=\\E.*";
     private static final String GROUP_SELECTOR = "a[href~=" + GROUP_SELECTOR_REGEX + "]";
 
-    protected String getURL(String title) {
-        M.debug("searching for " + title);
-        title = title.trim();
-        Document doc;
-        double bestSimilarity = 0;
-        String bestTitle = null;
-        String bestURL = null;
+    private static final Map<Element, List<String>> emptyMap = new HashMap<>();
+
+    private static final class ThreadState {
+        private int endPage = -1;
+    }
+
+    protected String getURL(final String title) {
+        MTimer t = new MTimer();
         int page = 1;
-        HashMap<String, String> mapContainedTitleToURL = new HashMap<String, String>();
-        long start = System.currentTimeMillis();
-        try {
-            do {
-                final String connectionURL = PREFIX + page + SEARCH + URLEncoder.encode(title, CHARSET);
-                doc = MCacheUtils.getDocument(connectionURL);
-                if (doc.html().contains("There are no") || doc.html().contains("make your query more restrictive.")) // search complete
-                    break;
-                Elements links = doc.select(SELECTOR);
-                for (Element link : links) {
-                    String linkName = link.text().trim();
-                    String linkHref = link.absUrl("href");
-                    if (!linkHref.matches(LINK_REGEX))
-                        continue;
-                    double sim = MStringUtils.similarityMaxContains(linkName, title);
-                    if (sim >= bestSimilarity) {
-                        bestSimilarity = sim;
-                        bestURL = linkHref;
-                        bestTitle = linkName;
-                        if (sim == 1.0) {
-                            mapContainedTitleToURL.put(bestTitle, bestURL);
-                        }
-                    }
-                    // check for alphanumeric chars only (mostly to avoid weird
-                    // dash issues like tomo-chan vs tomochan)
-                    sim = MStringUtils.similarityMaxContainsAlphanumeric(linkName, title);
-                    if (sim >= bestSimilarity) {
-                        bestSimilarity = sim;
-                        bestURL = linkHref;
-                        bestTitle = linkName;
-                        if (sim == 1.0) {
-                            mapContainedTitleToURL.put(bestTitle, bestURL);
-                        }
-                    }
-                }
-                page++;
-            } while (true);
-            if (mapContainedTitleToURL.size() > 1) {
-                bestSimilarity = 0;
-                for (Entry<String, String> e : mapContainedTitleToURL.entrySet()) {
-                    double sim = MStringUtils.similarity(e.getKey(), title);
-                    if (sim > bestSimilarity) {
-                        bestSimilarity = sim;
-                        bestURL = e.getValue();
-                        bestTitle = e.getKey();
-                    }
-                }
+        int counter = 30;
+        final ThreadState ts = new ThreadState();
+        List<Future<Map<Element, List<String>>>> futures = new ArrayList<Future<Map<Element, List<String>>>>();
+        while (counter-- >= 0) {
+            if (ts.endPage >= 0 && page > ts.endPage) {
+                break;
             }
-            // M.debug("Best result for \"" + title + "\": " + bestTitle + " ["
-            // + bestURL + "] with a similarity of " + bestSimilarity);
-        } catch (IOException e) {
-            e.printStackTrace();
+            for (int k = 0; k < 2; k++) {
+                final int currPage = page++;
+                if (ts.endPage >= 0 && currPage > ts.endPage) {
+                    continue;
+                }
+                Callable<Map<Element, List<String>>> fetchSearchResultsPageTask = () -> {
+                    if (ts.endPage >= 0 && currPage > ts.endPage) {
+                        // don't go past the last valid page
+                        return emptyMap;
+                    }
+                    Map<Element, List<String>> urls = new HashMap<Element, List<String>>();
+                    try {
+                        final String connectionURL = PREFIX + currPage + SEARCH + URLEncoder.encode(title.trim(), CHARSET);
+                        Document doc = MCacheUtils.getDocument(connectionURL);
+                        String txt = doc.text();
+                        if (txt.contains("There are no") || txt.contains("make your query more restrictive.")) {
+                            // search complete, mark page as last valid page
+                            if (ts.endPage == -1 || currPage <= ts.endPage) {
+                                ts.endPage = currPage;
+                            }
+                            return emptyMap;
+                        }
+                        Elements links = doc.select(SELECTOR);
+                        for (Element link : links) {
+                            String linkHref = link.absUrl("href");
+                            if (!linkHref.matches(LINK_REGEX))
+                                continue;
+                            List<String> arrList = new ArrayList<String>();
+                            String linkName = link.text().trim();
+                            arrList.add(linkName);
+                            urls.put(link, arrList);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Misaka.update("Error: Failed to fetch baka search results.");
+                    }
+                    return urls;
+                };
+                Future<Map<Element, List<String>>> future = MultiThreadTaskManager.queueTaskOrdered(fetchSearchResultsPageTask);
+                futures.add(future);
+            }
+            try {
+                Thread.sleep(50L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        M.debug("Finished search() in " + (System.currentTimeMillis() - start) + "ms");
-        M.debug("best url: " + bestURL);
-        return bestURL;
+        MultiThreadTaskManager.wait(futures);
+        HashMap<Element, List<String>> resultMap = new HashMap<Element, List<String>>();
+        for (Future<Map<Element, List<String>>> f : futures) {
+            try {
+                resultMap.putAll(f.get());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+        Map<Element, String> topResults = MStringUtils.getTopResults(resultMap, title, 3);
+        t.output("BakaBT search");
+        if (topResults.size() == 0) {
+            return null;
+        }
+        //        M.debug("best url: " + res);
+        String res = topResults.keySet().iterator().next().absUrl("href");
+        return res;
     }
 
     protected Map<ScanGroup, List<String>> getGroups(String bestURL) {

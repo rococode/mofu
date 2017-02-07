@@ -14,6 +14,9 @@ import com.edasaki.misakachan.utils.logging.M;
 
 public class MStringUtils {
 
+    /**
+     * @deprecated buggy / not fully functional
+     */
     @Deprecated
     public static <T> Map<T, String> getTopResults2(Map<T, List<String>> map, String toMatch, int count) {
         Map<T, String> bestNames = new HashMap<T, String>();
@@ -66,7 +69,6 @@ public class MStringUtils {
         return resultMap;
     }
 
-    @Deprecated
     public static <T> Map<T, String> getTopResults(Map<T, List<String>> map, String toMatch, int count) {
         Map<T, String> bestNames = new HashMap<T, String>();
         for (Entry<T, List<String>> e : map.entrySet()) {
@@ -100,7 +102,7 @@ public class MStringUtils {
             }
             bestNames.put(e.getKey(), bestName);
         }
-        M.debug("best Names: " + bestNames);
+        //        M.debug("best Names: " + bestNames);
 
         PriorityQueue<T> topN = new PriorityQueue<T>(count, new Comparator<T>() {
             public int compare(T t1, T t2) {
@@ -117,16 +119,16 @@ public class MStringUtils {
                     sim2 = MStringUtils.similarity(t2Val, toMatch);
                 }
                 int res = Double.compare(sim2, sim1);
-                M.debug("res of compare " + t1Val + " and " + t2Val + ": " + res);
+                //                M.debug("res of compare " + t1Val + " and " + t2Val + ": " + res);
                 return res;
             }
         });
         topN.addAll(bestNames.keySet());
-        M.debug("DEBUG: " + topN);
+        //        M.debug("DEBUG: " + topN);
         Map<T, String> resultMap = new LinkedHashMap<T, String>();
         for (int k = 0; k < count; k++) {
             T next = topN.poll();
-            M.debug("polled " + next);
+            //            M.debug("polled " + next);
             if (next != null && bestNames.containsKey(next)) {
                 resultMap.put(next, bestNames.get(next));
             }
@@ -141,7 +143,6 @@ public class MStringUtils {
                 return Double.compare(map.get(t2), map.get(t1));
             }
         });
-
         for (T key : map.keySet()) {
             if (topN.size() < n)
                 topN.add(key);

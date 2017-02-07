@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import com.edasaki.misakachan.scanlator.BakaUpdateSearcher;
 import com.edasaki.misakachan.test.Test;
+import com.edasaki.misakachan.utils.logging.M;
 import com.google.common.truth.Truth;
 
 public class BakaUpdateTests {
@@ -30,12 +31,13 @@ public class BakaUpdateTests {
             { "alice borderland", "59540" },
     };
 
-    @Test(enabled=false)
+    @Test(enabled = true)
     public void testSearchFull() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         BakaUpdateSearcher searcher = new BakaUpdateSearcher();
         Method m = searcher.getClass().getDeclaredMethod("getURL", String.class);
         m.setAccessible(true);
         for (String[] s : ID_TESTS) {
+            long start = System.currentTimeMillis();
             System.out.print("Testing " + Arrays.toString(s) + "... ");
             String res = (String) m.invoke(searcher, s[0]);
             if (s[1] == null) {
@@ -43,6 +45,7 @@ public class BakaUpdateTests {
             } else {
                 Truth.assertThat(res).endsWith("?id=" + s[1]);
             }
+            M.debug("Finished search() in " + (System.currentTimeMillis() - start) + "ms");
         }
     }
 
@@ -52,6 +55,7 @@ public class BakaUpdateTests {
         Method m = searcher.getClass().getDeclaredMethod("getURL", String.class);
         m.setAccessible(true);
         for (String[] s : ID_TESTS_MIN) {
+            long start = System.currentTimeMillis();
             System.out.print("Testing " + Arrays.toString(s) + "... ");
             String res = (String) m.invoke(searcher, s[0]);
             if (s[1] == null) {
@@ -59,6 +63,7 @@ public class BakaUpdateTests {
             } else {
                 Truth.assertThat(res).endsWith("?id=" + s[1]);
             }
+            M.debug("Finished search() in " + (System.currentTimeMillis() - start) + "ms");
         }
     }
 

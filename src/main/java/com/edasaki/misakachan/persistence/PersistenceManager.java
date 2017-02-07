@@ -39,6 +39,8 @@ public class PersistenceManager {
 
     public void loadFiles() {
         for (File f : dir.listFiles()) {
+            if (f.isDirectory())
+                continue;
             String name = f.getName();
             try {
                 name = name.toUpperCase();
@@ -98,25 +100,59 @@ public class PersistenceManager {
         String url = Misaka.instance().baka.getURL(title);
         M.debug("got " + url);
         int index = 0;
-        File dir = new File(PATH + File.separator + title + " - " + source + File.separator + "Chapter " + chapterNumber);
+        File dir = new File(PATH + File.separator + "library" + File.separator + title + " - " + source + File.separator + "Chapter " + chapterNumber);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        M.debug("Writing to dir " + dir);
         for (Object[] o : pages) {
             @SuppressWarnings("unused")
             int num = (int) o[0];
             String src = (String) o[1];
-            File saveFile = new File(dir, String.format("%03d", ++index));
+            String name = String.format("%03d", ++index);
             MultiThreadTaskManager.queueTask(new Callable<Void>() {
 
                 @Override
                 public Void call() throws Exception {
-                    URL url = new URL(src);
-                    InputStream in = new BufferedInputStream(url.openStream());
-                    OutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
-                    for (int i; (i = in.read()) != -1;) {
-                        out.write(i);
+                    try {
+                        URL url = new URL(src);
+                        M.debug(src);
+                        String ext = src;
+                        if (ext.contains("/")) {
+                            ext = ext.substring(ext.lastIndexOf('/'));
+                        }
+                        if (ext.contains(".")) {
+                            ext = ext.substring(ext.lastIndexOf("."));
+                        }
+                        if (ext.contains("?")) {
+                            ext = ext.substring(0, ext.indexOf('?'));
+                        }
+                        if (ext.contains("&")) {
+                            ext = ext.substring(0, ext.indexOf('&'));
+                        }
+                        if (!ext.startsWith(".")) {
+                            ext = "." + ext;
+                        }
+                        if (ext.length() != 4 && ext.length() != 5) { 
+                            // extensions including . should be 4 or 5 chars
+                            // .png, .jpg, .jpeg, .bmp, etc.
+                            Misaka.update("Please report this to Misaka!");
+                            Misaka.update("Unrecognized file extension in: " + src);
+                            ext = ".png";
+                        }
+                        File saveFile = new File(dir, name + ext);
+                        M.debug("Writing to " + saveFile);
+                        InputStream in = new BufferedInputStream(url.openStream());
+                        OutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
+                        for (int i; (i = in.read()) != -1;) {
+                            out.write(i);
+                        }
+                        in.close();
+                        out.close();
+                        M.debug("Saved " + saveFile.getAbsolutePath());
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    in.close();
-                    out.close();
-                    M.debug("Saved " + saveFile.getAbsolutePath());
                     return null;
                 }
 

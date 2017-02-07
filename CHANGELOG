@@ -1,3 +1,10 @@
+0.0.28 - Feb 6 2017
+- On midterm week right now so don't have as much time to code new stuff :P
+- finished implementing single-click download on reader interface - still working on adding other download options
+- added simple timer utility for debugging
+- fixed multithreading issue with document cache initialization
+- implemented multithreading for bakabt search - performs significantly faster (30-50%) for long results (5+ pages), about the same for short results (1-2 pages).
+
 0.0.27 - Feb 3 2017
 - fixed clearing pages on new chapter
 - started work on chapter downloading (almost done with it I think, just a couple last bugs to iron out)

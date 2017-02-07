@@ -3,6 +3,7 @@ package com.edasaki.misakachan.test;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import com.edasaki.misakachan.test.tests.BakaUpdateTests;
 import com.edasaki.misakachan.test.tests.BasicTests;
 import com.edasaki.misakachan.test.tests.ChangelogTests;
 import com.edasaki.misakachan.test.tests.MangaHereTests;
@@ -12,7 +13,7 @@ public class TestRunner {
 
     private static final Class<?>[] TEST_CLASSES = {
             BasicTests.class,
-            //            BakaUpdateTests.class,
+            BakaUpdateTests.class,
             StringUtilTests.class,
             ChangelogTests.class,
             //            SiteSearchTests.class,
@@ -48,6 +49,7 @@ public class TestRunner {
         if (failed > 0) {
             System.out.println("Warning: Failed more than one test.");
         }
+        System.exit(0);
     }
 
 }
