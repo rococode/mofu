@@ -1,3 +1,7 @@
+0.0.29 - Feb 6 2017
+- added download button to individual chapters in chapter listing
+- cleaned up some code
+
 0.0.28 - Feb 6 2017
 - On midterm week right now so don't have as much time to code new stuff :P
 - finished implementing single-click download on reader interface - still working on adding other download options

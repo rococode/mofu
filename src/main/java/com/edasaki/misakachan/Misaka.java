@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.edasaki.misakachan.changelog.ChangelogManager;
 import com.edasaki.misakachan.gui.GuiManager;
-import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.persistence.OptionManager;
 import com.edasaki.misakachan.persistence.PersistenceManager;
 import com.edasaki.misakachan.scanlator.BakaUpdateManager;

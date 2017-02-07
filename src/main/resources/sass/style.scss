@@ -1,4 +1,4 @@
-@import "colors_light";
+@import "colors";
 
 html {
   position: relative;
@@ -221,9 +221,10 @@ div, img {
     @extend .unselectable;
 
     &:hover {
-    
-        div {
-        visibility: visible;}
+      div {
+        visibility: visible;
+      }
+
       color: $color-text-hover;
       cursor: pointer;
     }
@@ -610,17 +611,23 @@ $loadingSquareSize: 85px;
 .manga-info-container {
   $info-width: 50%;
   $info-height: 520px;
+  $min-width: 650px;
 
   width: $info-width;
+  min-width: $min-width;
   min-height: $info-height;
   height: auto;
   background-color: $color-background-dark;
   border: 3px solid $color-text-dark;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -$info-height / 1.5;
-  margin-left: -$info-width / 2;
+
+  @media (min-width: $min-width) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -$info-height / 1.5;
+    margin-left: -$info-width / 2;
+  }
+
   padding: 10px;
 
   .top-wrapper {
@@ -666,12 +673,35 @@ $loadingSquareSize: 85px;
     width: 100%;
   }
 
-  .chapter {
+  .chapter-wrapper {
     width: 100%;
     padding: 5px 0 5px 5px;
+    vertical-align: middle;
 
-    &:hover {
+    &.hovered {
       background-color: $color-background-dark;
+    }
+
+    .individual-chapter-download-button {
+      @extend .unselectable;
+
+      padding-right: 7px;
+      display: inline;
+      vertical-align: middle;
+
+      &:hover {
+        color: $color-button-main;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    .chapter {
+      @extend .unselectable;
+
+      vertical-align: middle;
+      display: inline;
+      overflow: hidden;
     }
   }
 

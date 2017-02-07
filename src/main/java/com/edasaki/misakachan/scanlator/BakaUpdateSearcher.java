@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -112,7 +111,6 @@ public class BakaUpdateSearcher {
         if (topResults.size() == 0) {
             return null;
         }
-        //        M.debug("best url: " + res);
         String res = topResults.keySet().iterator().next().absUrl("href");
         return res;
     }
@@ -139,16 +137,16 @@ public class BakaUpdateSearcher {
         Map<ScanGroup, Future<List<String>>> chapters = new HashMap<ScanGroup, Future<List<String>>>();
         for (ScanGroup sg : groups.values()) {
             Future<List<String>> f = MultiThreadTaskManager.queueTask(() -> {
-                Document doc = MCacheUtils.getDocument(sg.url);
+                //                Document doc = MCacheUtils.getDocument(sg.url);
                 //                    return conn.get();
                 return null;
             });
             chapters.put(sg, f);
         }
         MultiThreadTaskManager.wait(chapters.values());
-        for (Entry<ScanGroup, Future<List<String>>> e : chapters.entrySet()) {
-
-        }
+        //        for (Entry<ScanGroup, Future<List<String>>> e : chapters.entrySet()) {
+        //
+        //        }
         return new HashMap<>();
     }
 
