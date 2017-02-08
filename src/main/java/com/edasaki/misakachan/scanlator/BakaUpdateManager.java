@@ -2,6 +2,9 @@ package com.edasaki.misakachan.scanlator;
 
 import java.util.List;
 
+import com.edasaki.misakachan.utils.logging.NoDebug;
+
+@NoDebug
 public class BakaUpdateManager {
 
     private BakaUpdateSearcher searcher;
@@ -15,7 +18,7 @@ public class BakaUpdateManager {
     }
 
     public List<ScanGroup> getScanlator(String mangaName) {
-//        searcher.getGroups(mangaName);
+        //        searcher.getGroups(mangaName);
         return null;
     }
 

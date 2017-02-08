@@ -14,8 +14,8 @@ import org.json.JSONObject;
 import org.jsoup.nodes.Document;
 
 import com.edasaki.misakachan.Misaka;
-import com.edasaki.misakachan.chapter.Chapter;
-import com.edasaki.misakachan.chapter.Page;
+import com.edasaki.misakachan.manga.Chapter;
+import com.edasaki.misakachan.manga.Page;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;

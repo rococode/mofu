@@ -5,10 +5,14 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import com.edasaki.misakachan.scanlator.BakaUpdateSearcher;
-import com.edasaki.misakachan.test.Test;
+import com.edasaki.misakachan.test.annotations.TestClass;
+import com.edasaki.misakachan.test.annotations.TestMethod;
 import com.edasaki.misakachan.utils.logging.M;
+import com.edasaki.misakachan.utils.logging.NoDebug;
 import com.google.common.truth.Truth;
 
+@NoDebug
+@TestClass(enabled = false)
 public class BakaUpdateTests {
 
     private static final String[][] ID_TESTS_MIN = {
@@ -31,14 +35,14 @@ public class BakaUpdateTests {
             { "alice borderland", "59540" },
     };
 
-    @Test(enabled = true)
+    @TestMethod(enabled = false)
     public void testSearchFull() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         BakaUpdateSearcher searcher = new BakaUpdateSearcher();
         Method m = searcher.getClass().getDeclaredMethod("getURL", String.class);
         m.setAccessible(true);
         for (String[] s : ID_TESTS) {
             long start = System.currentTimeMillis();
-            System.out.print("Testing " + Arrays.toString(s) + "... ");
+            M.debug("Testing " + Arrays.toString(s) + "... ");
             String res = (String) m.invoke(searcher, s[0]);
             if (s[1] == null) {
                 Truth.assertThat(res).isNull();
@@ -49,14 +53,14 @@ public class BakaUpdateTests {
         }
     }
 
-    @Test
+    @TestMethod
     public void testSearch() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         BakaUpdateSearcher searcher = new BakaUpdateSearcher();
         Method m = searcher.getClass().getDeclaredMethod("getURL", String.class);
         m.setAccessible(true);
         for (String[] s : ID_TESTS_MIN) {
             long start = System.currentTimeMillis();
-            System.out.print("Testing " + Arrays.toString(s) + "... ");
+            M.debug("Testing " + Arrays.toString(s) + "... ");
             String res = (String) m.invoke(searcher, s[0]);
             if (s[1] == null) {
                 Truth.assertThat(res).isNull();

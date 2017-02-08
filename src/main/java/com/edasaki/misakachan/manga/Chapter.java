@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chapter {
-    private final String chapterName;
-    private final int pageCount;
+    private final String chapterName, mangaTitle;
+    private final int pageCount, chapterNumber;
     private final List<Page> pages;
 
-    public Chapter(String name, int pageCount, List<Page> pages) {
-        this.chapterName = name;
-        this.pageCount = pageCount;
+    public Chapter(String mangaTitle, String chapterTitle, int chapterNumber, List<Page> pages) {
+        this.mangaTitle = mangaTitle;
+        this.chapterName = chapterTitle;
+        this.chapterNumber = chapterNumber;
+        this.pageCount = pages.size();
         this.pages = new ArrayList<Page>();
         this.pages.addAll(pages);
     }
@@ -25,6 +27,14 @@ public class Chapter {
 
     public List<Page> getPages() {
         return pages;
+    }
+
+    public String getMangaTitle() {
+        return this.mangaTitle;
+    }
+
+    public int getChapterNumber() {
+        return this.chapterNumber;
     }
 
 }

@@ -1,18 +1,20 @@
 package com.edasaki.misakachan.test.tests;
 
-import com.edasaki.misakachan.test.Test;
+import com.edasaki.misakachan.test.annotations.TestClass;
+import com.edasaki.misakachan.test.annotations.TestMethod;
 import com.google.common.truth.Truth;
 
+@TestClass(enabled = true)
 public class BasicTests {
 
-    @Test
+    @TestMethod
     public int alwaysWorks() {
         int x = 1;
         x--;
         return x;
     }
 
-    @Test
+    @TestMethod
     public void testGoogleTruth() {
         String string = "awesome";
         Truth.assertThat(string).startsWith("awe");

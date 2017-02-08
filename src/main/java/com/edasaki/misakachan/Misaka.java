@@ -9,6 +9,7 @@ import com.edasaki.misakachan.persistence.OptionManager;
 import com.edasaki.misakachan.persistence.PersistenceManager;
 import com.edasaki.misakachan.scanlator.BakaUpdateManager;
 import com.edasaki.misakachan.source.AbstractSource;
+import com.edasaki.misakachan.source.english.KissManga;
 import com.edasaki.misakachan.source.english.MangaHere;
 import com.edasaki.misakachan.spark.SparkManager;
 import com.edasaki.misakachan.version.Version;
@@ -17,6 +18,7 @@ public class Misaka {
 
     private static final AbstractSource SOURCES[] = {
             new MangaHere(),
+            new KissManga(),
             //            new TestSource(),
     };
 

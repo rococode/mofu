@@ -18,16 +18,16 @@ import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.utils.MCacheUtils;
 import com.edasaki.misakachan.utils.logging.M;
 
-public class MangaHere extends AbstractSource {
+public class KissManga extends AbstractSource {
 
     @Override
     public boolean match(String url) {
-        return url.contains("mangahere.co");
+        return url.contains("kissmanga.com");
     }
 
     @Override
     public boolean matchInfo(String url) {
-        return url.contains("mangahere.co/manga/");
+        return url.contains("kissmanga.com/Manga/");
     }
 
     @Override

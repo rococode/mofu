@@ -10,8 +10,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.edasaki.misakachan.chapter.Chapter;
-import com.edasaki.misakachan.chapter.Series;
+import com.edasaki.misakachan.manga.Chapter;
+import com.edasaki.misakachan.manga.Series;
 
 public abstract class AbstractSource {
 

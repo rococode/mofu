@@ -1,11 +1,13 @@
-package com.edasaki.misakachan.utils;
-
-import com.edasaki.misakachan.utils.logging.M;
+package com.edasaki.misakachan.utils.logging;
 
 public class MTimer {
     private long start;
 
     public MTimer() {
+        start = System.currentTimeMillis();
+    }
+
+    public void reset() {
         start = System.currentTimeMillis();
     }
 

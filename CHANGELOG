@@ -1,3 +1,9 @@
+0.0.30 - Feb 7 2017
+- added some more debugging output options so I'm not spamming myself with debug messages lol
+- improved code testing suite to be a lot nicer to use
+- removed extra copy of manga code (forgot about it)
+- started working on kissmanga source
+
 0.0.29 - Feb 6 2017
 - added download button to individual chapters in chapter listing
 - cleaned up some code

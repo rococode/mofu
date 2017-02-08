@@ -98,5 +98,21 @@
 			<artifactId>guava</artifactId>
 			<version>20.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.10</version>
+		</dependency>
+		<dependency>
+			<artifactId>anti-antibot-cloudflare-apachehttpclient</artifactId>
+			<groupId>com.github.alessiop86.anti-antibot-cloudflare</groupId>
+			<version>1.2</version>
+		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 </project>

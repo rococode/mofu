@@ -1,9 +1,11 @@
 package com.edasaki.misakachan.test.tests;
 
-import com.edasaki.misakachan.test.Test;
+import com.edasaki.misakachan.test.annotations.TestClass;
+import com.edasaki.misakachan.test.annotations.TestMethod;
 import com.edasaki.misakachan.utils.MStringUtils;
 import com.google.common.truth.Truth;
 
+@TestClass(enabled = true)
 public class StringUtilTests {
 
     // {Manga Name, Better Match, Worse Match}
@@ -14,7 +16,7 @@ public class StringUtilTests {
             { "Ika Musume", "Shinryaku! Ika Musume", "Shinryaku! Ika Musume dj - Ika Musumeshi" },
     };
 
-    @Test
+    @TestMethod
     public void testMangaURLComparisons() {
         for (String[] s : URL_COMPARISONS) {
             Truth.assertThat(MStringUtils.similarity(s[0], s[2]) < MStringUtils.similarity(s[0], s[1])).isTrue();

@@ -18,8 +18,10 @@ import com.edasaki.misakachan.Misaka;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.utils.MCacheUtils;
 import com.edasaki.misakachan.utils.MStringUtils;
-import com.edasaki.misakachan.utils.MTimer;
+import com.edasaki.misakachan.utils.logging.MTimer;
+import com.edasaki.misakachan.utils.logging.NoDebug;
 
+@NoDebug
 public class BakaUpdateSearcher {
     private static final String PREFIX = "https://www.mangaupdates.com/series.html?stype=title&orderby=rating&perpage=100&page=";
     private static final String SEARCH = "&search=";
