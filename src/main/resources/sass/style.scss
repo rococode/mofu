@@ -742,3 +742,81 @@ $loadingSquareSize: 85px;
 .cf {
   *zoom: 1;
 }
+
+.download-menu-button {
+  @extend .unselectable;
+
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: -1px;
+  position: relative;
+
+  span {
+    font-size: 1em;
+    line-height: 1em;
+  }
+
+  span:hover {
+    @extend .unselectable;
+
+    color: $color-button-main;
+    cursor: pointer;
+
+    & + .arrow_box {
+      opacity: 1;
+      -webkit-transition: all 0.5s linear;
+      -o-transition: all 0.5s linear;
+      -ms-transition: all 0.5s linear;
+      -moz-transition: all 0.5s linear;
+      transition: all 0.5s linear;
+    }
+  }
+
+  $base-arrow-size: 5px;
+  $border-size: 2px;
+
+  .arrow_box {
+    display: inline-block;
+    font-size: 0.7em;
+    margin: 3px 0 0 8px;
+    vertical-align: middle;
+    line-height: 0.7em;
+    padding: 2px 0;
+    position: absolute;
+    color: $color-text-dark;
+    background-color: $color-button-hover;
+    border: $border-size solid $color-button-main;
+    font-variant: small-caps;
+    opacity: 0;
+    -webkit-transition: all 0.5s linear;
+    -o-transition: all 0.5s linear;
+    -ms-transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+  }
+
+  .arrow_box:after, .arrow_box:before {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .arrow_box:after {
+    border-color: rgba(0, 0, 0, 0);
+    border-right-color: $color-button-hover;
+    border-width: $base-arrow-size;
+    margin-top: -$base-arrow-size;
+  }
+
+  .arrow_box:before {
+    border-color: rgba(0, 0, 0, 0);
+    border-right-color: $color-button-main;
+    border-width: $base-arrow-size + $border-size;
+    margin-top: -$base-arrow-size - $border-size;
+  }
+}

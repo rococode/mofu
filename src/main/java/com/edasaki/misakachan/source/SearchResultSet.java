@@ -8,7 +8,9 @@ import java.util.List;
 
 import com.edasaki.misakachan.utils.MStringUtils;
 import com.edasaki.misakachan.utils.logging.M;
+import com.edasaki.misakachan.utils.logging.NoDebug;
 
+@NoDebug
 public class SearchResultSet {
     private final AbstractSource aSource;
     private final String source;

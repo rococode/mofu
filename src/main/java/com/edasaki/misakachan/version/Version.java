@@ -10,10 +10,17 @@ public class Version implements Comparable<Version> {
     public static final Version UNKNOWN = new Version("0.0.0");
 
     private Version(String s) {
-        String[] data = s.split("\\.");
-        major = Integer.parseInt(data[0].replaceAll("[^0-9]", ""));
-        minor = Integer.parseInt(data[1].replaceAll("[^0-9]", ""));
-        mini = Integer.parseInt(data[2].replaceAll("[^0-9]", ""));
+        try {
+            String[] data = s.split("\\.");
+            major = Integer.parseInt(data[0].replaceAll("[^0-9]", ""));
+            minor = Integer.parseInt(data[1].replaceAll("[^0-9]", ""));
+            mini = Integer.parseInt(data[2].replaceAll("[^0-9]", ""));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.major = 0;
+        this.minor = 0;
+        this.mini = 0;
     }
 
     public static Version getVersion(String s) {

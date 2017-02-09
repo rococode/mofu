@@ -29,18 +29,18 @@ public class Launcher {
             try {
                 File f = MFileUtils.getResourceAsFile("CHANGELOG");
                 if (f.exists()) {
-                    return getChangelogVersion(changelog);
+                    return getInternalVersion(changelog);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            return getChangelogVersion(changelog);
+            return getInternalVersion(changelog);
         }
         return Version.UNKNOWN;
     }
 
-    private static Version getChangelogVersion(File f) {
+    private static Version getInternalVersion(File f) {
         try (Scanner scan = new Scanner(f)) {
             String s = scan.nextLine();
             return Version.getVersion(s.substring(0, s.indexOf('-')).trim());

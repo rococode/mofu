@@ -181,14 +181,14 @@ $(document).ready(function() {
 
 	// debugging stuff below
 	// swapToReader();
-	// swapToSearchResult();
-	// $('#manga-info-full-page-container').show();
+	 swapToSearchResult();
+	 $('#manga-info-full-page-container').show();
 	// fit($('.title'), em(2.2));
 	// var newWidth = $('#manga-info-container').width() -
 	// $('#manga-info-img').width() - 15;
 	// console.log('calced width ' + newWidth);
 	// $('.manga-description-container').width(newWidth);
-	// $('.manga-description-container').jScrollPane({contentWidth: '0px'});
+	 $('.manga-description-container').jScrollPane({contentWidth: '0px'});
 });
 
 // function checkPadding(element, botPadding) {
@@ -411,7 +411,7 @@ function populateContainer(series) {
 		var url = chap.find('.hidden-info').text();
 		loadInReader(url);
 	});
-	e.find('.chapter-header').text(ct + " chapter" + (ct == 1 ? "" : "s") + " available from " + series.source);
+	e.find('.chapter-header').html(ct + " chapter" + (ct == 1 ? "" : "s") + " available from " + series.source + " <div class=\"download-menu-button\"><span class=\"fa fa-arrow-circle-down\"></span><div class=\"arrow_box\">Download!</div></div>");
 	$('#manga-info-full-page-container').show();
 	fit($('.title'), em(2.2));
 	var newWidth = $('#manga-info-container').width() - $('#manga-info-img').width() - 20;

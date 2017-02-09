@@ -15,7 +15,7 @@ div, img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter {
+.unselectable, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -549,3 +549,59 @@ div, img {
 */
 .cf {
   *zoom: 1; }
+
+.download-menu-button {
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: -1px;
+  position: relative; }
+  .download-menu-button span {
+    font-size: 1em;
+    line-height: 1em; }
+  .download-menu-button span:hover {
+    color: #ffe57f;
+    cursor: pointer; }
+    .download-menu-button span:hover + .arrow_box {
+      opacity: 1;
+      -webkit-transition: all 0.5s linear;
+      -o-transition: all 0.5s linear;
+      -ms-transition: all 0.5s linear;
+      -moz-transition: all 0.5s linear;
+      transition: all 0.5s linear; }
+  .download-menu-button .arrow_box {
+    display: inline-block;
+    font-size: 0.7em;
+    margin: 3px 0 0 8px;
+    vertical-align: middle;
+    line-height: 0.7em;
+    padding: 2px 0;
+    position: absolute;
+    color: #555;
+    background-color: #ffd740;
+    border: 2px solid #ffe57f;
+    font-variant: small-caps;
+    opacity: 0;
+    -webkit-transition: all 0.5s linear;
+    -o-transition: all 0.5s linear;
+    -ms-transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    transition: all 0.5s linear; }
+  .download-menu-button .arrow_box:after, .download-menu-button .arrow_box:before {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none; }
+  .download-menu-button .arrow_box:after {
+    border-color: transparent;
+    border-right-color: #ffd740;
+    border-width: 5px;
+    margin-top: -5px; }
+  .download-menu-button .arrow_box:before {
+    border-color: transparent;
+    border-right-color: #ffe57f;
+    border-width: 7px;
+    margin-top: -7px; }
