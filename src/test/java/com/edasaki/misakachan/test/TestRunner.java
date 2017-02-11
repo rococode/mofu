@@ -12,6 +12,7 @@ import org.reflections.Reflections;
 
 import com.edasaki.misakachan.test.annotations.TestClass;
 import com.edasaki.misakachan.test.annotations.TestMethod;
+import com.edasaki.misakachan.test.tests.ExperimentalTests;
 
 public class TestRunner {
 
@@ -24,6 +25,16 @@ public class TestRunner {
     static {
         for (Class<?> c : EXCLUDED_CLASSES) {
             excluded.add(c);
+        }
+    }
+
+    private static final Class<?>[] SPECIFIC_TESTING = {
+            ExperimentalTests.class
+    };
+    private static final Set<Class<?>> specifics = new HashSet<Class<?>>();
+    static {
+        for (Class<?> c : SPECIFIC_TESTING) {
+            specifics.add(c);
         }
     }
 
@@ -47,6 +58,9 @@ public class TestRunner {
             if (excluded.contains(clazz)) {
                 autoskip = true;
             } else if (clazz.isAnnotationPresent(TestClass.class) && !((TestClass) clazz.getAnnotation(TestClass.class)).enabled()) {
+                autoskip = true;
+            }
+            if (specifics.size() > 0 && !specifics.contains(clazz)) {
                 autoskip = true;
             }
             for (Method method : clazz.getDeclaredMethods()) {

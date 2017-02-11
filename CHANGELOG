@@ -1,3 +1,9 @@
+0.0.32 - Feb 11 2017
+- Added ExperimentalTests for playing around with code
+- added dependencies: Selenium and bonigarcia's web driver manager (for automated management of PhantomJS drivers on any OS)
+- added working experimental code for bypassing kissmanga cloudflare protection with headless phantomjs browser thru selenium
+- in layman's terms, basically on some websites you see those cloudflare "Please wait 5 seconds while we verify your browser" etc. etc. messages. Those cause some pretty difficult issues for bots like misakachan (well, that's kind of the point I guess). I managed to write a workaround that gets past that by imitating an actual browser, so now we should have no problems retrieving sites like KissManga, etc!
+
 0.0.31 - Feb 8 2017
 - made changelog fetching async and preloaded
 - started working on download interface UI
