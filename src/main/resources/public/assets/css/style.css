@@ -15,7 +15,7 @@ div, img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover {
+.unselectable, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -528,6 +528,7 @@ div, img {
     margin-bottom: 3px; }
 
 .manga-download-container {
+  display: none;
   width: 50%;
   min-width: 650px;
   min-height: 520px;
@@ -561,6 +562,8 @@ div, img {
       vertical-align: middle;
       cursor: pointer;
       margin-left: 3px; }
+      .manga-download-container .chapter-header .download-back:hover {
+        color: #eee; }
     .manga-download-container .chapter-header .select-all {
       position: absolute;
       right: 0px;

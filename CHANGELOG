@@ -1,3 +1,7 @@
+0.0.34 - Feb 11 2017
+- chapters now show up properly in the new chapter download panel
+- seems to be a bit laggy with lots of chapters (for example ika musume's 400+ chapters causes some lag) - will try to fix asap
+
 0.0.33 - Feb 11 2017
 - added explicit jetty dependencies to prevent dependency conflicts
 - finally figured out how to set listeners for dynamically created elements (I am a jQuery noob hehe)
