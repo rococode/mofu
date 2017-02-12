@@ -668,13 +668,8 @@ $loadingSquareSize: 85px;
     border: 1px solid $color-text-dark;
   }
 
-  .chapter-bottom-padding {
-    height: 5px;
-    width: 100%;
-  }
-
   .chapter-wrapper {
-    width: 100%;
+    width: auto;
     padding: 5px 0 5px 5px;
     vertical-align: middle;
 
@@ -715,6 +710,149 @@ $loadingSquareSize: 85px;
 
   .alt, .genre, .author, .artist {
     margin-bottom: 3px;
+  }
+}
+
+.manga-download-container {
+  $info-width: 50%;
+  $info-height: 520px;
+  $min-width: 650px;
+
+  width: $info-width;
+  min-width: $min-width;
+  min-height: $info-height;
+  height: auto;
+  background-color: $color-background-dark;
+  border: 3px solid $color-text-dark;
+
+  @media (min-width: $min-width) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -$info-height / 1.5;
+    margin-left: -$info-width / 2;
+  }
+
+  padding: 7px 10px 10px;
+
+  .chapter-header {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+
+    .download-panel-name {
+      display: inline-block;
+      font-size: 1.15em;
+      line-height: 1.15em;
+      vertical-align: middle;
+    }
+
+    .download-back {
+      @extend .unselectable;
+
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      font-size: 1.3em;
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+      margin-left: 3px;
+    }
+
+    .select-all {
+      @extend .unselectable;
+
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      cursor: pointer;
+      vertical-align: middle;
+      font-size: 0.8em;
+      line-height: 0.8em;
+      padding: 5px 7px;
+      color: $color-button-text;
+      background-color: $color-button-main;
+      border: 1px solid $color-button-hover;
+      border-radius: 3px;
+      display: inline-block;
+      margin-left: 10px;
+
+      &:hover {
+        background-color: $color-button-hover;
+      }
+    }
+  }
+
+  .chapters {
+    background-color: $color-background-med-dark;
+    height: $info-height;
+    text-align: left;
+    border: 1px solid $color-text-dark;
+  }
+
+  .download-selected-button {
+    @extend .unselectable;
+
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: $color-button-main;
+    color: $color-button-text;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 5px 0;
+
+    &:hover {
+      background-color: $color-button-hover;
+    }
+  }
+
+  .chapter-wrapper {
+    @extend .unselectable;
+
+    cursor: pointer !important;
+    width: auto;
+    padding: 5px 0 5px 5px;
+    vertical-align: middle;
+
+    &.hovered {
+      background-color: $color-background-dark;
+    }
+
+    &.selected-for-download {
+      background-color: $color-button-main;
+      color: $color-button-text;
+    }
+
+    .download-button {}
+
+    .individual-chapter-download-button {
+      @extend .unselectable;
+
+      padding: 0 5px;
+      display: inline;
+      vertical-align: middle;
+
+      &:hover {
+        color: $color-button-main;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    .chapter {
+      @extend .unselectable;
+
+      vertical-align: middle;
+      display: inline;
+      overflow: hidden;
+    }
+  }
+
+  .selected-for-download > .individual-chapter-download-button:hover {
+    color: $color-button-text;
   }
 }
 

@@ -48,7 +48,7 @@
 	<div id="reader-container" class="reader-container">
 		<div id="reader-title" class="reader-title">Gekkan Shoujo Nozaki</div>
 		<div id="info-source" class="hidden-info"></div>
-        <div id="info-chapter" class="hidden-info"></div>
+		<div id="info-chapter" class="hidden-info"></div>
 		<div class="reader-nav-container">
 			<div class="reader-nav">
 				<div class="reader-nav-el">Prev Chapter</div>
@@ -59,8 +59,12 @@
 			</div>
 		</div>
 		<div id="reader-pages" class="reader-pages">
-		<div class="reader-page"><img src="http://i.edasaki.com/test-page.png"></div>
-        <div class="reader-page"><img src="http://i.edasaki.com/test-page.png"></div>
+			<div class="reader-page">
+				<img src="http://i.edasaki.com/test-page.png">
+			</div>
+			<div class="reader-page">
+				<img src="http://i.edasaki.com/test-page.png">
+			</div>
 		</div>
 		<div class="reader-nav-container">
 			<div class="reader-nav">
@@ -76,7 +80,7 @@
 			<span id="to-page-bottom" class="fa fa-arrow-down"></span>
 		</div>
 		<div id="download-button" class="download-button">
-            <span id="download-button-icon" class="fa fa-download"></span>
+			<span id="download-button-icon" class="fa fa-download"></span>
 		</div>
 	</div>
 	<div id="loading-container" class="loading-container">
@@ -107,21 +111,77 @@
 		<div id="manga-info-full-page-container" class="manga-info-full-page-container">
 			<div id="manga-info-container" class="manga-info-container">
 				<div class="top-wrapper">
-					<div class="cf"> <img id="manga-info-img" src="http://edasaki.com/i/test-page.png" />
-					<div class="title">Mockup Really Super Duper Long Title Just A Little Longer</div>
-					<div class="alt">Alternate Names: Test Alt Title</div>
-					<div class="genre">Genres: Fun, Cool, Happy</div>
-					<div class="author">Author(s): Edasaki</div>
-					<div class="artist">Artist(s): Edasaki</div>
-					<div class="manga-description-container">
-						<div class="desc">A really cool thing about stuff. Super exciting stuff. Really great. Super great. Just the greatest. I'm just writing random stuff to try to push this to two lines so I can see how it looks lol. And now I'm just gonna
-							write a whole bunchhhhhh of random stuff to push it beyond the boundary and see how wacky it looks after that. Because by default I think it kinda screwws up the formatting, but I want to make it resize the text automatically.</div>
-					</div>
+					<div class="cf">
+						<img id="manga-info-img" src="http://edasaki.com/i/test-page.png" />
+						<div class="title">Mockup Really Super Duper Long Title Just A Little Longer</div>
+						<div class="alt">Alternate Names: Test Alt Title</div>
+						<div class="genre">Genres: Fun, Cool, Happy</div>
+						<div class="author">Author(s): Edasaki</div>
+						<div class="artist">Artist(s): Edasaki</div>
+						<div class="manga-description-container">
+							<div class="desc">A really cool thing about stuff. Super exciting stuff. Really great. Super great. Just the greatest. I'm just writing random stuff to try to push this to two lines so I can see how it looks lol. And now I'm just gonna
+								write a whole bunchhhhhh of random stuff to push it beyond the boundary and see how wacky it looks after that. Because by default I think it kinda screwws up the formatting, but I want to make it resize the text automatically.</div>
+						</div>
 					</div>
 				</div>
 				<div class="divider"></div>
-				<div class="chapter-header">10 Chapters available from MangoDango <div class="download-menu-button"><span class="fa fa-arrow-circle-down"></span><div class="arrow_box">Download!</div></div></div>
+				<div class="chapter-header">
+					10 Chapters available from MangoDango
+					<div class="download-menu-button">
+						<span class="fa fa-download"></span>
+						<div class="arrow_box">Download!</div>
+					</div>
+				</div>
 				<div id="chapter-pane" class="chapters"></div>
+			</div>
+			<div id="manga-download-container" class="manga-download-container">
+				<div class="chapter-header">
+				<div class="download-back"><span class="fa fa-arrow-left"></span></div>
+					<div class="download-panel-name">
+						Manga Name Here
+					</div>
+					<div class="select-all">Select All</div>
+				</div>
+				<div id="chapter-pane" class="chapters">
+					<div class="chapter-wrapper">
+						<span class="individual-chapter-download-button fa fa-square"></span>
+						<div class="chapter">
+							Chapter 1
+							<div class="hidden-info">blah</div>
+						</div>
+					</div>
+					<div class="chapter-wrapper">
+						<span class="individual-chapter-download-button fa fa-square"></span>
+						<div class="chapter">
+							Chapter 2
+							<div class="hidden-info">blah2</div>
+						</div>
+					</div>
+                    <div class="chapter-wrapper">
+                        <span class="individual-chapter-download-button fa fa-square"></span>
+                        <div class="chapter">
+                            Chapter 3
+                            <div class="hidden-info">blah2</div>
+                        </div>
+                    </div>
+                    <div class="chapter-wrapper">
+                        <span class="individual-chapter-download-button fa fa-square"></span>
+                        <div class="chapter">
+                            Chapter 4
+                            <div class="hidden-info">blah2</div>
+                        </div>
+                    </div>
+                    <div class="chapter-wrapper">
+                        <span class="individual-chapter-download-button fa fa-square"></span>
+                        <div class="chapter">
+                            Chapter 5
+                            <div class="hidden-info">blah2</div>
+                        </div>
+                    </div>
+				</div>
+                <div id="download-selected-button" class="download-selected-button">
+                   Download!
+                </div>
 			</div>
 		</div>
 	</div>

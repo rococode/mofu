@@ -1,4 +1,10 @@
-0.0.32 - Feb 11 2017
+0.0.33 - Feb 11 2017
+- added explicit jetty dependencies to prevent dependency conflicts
+- finally figured out how to set listeners for dynamically created elements (I am a jQuery noob hehe)
+- on a side note, scripts.js is extremely messy right now - rest assured it'll be refactored at some point!
+- made a lot of progress on download UI - basically done, now just need to do the program stuff (loading in chapters into the panel and downloading)
+
+0.0.32 - Feb 10 2017
 - Added ExperimentalTests for playing around with code
 - added dependencies: Selenium and bonigarcia's web driver manager (for automated management of PhantomJS drivers on any OS)
 - added working experimental code for bypassing kissmanga cloudflare protection with headless phantomjs browser thru selenium

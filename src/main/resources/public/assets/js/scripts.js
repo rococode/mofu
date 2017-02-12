@@ -176,37 +176,83 @@ $(document).ready(function() {
 		});
 	});
 
+	$(document).on('click', '.download-menu-button', function() {
+		var pane = $('#chapter-pane');
+		console.log(pane);
+		pane.find('.chapter-wrapper').each(function() {
+			console.log(this);
+		});
+	});
+
+	$(document).on('mouseenter mouseleave', '.chapter-wrapper', function() {
+		$(this).toggleClass('hovered');
+	});
+
+	$(document).on('click', '#manga-download-container > #chapter-pane > .chapter-wrapper', function() {
+		$(this).toggleClass('selected-for-download');
+		var button = $(this).find('.individual-chapter-download-button');
+		console.log('button: ' + button.innerHTML);
+		if ($(this).hasClass('selected-for-download')) {
+			button.addClass('fa-check-square');
+			button.removeClass('fa-square');
+		} else {
+			button.removeClass('fa-check-square');
+			button.addClass('fa-square');
+		}
+		var unchecked = $('#manga-download-container > #chapter-pane > .chapter-wrapper:not(.selected-for-download)').length;
+		if (unchecked == 0) {
+			$('.select-all').text('Deselect All');
+		} else {
+			$('.select-all').text('Select All');
+		}
+		var checked = $('#manga-download-container > #chapter-pane > .chapter-wrapper.selected-for-download').length;
+		if(checked == 0) {
+			$('#download-selected-button').text('Choose the chapters you want, then click here!');	
+		} else {
+			$('#download-selected-button').text('Download ' + checked + ' Chapter' + (checked == 1? "" : "s") + "!");						
+		}
+	});
+	$('#download-selected-button').text('Choose the chapters you want, then click here!');	
+
+	$(document).on('click', '.select-all', function() {
+		if ($(this).text() === 'Select All') {
+			$('#chapter-pane > .chapter-wrapper').each(function() {
+				var e = $(this);
+				e.addClass('selected-for-download');
+				var button = $(this).find('.individual-chapter-download-button');
+				button.addClass('fa-check-square');
+				button.removeClass('fa-square');
+			})
+			$('.select-all').text('Deselect All');
+		} else {
+			$('#chapter-pane > .chapter-wrapper').each(function() {
+				var e = $(this);
+				e.removeClass('selected-for-download');
+				var button = $(this).find('.individual-chapter-download-button');
+				button.removeClass('fa-check-square');
+				button.addClass('fa-square');
+			})
+			$('.select-all').text('Select All');
+		}
+	});
+
 	addBottomPadding($('#top-bottom-buttons'), 50);
 	addBottomPadding($('#download-button'), 50);
 
 	// debugging stuff below
 	// swapToReader();
-	 swapToSearchResult();
-	 $('#manga-info-full-page-container').show();
+	swapToSearchResult();
+	$('#manga-info-full-page-container').show();
+	$('#manga-info-container').hide();
 	// fit($('.title'), em(2.2));
 	// var newWidth = $('#manga-info-container').width() -
 	// $('#manga-info-img').width() - 15;
 	// console.log('calced width ' + newWidth);
 	// $('.manga-description-container').width(newWidth);
-	 $('.manga-description-container').jScrollPane({contentWidth: '0px'});
+	$('.manga-description-container').jScrollPane({
+		contentWidth : '0px'
+	});
 });
-
-// function checkPadding(element, botPadding) {
-// var elementTop = element.offset().top;
-// var elementBottom = elementTop + element.outerHeight();
-// var viewportTop = $(window).scrollTop();
-// var viewportBottom = viewportTop + $(window).height();
-// console.log(viewportBottom);
-// return elementTop > viewportTop && elementBottom + parseFloat(botPadding) - 1 < viewportBottom;
-// };
-//
-// function checkNeedsAbs(element, padding) {
-// var elementTop = element.offset().top;
-// var elementBottom = elementTop + element.outerHeight();
-// var limit = $('html').height() - $('.footer').outerHeight() - padding;
-// console.log('top ' + elementTop + ' bottom ' + elementBottom + ' limit ' + limit);
-// return elementBottom > limit;
-// }
 
 function check(element, padding) {
 	var viewportTop = $(window).scrollTop();
@@ -220,10 +266,6 @@ function check(element, padding) {
 
 function addBottomPadding(element, padding) {
 	$(window).scroll(function(e) {
-		// var noReset = element.data('original-bottom') == undefined || checkPadding(element, element.data('original-bottom'));
-		// var needsAbsolute = checkNeedsAbs(element, padding + (element.data('original-bottom') == undefined ? 0 : parseFloat(element.data('original-bottom'))));
-		// console.log(noReset + ' ' + needsAbsolute);
-		// if (noReset && needsAbsolute) {
 		if (check(element, padding)) {
 			if (element.data('original-bottom') == undefined) {
 				element.data('original-bottom', element.css('bottom'));
@@ -391,19 +433,17 @@ function populateContainer(series) {
 	var ct = 0;
 	for (i in series.chapters) {
 		var chap = series.chapters[i];
-		pane.append('<div class="chapter-wrapper"><span class="individual-chapter-download-button fa fa-arrow-circle-down"></span><div class="chapter">Chapter ' + chap.name + '<div class="hidden-info">' + chap.url + '</div></div></div>');
+		// pane.append('<div class="chapter-wrapper"><span class="individual-chapter-download-button fa fa-arrow-circle-down"></span><div class="chapter">Chapter ' + chap.name + '<div class="hidden-info">' + chap.url + '</div></div></div>');
+		pane.append('<div class="chapter-wrapper"><div class="chapter">Chapter ' + chap.name + '<div class="hidden-info">' + chap.url + '</div></div>');
 		ct++;
 	}
-	e.find('.chapter-wrapper').hover(function() {
-		$(this).toggleClass('hovered');
-	});
-	
+
 	e.find('.individual-chapter-download-button').hover(function() {
 		$(this).parent().toggleClass('hovered');
 	})
-	
+
 	e.find('.individual-chapter-download-button').on('click', function() {
-		
+
 	});
 
 	e.find('.chapter').on('click', function() {

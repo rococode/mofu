@@ -19,7 +19,7 @@ import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 @TestClass(enabled = true)
 public class ExperimentalTests {
 
-    @TestMethod
+    @TestMethod(enabled = false)
     public void testCloudflareBypass() throws Exception {
         String url = "http://kissmanga.com";
         System.out.println("test");
@@ -56,8 +56,10 @@ public class ExperimentalTests {
         boolean a = wait.until(jQueryLoad) && wait.until(jsLoad);
         System.out.println("res: " + a);
         Thread.sleep(7000L);
+        System.out.println(driver.getPageSource());
         Set<Cookie> cookies = driver.manage().getCookies();
         driver.close();
+        driver.quit();
         driver = new PhantomJSDriver(dcaps);
         for (Cookie c : cookies) {
             System.out.println("Adding cookie: " + c.toString());
@@ -66,5 +68,7 @@ public class ExperimentalTests {
         driver.get(url);
         Thread.sleep(7000L);
         System.out.println(driver.getPageSource());
+        driver.close();
+        driver.quit();
     }
 }

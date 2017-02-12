@@ -12,7 +12,6 @@ import org.reflections.Reflections;
 
 import com.edasaki.misakachan.test.annotations.TestClass;
 import com.edasaki.misakachan.test.annotations.TestMethod;
-import com.edasaki.misakachan.test.tests.ExperimentalTests;
 
 public class TestRunner {
 
@@ -29,7 +28,7 @@ public class TestRunner {
     }
 
     private static final Class<?>[] SPECIFIC_TESTING = {
-            ExperimentalTests.class
+            //            ExperimentalTests.class
     };
     private static final Set<Class<?>> specifics = new HashSet<Class<?>>();
     static {

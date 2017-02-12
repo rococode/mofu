@@ -15,7 +15,7 @@ div, img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover {
+.unselectable, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -502,11 +502,8 @@ div, img {
     height: 250px;
     text-align: left;
     border: 1px solid #555; }
-  .manga-info-container .chapter-bottom-padding {
-    height: 5px;
-    width: 100%; }
   .manga-info-container .chapter-wrapper {
-    width: 100%;
+    width: auto;
     padding: 5px 0 5px 5px;
     vertical-align: middle; }
     .manga-info-container .chapter-wrapper.hovered {
@@ -529,6 +526,98 @@ div, img {
     height: 75px; }
   .manga-info-container .alt, .manga-info-container .genre, .manga-info-container .author, .manga-info-container .artist {
     margin-bottom: 3px; }
+
+.manga-download-container {
+  width: 50%;
+  min-width: 650px;
+  min-height: 520px;
+  height: auto;
+  background-color: #272727;
+  border: 3px solid #555;
+  padding: 7px 10px 10px; }
+  @media (min-width: 650px) {
+    .manga-download-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      margin-top: -346.66667px;
+      margin-left: -25%; } }
+  .manga-download-container .chapter-header {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative; }
+    .manga-download-container .chapter-header .download-panel-name {
+      display: inline-block;
+      font-size: 1.15em;
+      line-height: 1.15em;
+      vertical-align: middle; }
+    .manga-download-container .chapter-header .download-back {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      font-size: 1.3em;
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+      margin-left: 3px; }
+    .manga-download-container .chapter-header .select-all {
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      cursor: pointer;
+      vertical-align: middle;
+      font-size: 0.8em;
+      line-height: 0.8em;
+      padding: 5px 7px;
+      color: #373737;
+      background-color: #ffe57f;
+      border: 1px solid #ffd740;
+      border-radius: 3px;
+      display: inline-block;
+      margin-left: 10px; }
+      .manga-download-container .chapter-header .select-all:hover {
+        background-color: #ffd740; }
+  .manga-download-container .chapters {
+    background-color: #323232;
+    height: 520px;
+    text-align: left;
+    border: 1px solid #555; }
+  .manga-download-container .download-selected-button {
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color: #ffe57f;
+    color: #373737;
+    text-align: center;
+    font-size: 1.2em;
+    padding: 5px 0; }
+    .manga-download-container .download-selected-button:hover {
+      background-color: #ffd740; }
+  .manga-download-container .chapter-wrapper {
+    cursor: pointer !important;
+    width: auto;
+    padding: 5px 0 5px 5px;
+    vertical-align: middle; }
+    .manga-download-container .chapter-wrapper.hovered {
+      background-color: #272727; }
+    .manga-download-container .chapter-wrapper.selected-for-download {
+      background-color: #ffe57f;
+      color: #373737; }
+    .manga-download-container .chapter-wrapper .individual-chapter-download-button {
+      padding: 0 5px;
+      display: inline;
+      vertical-align: middle; }
+      .manga-download-container .chapter-wrapper .individual-chapter-download-button:hover {
+        color: #ffe57f;
+        text-decoration: none;
+        cursor: pointer; }
+    .manga-download-container .chapter-wrapper .chapter {
+      vertical-align: middle;
+      display: inline;
+      overflow: hidden; }
+  .manga-download-container .selected-for-download > .individual-chapter-download-button:hover {
+    color: #373737; }
 
 /**
 * micro-clearfix
