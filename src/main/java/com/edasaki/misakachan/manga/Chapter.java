@@ -3,17 +3,20 @@ package com.edasaki.misakachan.manga;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.edasaki.misakachan.source.AbstractSource;
+
 public class Chapter {
     private final String chapterName, mangaTitle;
     private final int pageCount, chapterNumber;
-    private final List<Page> pages;
+    private final List<MangaPage> pages;
+    public AbstractSource source;
 
-    public Chapter(String mangaTitle, String chapterTitle, int chapterNumber, List<Page> pages) {
+    public Chapter(String mangaTitle, String chapterTitle, int chapterNumber, List<MangaPage> pages) {
         this.mangaTitle = mangaTitle;
         this.chapterName = chapterTitle;
         this.chapterNumber = chapterNumber;
         this.pageCount = pages.size();
-        this.pages = new ArrayList<Page>();
+        this.pages = new ArrayList<MangaPage>();
         this.pages.addAll(pages);
     }
 
@@ -25,7 +28,7 @@ public class Chapter {
         return this.pageCount;
     }
 
-    public List<Page> getPages() {
+    public List<MangaPage> getPages() {
         return pages;
     }
 

@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 import com.edasaki.misakachan.Misaka;
+import com.edasaki.misakachan.manga.MangaPage;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.utils.logging.M;
 
@@ -96,6 +97,16 @@ public class PersistenceManager {
         return f;
     }
 
+    public void saveChapter(String title, String source, int chapterNumber, List<MangaPage> pages) {
+        Object[][] pagesAsObjArr = new Object[pages.size()][2];
+        for (int k = 0; k < pagesAsObjArr.length; k++) {
+            MangaPage page = pages.get(k);
+            pagesAsObjArr[k][0] = page.getPageNumber();
+            pagesAsObjArr[k][1] = page.getURL();
+        }
+        saveChapter(title, source, chapterNumber, pagesAsObjArr);
+    }
+
     public void saveChapter(String title, String source, int chapterNumber, Object[][] pages) {
         String url = Misaka.instance().baka.getURL(title);
         M.debug("got " + url);
@@ -133,7 +144,7 @@ public class PersistenceManager {
                         if (!ext.startsWith(".")) {
                             ext = "." + ext;
                         }
-                        if (ext.length() != 4 && ext.length() != 5) { 
+                        if (ext.length() != 4 && ext.length() != 5) {
                             // extensions including . should be 4 or 5 chars
                             // .png, .jpg, .jpeg, .bmp, etc.
                             Misaka.update("Please report this to Misaka!");

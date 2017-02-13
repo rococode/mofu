@@ -29,7 +29,16 @@ public abstract class AbstractSource {
 
     public abstract Series getSeries(String url);
 
-    public abstract Chapter getChapter(String url);
+    public Chapter getChapter(String url) {
+        Chapter chap = getChapterFromSite(url);
+        if (chap == null) {
+            return null;
+        }
+        chap.source = this;
+        return chap;
+    }
+
+    protected abstract Chapter getChapterFromSite(String url);
 
     public abstract String getSourceName();
 

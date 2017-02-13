@@ -14,9 +14,8 @@ import org.json.JSONObject;
 import org.jsoup.nodes.Document;
 
 import com.edasaki.misakachan.Misaka;
-import com.edasaki.misakachan.manga.Chapter;
-import com.edasaki.misakachan.manga.Page;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
+import com.edasaki.misakachan.persistence.ChapterDownloader;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.source.SearchResult;
@@ -30,7 +29,7 @@ import spark.Spark;
 
 public class SparkManager {
 
-    private AbstractSource[] sources;
+    public AbstractSource[] sources;
 
     private static final Map<String, String> cachedURLToImage = new HashMap<String, String>();
 
@@ -67,7 +66,7 @@ public class SparkManager {
             for (int k = 0; k < arr.length(); k++) {
                 String url = arr.getString(k);
                 downloads.add(() -> {
-                    M.debug("dl " + url);
+                    ChapterDownloader.downloadChapterFromURL(url);
                     return true;
                 });
             }
@@ -169,22 +168,9 @@ public class SparkManager {
 
     private String loadRequestedURL(Request req, Response res) {
         String url = req.body();
-        JSONObject jo = new JSONObject();
-        for (AbstractSource source : sources) {
-            if (source.match(url)) {
-                jo.put("type", "url");
-                jo.put("source", source.getSourceName());
-                Chapter chapter = source.getChapter(url);
-                jo.put("mangaName", chapter.getMangaTitle());
-                jo.put("chapterName", chapter.getChapterName());
-                jo.put("chapterNumber", chapter.getChapterNumber());
-                jo.put("pagecount", chapter.getPageCount());
-                JSONArray urls = new JSONArray();
-                for (Page p : chapter.getPages())
-                    urls.put(p.getURL());
-                jo.put("urls", urls);
-                return jo.toString();
-            }
+        JSONObject jo = ChapterDownloader.getChapterFromURLAsJSON(url);
+        if (jo != null) {
+            return jo.toString();
         }
         return search(req, res);
     }

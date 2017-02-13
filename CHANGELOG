@@ -1,3 +1,6 @@
+0.0.36 - Feb 13 2017
+- finished first fully functional prototype of manga downloading!
+
 0.0.35 - Feb 12 2017
 - added scrollbar to chapter download panel
 - finished backend reading the urls from download panel - just need to wrap up the code to actually download a chapter directly from URL now!

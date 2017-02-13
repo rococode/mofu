@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.edasaki.misakachan.manga.Chapter;
-import com.edasaki.misakachan.manga.Page;
+import com.edasaki.misakachan.manga.MangaPage;
 import com.edasaki.misakachan.manga.Series;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.source.AbstractSource;
@@ -61,8 +61,8 @@ public class MangaHere extends AbstractSource {
     }
 
     @Override
-    public Chapter getChapter(String url) {
-        M.debug("gettting " + url);
+    public Chapter getChapterFromSite(String url) {
+        M.debug("getting " + url);
         Document doc = MCacheUtils.getDocument(url);
         if (doc == null)
             return null;
@@ -92,7 +92,7 @@ public class MangaHere extends AbstractSource {
             srcs.add(src);
         }
         System.out.println("finished parsing pages in " + (System.currentTimeMillis() - start) + "ms");
-        List<Page> pages = Page.convertURLs(srcs);
+        List<MangaPage> pages = MangaPage.convertURLs(srcs);
         Chapter chapter = new Chapter(mangaTitle, chapterTitle, chapterNum, pages);
         return chapter;
     }
