@@ -1,4 +1,6 @@
 var inReader = false;
+var downloadChapterPane;
+var infoChapterPane;
 
 $(document).ready(function() {
 
@@ -144,6 +146,8 @@ $(document).ready(function() {
 		if (e.target != this)
 			return;
 		$('#manga-info-full-page-container').hide();
+		$('#manga-info-container').show();
+		$('#manga-download-container').hide();
 	})
 
 	$('#download-button-icon').on('click', function() {
@@ -172,22 +176,13 @@ $(document).ready(function() {
 		});
 	});
 
-	$(document).on('click', '.download-menu-button', function() {
-		var pane = $('#chapter-pane');
-		console.log(pane);
-		pane.find('.chapter-wrapper').each(function() {
-			console.log(this);
-		});
-	});
-
 	$(document).on('mouseenter mouseleave', '.chapter-wrapper', function() {
 		$(this).toggleClass('hovered');
 	});
 
-	$(document).on('click', '#manga-download-container > #chapter-pane > .chapter-wrapper', function() {
+	$(document).on('click', '#manga-download-container > #chapter-pane .chapter-wrapper', function() {
 		$(this).toggleClass('selected-for-download');
 		var button = $(this).find('.individual-chapter-download-button');
-		console.log('button: ' + button.innerHTML);
 		if ($(this).hasClass('selected-for-download')) {
 			button.addClass('fa-check-square');
 			button.removeClass('fa-square');
@@ -195,13 +190,13 @@ $(document).ready(function() {
 			button.removeClass('fa-check-square');
 			button.addClass('fa-square');
 		}
-		var unchecked = $('#manga-download-container > #chapter-pane > .chapter-wrapper:not(.selected-for-download)').length;
+		var unchecked = $('#manga-download-container > #chapter-pane .chapter-wrapper:not(.selected-for-download)').length;
 		if (unchecked == 0) {
 			$('.select-all').text('Deselect All');
 		} else {
 			$('.select-all').text('Select All');
 		}
-		var checked = $('#manga-download-container > #chapter-pane > .chapter-wrapper.selected-for-download').length;
+		var checked = $('#manga-download-container > #chapter-pane .chapter-wrapper.selected-for-download').length;
 		if (checked == 0) {
 			$('#download-selected-button').text('Choose the chapters you want, then click here!');
 		} else {
@@ -212,7 +207,7 @@ $(document).ready(function() {
 
 	$(document).on('click', '.select-all', function() {
 		if ($(this).text() === 'Select All') {
-			$('#chapter-pane > .chapter-wrapper').each(function() {
+			$('#manga-download-container > #chapter-pane .chapter-wrapper').each(function() {
 				var e = $(this);
 				e.addClass('selected-for-download');
 				var button = $(this).find('.individual-chapter-download-button');
@@ -221,7 +216,7 @@ $(document).ready(function() {
 			})
 			$('.select-all').text('Deselect All');
 		} else {
-			$('#chapter-pane > .chapter-wrapper').each(function() {
+			$('#manga-download-container > #chapter-pane .chapter-wrapper').each(function() {
 				var e = $(this);
 				e.removeClass('selected-for-download');
 				var button = $(this).find('.individual-chapter-download-button');
@@ -230,21 +225,68 @@ $(document).ready(function() {
 			})
 			$('.select-all').text('Select All');
 		}
-		var checked = $('#manga-download-container > #chapter-pane > .chapter-wrapper.selected-for-download').length;
+		var checked = $('#manga-download-container > #chapter-pane .chapter-wrapper.selected-for-download').length;
 		if (checked == 0) {
 			$('#download-selected-button').text('Choose the chapters you want, then click here!');
 		} else {
 			$('#download-selected-button').text('Download ' + checked + ' Chapter' + (checked == 1 ? "" : "s") + "!");
 		}
 	});
+	
+	$('#download-selected-button').on('click', function() {
+		var chaps = $(this).parent().find('.chapter-wrapper');
+		var arr = [];
+		chaps.each(function() {
+			if($(this).hasClass('selected-for-download')) {
+				arr.push($(this).find('.hidden-info').text());
+			}
+		});
+		console.log(arr);
+		$.post("downloadbatch", JSON.stringify(arr), function(data, status) {
+			var res = JSON.parse(data);
+			alert("Queued " + res.count);
+		});
+		$('#manga-info-container').show();
+		$('#manga-download-container').hide();
+	});
 
 	addBottomPadding($('#top-bottom-buttons'), 50);
 	addBottomPadding($('#download-button'), 50);
-	$('#manga-info-full-page-container').show();
+	
+	downloadChapterPane = $('.manga-download-container > #chapter-pane').jScrollPane({
+		contentWidth : '0px',
+		autoReinitialise : true
+	}).data('jsp');
+	infoChapterPane = $('.manga-info-container > #chapter-pane').jScrollPane({
+		contentWidth : '0px',
+		autoReinitialise : true
+	}).data('jsp');
 
+	console.log('pane: ' + infoChapterPane.getContentPane());
+	
 	$(document).on('click', '.download-menu-button', function() {
 		$('#manga-info-container').hide();
 		$('#manga-download-container').show();
+		var pane = downloadChapterPane.getContentPane();
+		pane.empty();
+		for (i in currentSeries.chapters) {
+			var chap = currentSeries.chapters[i];
+			pane.append('\
+				<div class="chapter-wrapper">\
+					<span class="individual-chapter-download-button fa fa-square"></span>\
+					<div class="chapter">\
+						Chapter ' + chap.name + '\
+						<div class="hidden-info">' + chap.url + '</div>\
+					</div>\
+				</div>');
+		}
+		downloadChapterPane.reinitialise();
+		// console.log('props: ' + pane.prop('offsetHeight'));
+		// if (pane.prop('offsetHeight') < pane.prop('scrollHeight') || pane.prop('offsetWidth') < pane.prop('scrollWidth')) {
+		// console.log('dl has overflow');
+		// } else {
+		// console.log('dl doesn\'t overflow');
+		// }
 	});
 
 	$(document).on('click', '.download-back', function() {
@@ -253,23 +295,13 @@ $(document).ready(function() {
 	});
 
 	// debugging stuff below
-	// swapToReader();
 	swapToSearchResult();
-	$('#manga-info-full-page-container').show();
-	// $('#manga-info-container').hide();
-	// fit($('.title'), em(2.2));
-	// var newWidth = $('#manga-info-container').width() -
-	// $('#manga-info-img').width() - 15;
-	// console.log('calced width ' + newWidth);
-	// $('.manga-description-container').width(newWidth);
-	$('.manga-description-container').jScrollPane({
-		contentWidth : '0px'
-	});
 
-	$('#chapter-pane').jScrollPane({
-		contentWidth : '0px',
-		autoReinitialise : true
-	});
+	// $('#manga-info-container > #chapter-pane').jScrollPane({
+	// contentWidth : '0px',
+	// autoReinitialise : true
+	// });
+
 });
 
 function check(element, padding) {
@@ -429,8 +461,9 @@ function pluralize(target, text, matches) {
 	}
 	return target;
 }
-
+var currentSeries;
 function populateContainer(series) {
+	currentSeries = series;
 	var e = $('#manga-info-container');
 	e.find('.title').text(series.title);
 	if (series.altNames.length == 0) {
@@ -446,33 +479,18 @@ function populateContainer(series) {
 		e.find('.desc').html('<b>Description</b>: ' + series.description);
 	}
 	e.find('img').attr('src', series.imageURL);
-	var dl = $('.manga-download-container > #chapter-pane');
-	dl.empty();
-	var pane = $('#chapter-pane .jspPane');
+	var pane = infoChapterPane.getContentPane();
 	pane.empty();
 	var ct = 0;
 	for (i in series.chapters) {
 		var chap = series.chapters[i];
-		// pane.append('<div class="chapter-wrapper"><span class="individual-chapter-download-button fa fa-arrow-circle-down"></span><div class="chapter">Chapter ' + chap.name + '<div class="hidden-info">' + chap.url + '</div></div></div>');
 		pane.append('<div class="chapter-wrapper"><div class="chapter">Chapter ' + chap.name + '<div class="hidden-info">' + chap.url + '</div></div>');
-		dl.append('\
-			<div class="chapter-wrapper">\
-				<span class="individual-chapter-download-button fa fa-square"></span>\
-				<div class="chapter">\
-					Chapter ' + chap.name + '\
-					<div class="hidden-info">'+ chap.url + '</div>\
-				</div>\
-			</div>');
 		ct++;
 	}
-
+	infoChapterPane.reinitialise();
 	e.find('.individual-chapter-download-button').hover(function() {
 		$(this).parent().toggleClass('hovered');
 	})
-
-	e.find('.individual-chapter-download-button').on('click', function() {
-
-	});
 
 	e.find('.chapter').on('click', function() {
 		var chap = $(this);

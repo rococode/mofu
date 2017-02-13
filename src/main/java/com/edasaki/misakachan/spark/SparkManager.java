@@ -50,10 +50,37 @@ public class SparkManager {
         Spark.post("/lookup", this::lookup);
         Spark.post("/fetchResultImages", this::fetchResultImages);
         Spark.post("/download", this::downloadSingle);
+        Spark.post("/downloadbatch", this::downloadByURL);
     }
 
     public int getPort() {
         return Spark.port();
+    }
+
+    private String downloadByURL(Request req, Response res) {
+        JSONObject result = new JSONObject();
+        M.debug("Received batch download request");
+        M.debug(req.body());
+        try {
+            JSONArray arr = new JSONArray(req.body());
+            List<Callable<Boolean>> downloads = new ArrayList<Callable<Boolean>>();
+            for (int k = 0; k < arr.length(); k++) {
+                String url = arr.getString(k);
+                downloads.add(() -> {
+                    M.debug("dl " + url);
+                    return true;
+                });
+            }
+            result.put("count", downloads.size());
+            Callable<Void> wrapper = () -> {
+                MultiThreadTaskManager.queueTasks(downloads);
+                return null;
+            };
+            MultiThreadTaskManager.queueTask(wrapper);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result.toString();
     }
 
     private String downloadSingle(Request req, Response res) {

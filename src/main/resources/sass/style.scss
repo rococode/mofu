@@ -737,7 +737,8 @@ $loadingSquareSize: 85px;
   padding: 7px 10px 10px;
 
   .chapter-header {
-  @extend .unselectable;
+    @extend .unselectable;
+
     text-align: center;
     width: 100%;
     margin-bottom: 10px;
@@ -761,7 +762,7 @@ $loadingSquareSize: 85px;
       vertical-align: middle;
       cursor: pointer;
       margin-left: 3px;
-      
+
       &:hover {
         color: $color-text-hover;
       }
