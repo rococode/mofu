@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>misakachan</groupId>
 	<artifactId>misakachan</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.37</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -19,7 +19,7 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
+			<plugin> 
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 				<configuration>

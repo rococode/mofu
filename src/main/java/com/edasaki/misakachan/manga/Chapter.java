@@ -6,12 +6,12 @@ import java.util.List;
 import com.edasaki.misakachan.source.AbstractSource;
 
 public class Chapter {
-    private final String chapterName, mangaTitle;
-    private final int pageCount, chapterNumber;
+    private final String chapterName, chapterNumber, mangaTitle;
+    private final int pageCount;
     private final List<MangaPage> pages;
     public AbstractSource source;
 
-    public Chapter(String mangaTitle, String chapterTitle, int chapterNumber, List<MangaPage> pages) {
+    public Chapter(String mangaTitle, String chapterTitle, String chapterNumber, List<MangaPage> pages) {
         this.mangaTitle = mangaTitle;
         this.chapterName = chapterTitle;
         this.chapterNumber = chapterNumber;
@@ -36,7 +36,7 @@ public class Chapter {
         return this.mangaTitle;
     }
 
-    public int getChapterNumber() {
+    public String getChapterNumber() {
         return this.chapterNumber;
     }
 

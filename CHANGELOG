@@ -1,3 +1,7 @@
+0.0.37 - Feb 13 2017
+- fixed bug with non-integer chapter numberings
+- whipped up a quick auto pom updater that changes the build version to match what's in this file
+
 0.0.36 - Feb 13 2017
 - finished first fully functional prototype of manga downloading!
 

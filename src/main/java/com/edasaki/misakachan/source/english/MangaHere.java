@@ -75,14 +75,14 @@ public class MangaHere extends AbstractSource {
         }
         String mangaTitle = "Unknown Manga";
         String chapterTitle = "Unknown Chapter";
-        int chapterNum = 0;
+        String chapterNum = "";
         for (Element e : doc.select("div.title > h1 > a")) {
             String txt = e.text().trim();
-            if (!txt.matches(".* +[0-9]+"))
+            if (!txt.matches(".* +.*[0-9]+\\S*"))
                 continue;
             mangaTitle = txt.substring(0, txt.lastIndexOf(' '));
             chapterTitle = txt;
-            chapterNum = Integer.parseInt(txt.substring(txt.lastIndexOf(' ') + 1).trim());
+            chapterNum = txt.substring(txt.lastIndexOf(' ')).trim();
             break;
         }
         List<String> srcs = new ArrayList<String>();

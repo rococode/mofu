@@ -97,7 +97,7 @@ public class PersistenceManager {
         return f;
     }
 
-    public void saveChapter(String title, String source, int chapterNumber, List<MangaPage> pages) {
+    public void saveChapter(String title, String source, String chapterNumber, List<MangaPage> pages) {
         Object[][] pagesAsObjArr = new Object[pages.size()][2];
         for (int k = 0; k < pagesAsObjArr.length; k++) {
             MangaPage page = pages.get(k);
@@ -107,7 +107,7 @@ public class PersistenceManager {
         saveChapter(title, source, chapterNumber, pagesAsObjArr);
     }
 
-    public void saveChapter(String title, String source, int chapterNumber, Object[][] pages) {
+    public void saveChapter(String title, String source, String chapterNumber, Object[][] pages) {
         String url = Misaka.instance().baka.getURL(title);
         M.debug("got " + url);
         int index = 0;

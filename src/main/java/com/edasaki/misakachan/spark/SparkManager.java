@@ -89,7 +89,7 @@ public class SparkManager {
             M.debug(o.toString(4));
             String title = o.getString("mangaName").trim();
             String source = o.getString("source");
-            int chapterNumber = Integer.parseInt(o.getString("chapterNumber"));
+            String chapterNumber = o.getString("chapterNumber");
             JSONArray arr = o.getJSONArray("arr");
             Object[][] pages = new Object[arr.length()][2];
             for (int k = 0; k < arr.length(); k++) {

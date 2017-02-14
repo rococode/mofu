@@ -10,9 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.edasaki.misakachan.manga.Chapter;
-import com.edasaki.misakachan.manga.MangaPage;
 import com.edasaki.misakachan.manga.Series;
-import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.utils.MCacheUtils;
@@ -62,39 +60,7 @@ public class KissManga extends AbstractSource {
 
     @Override
     public Chapter getChapterFromSite(String url) {
-        M.debug("gettting " + url);
-        Document doc = MCacheUtils.getDocument(url);
-        if (doc == null)
-            return null;
-        Elements dropdownSelector = doc.select("select.wid60 > option");
-        List<String> pageURLs = new ArrayList<String>();
-        for (Element option : dropdownSelector) {
-            String pageURL = option.attr("value");
-            if (!pageURLs.contains(pageURL))
-                pageURLs.add(pageURL);
-        }
-        String mangaTitle = "Unknown Manga";
-        String chapterTitle = "Unknown Chapter";
-        int chapterNum = 0;
-        for (Element e : doc.select("div.title > h1 > a")) {
-            String txt = e.text().trim();
-            if (!txt.matches(".* +[0-9]+"))
-                continue;
-            mangaTitle = txt.substring(0, txt.lastIndexOf(' '));
-            chapterTitle = txt;
-            chapterNum = Integer.parseInt(txt.substring(txt.lastIndexOf(' ') + 1).trim());
-            break;
-        }
-        List<String> srcs = new ArrayList<String>();
-        long start = System.currentTimeMillis();
-        for (Document d : MultiThreadTaskManager.getDocuments(pageURLs)) {
-            String src = d.getElementById("image").attr("src");
-            srcs.add(src);
-        }
-        System.out.println("finished parsing pages in " + (System.currentTimeMillis() - start) + "ms");
-        List<MangaPage> pages = MangaPage.convertURLs(srcs);
-        Chapter chapter = new Chapter(mangaTitle, chapterTitle, chapterNum, pages);
-        return chapter;
+        return null;
     }
 
     @Override
