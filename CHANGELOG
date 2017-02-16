@@ -1,6 +1,7 @@
 0.0.38 - Feb 16 2017
 - added solo tag to test classes to run just that class easily
 - mostly finished cloudflare bypass, bit stuck on a weird bug
+- super-mini-patch 0.0.38.1: fixed the bug I think! Seems to work now :)
 
 0.0.37 - Feb 13 2017
 - fixed bug with non-integer chapter numberings
