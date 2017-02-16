@@ -5,14 +5,15 @@ import java.util.List;
 
 import com.edasaki.misakachan.changelog.ChangelogManager;
 import com.edasaki.misakachan.gui.GuiManager;
+import com.edasaki.misakachan.history.HistoryManager;
 import com.edasaki.misakachan.persistence.OptionManager;
 import com.edasaki.misakachan.persistence.PersistenceManager;
 import com.edasaki.misakachan.scanlator.BakaUpdateManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.english.KissManga;
 import com.edasaki.misakachan.source.english.MangaHere;
-import com.edasaki.misakachan.spark.SparkManager;
 import com.edasaki.misakachan.version.Version;
+import com.edasaki.misakachan.web.SparkManager;
 
 public class Misaka {
 
@@ -31,6 +32,7 @@ public class Misaka {
     public OptionManager options;
     public BakaUpdateManager baka;
     public ChangelogManager changelog;
+    public HistoryManager history;
 
     public SparkManager spark;
 
@@ -54,6 +56,8 @@ public class Misaka {
 
         this.baka = new BakaUpdateManager();
         this.changelog = new ChangelogManager();
+
+        this.history = new HistoryManager();
 
         // Do this last, since we want to be sure everything else is ready
         this.updateStatus("Initializing webserver...");

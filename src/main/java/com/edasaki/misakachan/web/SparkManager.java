@@ -1,4 +1,4 @@
-package com.edasaki.misakachan.spark;
+package com.edasaki.misakachan.web;
 
 import java.util.ArrayList;
 import java.util.HashMap;

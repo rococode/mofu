@@ -12,6 +12,7 @@ import org.reflections.Reflections;
 
 import com.edasaki.misakachan.test.annotations.TestClass;
 import com.edasaki.misakachan.test.annotations.TestMethod;
+import com.edasaki.misakachan.utils.logging.M;
 
 public class TestRunner {
 
@@ -27,15 +28,7 @@ public class TestRunner {
         }
     }
 
-    private static final Class<?>[] SPECIFIC_TESTING = {
-            //            ExperimentalTests.class
-    };
     private static final Set<Class<?>> specifics = new HashSet<Class<?>>();
-    static {
-        for (Class<?> c : SPECIFIC_TESTING) {
-            specifics.add(c);
-        }
-    }
 
     public static void main(String[] args) {
         // is this super hacky code? yeah.. does it matter that much? ehhhh not really hehe
@@ -50,6 +43,11 @@ public class TestRunner {
                 return o1.getName().compareTo(o2.getName());
             }
         });
+        for (Class<?> clazz : annotatedList) {
+            if (clazz.getAnnotation(TestClass.class).solo()) {
+                specifics.add(clazz);
+            }
+        }
         int passed = 0, failed = 0, count = 0, ignore = 0;
         Annotation annotation;
         for (Class<?> clazz : annotatedList) {

@@ -11,5 +11,8 @@ public @interface TestClass {
 
     //should ignore this test?
     public boolean enabled() default true;
+    
+    // run this test ONLY
+    public boolean solo() default false;
 
 }
