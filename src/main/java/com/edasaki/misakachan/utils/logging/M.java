@@ -22,6 +22,23 @@ public class M {
         debug(o.toString());
     }
 
+    public static void edb(String s) {
+        if (CHECK_CLASSES) {
+            Class<?> clazz = getCallerClass(3);
+            if (clazz == MTimer.class) {
+                clazz = getCallerClass(4);
+            }
+            if (clazz.isAnnotationPresent(NoDebug.class)) {
+                return;
+            }
+        }
+        System.err.println(s);
+    }
+
+    public static void edb(Object o) {
+        edb(o.toString());
+    }
+
     private static Class<?> getCallerClass(int depth) {
         return mySecurityManager.getCallerClass(depth);
     }

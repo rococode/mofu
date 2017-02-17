@@ -18,4 +18,14 @@ public class MTimer {
     public void output(String s) {
         M.debug(s + ": " + (System.currentTimeMillis() - start) + " ms");
     }
+
+    public void outputAndReset() {
+        output();
+        reset();
+    }
+
+    public void outputAndReset(String s) {
+        output(s);
+        reset();
+    }
 }
