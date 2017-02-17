@@ -11,6 +11,8 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import com.edasaki.misakachan.Misaka;
+import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.utils.logging.M;
 import com.edasaki.misakachan.utils.logging.MTimer;
 
@@ -18,7 +20,10 @@ import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 
 public final class WebAccessor {
     private static final String USER_AGENT = "Mozilla/5.0";
-    private static final String[] PHANTOMJS_ARGS = { "--ignore-ssl-errors=true", "--ssl-protocol=all" };
+    private static final String[] PHANTOMJS_ARGS = {
+            "--ignore-ssl-errors=true",
+            "--ssl-protocol=all",
+    };
     private static final DesiredCapabilities dcaps = new DesiredCapabilities();
     private static PhantomJSDriver PHANTOM;
     private static final Object[][] PRELOAD = {
@@ -31,27 +36,33 @@ public final class WebAccessor {
                     }
             },
     };
-    static {
-        PhantomJsDriverManager.getInstance().setup();
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                PHANTOM.quit();
-            }
-        });
-        dcaps.setJavascriptEnabled(true);
-        System.setProperty("phantomjs.page.settings.userAgent", USER_AGENT);
-        dcaps.setCapability("phantomjs.page.settings.userAgent", USER_AGENT);
-        dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_CLI_ARGS, PHANTOMJS_ARGS);
-    }
 
-    public static void preload() {
-        PHANTOM = new PhantomJSDriver(dcaps);
-        MTimer timer = new MTimer();
-        for (Object[] o : PRELOAD) {
-            M.debug("PRELOADING " + o[0]);
-            WebAccessor.getURL((String) o[0], (FinishedCondition[]) o[1]);
-            timer.outputAndReset("Finished preloading " + o[0]);
-        }
+    public static void initialize() {
+        MultiThreadTaskManager.queueTask(() -> {
+            MTimer timer = new MTimer();
+            MTimer timer2 = new MTimer();
+            PhantomJsDriverManager.getInstance().setup();
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                    if (PHANTOM != null)
+                        PHANTOM.quit();
+                }
+            });
+            timer2.outputAndReset("blah");
+            dcaps.setJavascriptEnabled(true);
+            System.setProperty("phantomjs.page.settings.userAgent", USER_AGENT);
+            dcaps.setCapability("phantomjs.page.settings.userAgent", USER_AGENT);
+            dcaps.setCapability(PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_CLI_ARGS, PHANTOMJS_ARGS);
+            PHANTOM = new PhantomJSDriver(dcaps);
+            timer2.outputAndReset("blah2");
+            for (Object[] o : PRELOAD) {
+                M.debug("PRELOADING " + o[0]);
+                WebAccessor.getURL((String) o[0], (FinishedCondition[]) o[1]);
+                timer2.outputAndReset("Finished preloading " + o[0]);
+            }
+            Misaka.update("Finished initializing WebAccessor in " + timer.getTimeSeconds() + ".");
+            return null;
+        });
     }
 
     private static final String NOT_YET_LOADED_REGEX = "(?s)\\s*\\Q<html>\\E\\s*\\Q<head>\\E\\s*\\Q</head>\\E\\s*\\Q<body>\\E\\s*\\Q</body>\\E\\s*\\Q</html>\\E\\s*";
@@ -80,36 +91,8 @@ public final class WebAccessor {
     }
 
     private static String waitFullLoad(WebDriver driver, FinishedCondition... conditions) {
-        //        M.edb("WAITING FULL LOAD");
-        //        MTimer timer = new MTimer();
-        //        WebDriverWait wait = new WebDriverWait(driver, 20);
-        //        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
-        //            @Override
-        //            public Boolean apply(WebDriver driver) {
-        //                M.debug("ready? " + ((JavascriptExecutor) driver).executeScript("return document.readyState"));
-        //                return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
-        //            }
-        //        };
-        //        ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
-        //            @Override
-        //            public Boolean apply(WebDriver driver) {
-        //                try {
-        //                    return ((Long) ((JavascriptExecutor) driver).executeScript("return jQuery.active") == 0);
-        //                } catch (Exception e) {
-        //                    return true;
-        //                }
-        //            }
-        //        };
-        //        wait.until(jsLoad);
-        //        wait.until(jQueryLoad);
-        //        M.edb("LOADED JS");
-        //        timer.outputAndReset();
         checkPendingRequests(driver);
-        //        M.edb("FINISHED PENDING");
-        //        timer.outputAndReset();
         waitDOMLoad(driver);
-        //        M.edb("FINISHED DOM");
-        //        timer.outputAndReset();
         if (conditions != null) {
             int counter = 0;
             while (counter++ < 1000) {
@@ -122,11 +105,8 @@ public final class WebAccessor {
                     }
                 }
                 if (done) {
-                    //                    M.edb("FINISHED CONDITIONS");
-                    //                    timer.outputAndReset();
                     return driver.getPageSource();
                 } else {
-                    //                    M.debug("waiting conditions");
                     try {
                         Thread.sleep(25L);
                     } catch (InterruptedException e) {
@@ -134,11 +114,7 @@ public final class WebAccessor {
                     }
                 }
             }
-            //            M.edb("FAILED CONDITIONS");
-            //            timer.outputAndReset();
         } else {
-            //            M.edb("FINISHED NO CONDITIONS");
-            //            timer.outputAndReset();
             return driver.getPageSource();
         }
         return null;
@@ -153,7 +129,8 @@ public final class WebAccessor {
         return false;
     }
 
-    public static synchronized Document getURL(String url, FinishedCondition... conditions) {
+    // TODO: Make this pull from a pool of phantoms rather than just one, and make it block in the method, not synchronized
+    public synchronized static Document getURL(String url, FinishedCondition... conditions) {
         M.debug("WebAccessor: Getting " + url);
         try {
             PHANTOM.executeScript("document.removeChild(document.documentElement);");
@@ -171,7 +148,7 @@ public final class WebAccessor {
                     Set<Cookie> cookies = PHANTOM.manage().getCookies();
                     for (Cookie c : cookies) {
                         if (c.getName().contains("cf_clearance")) {
-                            M.edb("REFRESHING");
+                            //                            M.edb("REFRESHING");
                             PHANTOM.navigate().refresh();
                             while (isCloudflare(src = PHANTOM.getPageSource())) {
                                 Thread.sleep(25L);

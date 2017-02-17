@@ -12,21 +12,8 @@ import org.reflections.Reflections;
 
 import com.edasaki.misakachan.test.annotations.TestClass;
 import com.edasaki.misakachan.test.annotations.TestMethod;
-import com.edasaki.misakachan.utils.logging.M;
 
 public class TestRunner {
-
-    // just an extra place to list excluded classes
-    // can also mark excluded class by setting enabled=false in TestClass annotation
-    private static final Class<?>[] EXCLUDED_CLASSES = {
-    };
-
-    private static final Set<Class<?>> excluded = new HashSet<Class<?>>();
-    static {
-        for (Class<?> c : EXCLUDED_CLASSES) {
-            excluded.add(c);
-        }
-    }
 
     private static final Set<Class<?>> specifics = new HashSet<Class<?>>();
 
@@ -52,9 +39,7 @@ public class TestRunner {
         Annotation annotation;
         for (Class<?> clazz : annotatedList) {
             boolean autoskip = false;
-            if (excluded.contains(clazz)) {
-                autoskip = true;
-            } else if (clazz.isAnnotationPresent(TestClass.class) && !((TestClass) clazz.getAnnotation(TestClass.class)).enabled()) {
+            if (clazz.isAnnotationPresent(TestClass.class) && !((TestClass) clazz.getAnnotation(TestClass.class)).enabled()) {
                 autoskip = true;
             }
             if (specifics.size() > 0 && !specifics.contains(clazz)) {

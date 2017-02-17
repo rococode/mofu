@@ -1,5 +1,8 @@
 0.0.39 - Feb 16 2017
-- 
+- finished first version of cloudflare bypass - fully functional, but it's not threadsafe and is blocking so it ain't that great :(
+- cloudflare bypass now preloads on a separate thread
+- added WebAccessor preloading - usually takes ~8 seconds on my computer, could be slower on worse internet connection so I'll work on improving it
+- basically sites that use Cloudflare (like KissManga) make my life a lot harder lol
 
 0.0.38 - Feb 16 2017
 - added solo tag to test classes to run just that class easily

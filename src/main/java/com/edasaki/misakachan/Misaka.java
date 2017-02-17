@@ -14,6 +14,7 @@ import com.edasaki.misakachan.source.english.KissManga;
 import com.edasaki.misakachan.source.english.MangaHere;
 import com.edasaki.misakachan.version.Version;
 import com.edasaki.misakachan.web.SparkManager;
+import com.edasaki.misakachan.web.WebAccessor;
 
 public class Misaka {
 
@@ -43,6 +44,7 @@ public class Misaka {
     }
 
     private void init() {
+        WebAccessor.initialize();
         this.gui = new GuiManager();
         this.gui.showFrame();
         for (String s : MESSAGE_QUEUE)

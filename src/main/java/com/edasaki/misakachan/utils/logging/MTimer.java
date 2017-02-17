@@ -28,4 +28,12 @@ public class MTimer {
         output(s);
         reset();
     }
+
+    public String getTimeSeconds() {
+        return (System.currentTimeMillis() - start) / 1000.0 + "s";
+    }
+
+    public String getTimeMillis() {
+        return (System.currentTimeMillis() - start) + "ms";
+    }
 }
