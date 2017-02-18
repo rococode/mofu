@@ -17,10 +17,10 @@ public class Version implements Comparable<Version> {
             mini = Integer.parseInt(data[2].replaceAll("[^0-9]", ""));
         } catch (Exception e) {
             e.printStackTrace();
+            this.major = 0;
+            this.minor = 0;
+            this.mini = 0;
         }
-        this.major = 0;
-        this.minor = 0;
-        this.mini = 0;
     }
 
     public static Version getVersion(String s) {

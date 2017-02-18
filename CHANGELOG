@@ -1,3 +1,7 @@
+0.0.41 - Feb 18 2017
+- added MIT license to project
+- readme updates
+
 0.0.40 - Feb 17 2017
 - realized that I only need to use phantomjs to get the cookies, not actually access pages afterwards lol
 - greatly improved WebAccessor - now loads most things pretty quickly, especially after it finishes preloading
