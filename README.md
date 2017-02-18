@@ -17,6 +17,18 @@ Unfortunately, the same awesome browsing experience doesn't really exist for com
 
 misakachan hopes to close this gap and bring some of the great functionality available for Android/iOS to folks who also want to read manga on their computers!
 
+### Table of Contents
+
+- [Features](#features)
+ - [Supported Sources](#supported-sources)
+- [Setup](#setup)
+- [Download](#download)
+- [FAQs](#faqs)
+- [Tech Stack](#tech-stack)
+- [License](#license)
+
+Because having one is fancy :)
+
 ## Features
 - Runs in your web browser so you can resize & zoom as much as you like!
 - Vertical (one long page) reading mode
@@ -102,4 +114,4 @@ Here's a quick overview of the specific tools and technologies used in misakacha
 
 ## License
 
-misakachan is available under whatever license is currently in the root directory (probably the MIT license).
+misakachan is available under [whatever license is currently in the root directory (probably the MIT license)](LICENSE).
