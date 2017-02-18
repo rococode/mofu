@@ -125,7 +125,7 @@ public class MangaHere extends AbstractSource {
             lastSearch = System.currentTimeMillis();
             Elements entries = doc.select(".result_search > dl");
             Elements mainLinks = entries.select("dl > dt > a.name_one");
-            Map<Element, List<String>> linkMap = new HashMap<Element, List<String>>();
+            Map<String, List<String>> linkMap = new HashMap<String, List<String>>();
             for (Element link : mainLinks) {
                 Elements alt = link.parent().parent().select("dd");
                 String altText = alt.text();
@@ -155,7 +155,7 @@ public class MangaHere extends AbstractSource {
                             associatedNames.add(s);
                     }
                 }
-                linkMap.put(link, associatedNames);
+                linkMap.put(link.absUrl("href"), associatedNames);
             }
             return createResultSet(linkMap);
         };

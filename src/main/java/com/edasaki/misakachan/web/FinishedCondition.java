@@ -1,6 +1,5 @@
 package com.edasaki.misakachan.web;
 
-@FunctionalInterface
-public interface FinishedCondition {
-    public boolean finished(String src);
+public abstract class FinishedCondition extends AbstractExtra {
+    public abstract boolean finished(String src);
 }

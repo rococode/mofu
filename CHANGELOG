@@ -1,3 +1,8 @@
+0.0.40 - Feb 17 2017
+- realized that I only need to use phantomjs to get the cookies, not actually access pages afterwards lol
+- greatly improved WebAccessor - now loads most things pretty quickly, especially after it finishes preloading
+- finished kissmanga search results! Halfway there :D Once I finish KissManga I can wrap up some other features, I just wanted to make sure I had at least two sources working.
+
 0.0.39 - Feb 16 2017
 - finished first version of cloudflare bypass - fully functional, but it's not threadsafe and is blocking so it ain't that great :(
 - cloudflare bypass now preloads on a separate thread

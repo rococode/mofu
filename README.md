@@ -7,7 +7,7 @@ Mobile apps are way better than anything available for computer users - just loo
 
 misakachan hopes to close the gap and provide more functionality to folks who read manga on their computers.
 
-Join us on Discord for sneak peeks at upcoming features, or to give me suggestions! I'm almost always online and try to respond to everyone :)
+Join us on Discord for sneak peeks at upcoming features, or to give me suggestions! I'm basically always online while I'm awake, and I try to respond to everyone (just make sure to @mention me) :)
 
 [<img src="https://discordapp.com/api/guilds/268574742032809985/widget.png?style=shield">](https://discord.gg/pMucKJ5)  
 

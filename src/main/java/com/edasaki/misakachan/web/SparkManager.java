@@ -132,11 +132,11 @@ public class SparkManager {
             String id = obj.getString("id");
             String url = obj.getString("url");
             while (!cachedURLToImage.containsKey(url)) {
-                if (counter > 5 * 10) { //5 is one second, max 5 sec hang
+                if (counter++ > 5 * 3) { //5 is one second, max 3 sec hang per image
                     break;
                 }
+                System.out.println("waiting for " + url + " in " + cachedURLToImage);
                 try {
-                    counter++;
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -226,6 +226,7 @@ public class SparkManager {
                 for (SearchResult s : set.getResults()) {
                     Future<String> f = MultiThreadTaskManager.queueTask(() -> {
                         String url = s.url;
+                        M.edb("attempting url " + s.url + " " + s.title);
                         Document doc = MCacheUtils.getDocument(url);
                         String img = src.getImageURL(doc);
                         return img;
@@ -233,8 +234,12 @@ public class SparkManager {
                     individualFutures.put(s.url, f);
                 }
                 MultiThreadTaskManager.wait(individualFutures.values());
-                for (Entry<String, Future<String>> e : individualFutures.entrySet()) {
-                    cachedURLToImage.put(e.getKey(), e.getValue().get());
+                for (Entry<String, Future<String>> entry : individualFutures.entrySet()) {
+                    try {
+                        cachedURLToImage.put(entry.getKey(), entry.getValue().get());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 this.lastSearchResults.remove(set);
                 return true;

@@ -61,11 +61,13 @@ public abstract class AbstractSource {
         return set;
     }
 
-    protected SearchResultSet createResultSet(Map<Element, List<String>> results) {
+    protected SearchResultSet createResultSet(Map<String, List<String>> results) {
         List<SearchResult> res = new ArrayList<SearchResult>();
-        for (Entry<Element, List<String>> e : results.entrySet()) {
-            SearchResult sr = new SearchResult(e.getValue().get(0), e.getValue().subList(1, e.getValue().size()), e.getKey().absUrl("href"));
+        for (Entry<String, List<String>> e : results.entrySet()) {
+            List<String> ls = e.getValue();
+            SearchResult sr = new SearchResult(ls.get(0), ls.size() > 1 ? ls.subList(1, e.getValue().size()) : null, e.getKey());
             res.add(sr);
+            System.out.println("ADded sr " + sr);
         }
         return createResultSet(res);
     }

@@ -1,12 +1,12 @@
 package com.edasaki.misakachan.utils;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import com.edasaki.misakachan.utils.logging.M;
+import com.edasaki.misakachan.web.WebAccessor;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -21,14 +21,9 @@ public class MCacheUtils {
         if (initialized) {
             return;
         }
-        documentCache = CacheBuilder.newBuilder().expireAfterWrite(5, TimeUnit.MINUTES).build(new CacheLoader<String, Document>() {
+        documentCache = CacheBuilder.newBuilder().expireAfterWrite(30, TimeUnit.MINUTES).build(new CacheLoader<String, Document>() {
             public Document load(String url) {
-                try {
-                    return Jsoup.connect(url).get();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
+                return WebAccessor.getURL(url);
             }
         });
         initialized = true;
@@ -48,6 +43,7 @@ public class MCacheUtils {
         try {
             return documentCache.get(url);
         } catch (ExecutionException e) {
+            M.edb("Failed on " + url);
             e.printStackTrace();
         }
         return null;
