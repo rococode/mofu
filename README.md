@@ -21,7 +21,7 @@ misakachan hopes to close this gap and bring some of the great functionality ava
 
 - [Features](#features)
  - [Supported Sources](#supported-sources)
-- [Setup](#setup)
+- [Setup Instructions](#setup-instructions)
 - [Download](#download)
 - [FAQs](#faqs)
 - [Tech Stack](#tech-stack)
@@ -45,7 +45,7 @@ Because having one is fancy :)
 - more coming soon!
 
 
-## Setup
+## Setup Instructions
 1. Install **Java 8** if you don't already have it. **misakachan requires Java 8, and won't work properly with Java 7!** 
  - [Click here to go to the Java 8 JRE download page](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
 2. Download the latest version from [the Releases page](https://github.com/edasaki/misakachan/releases)
