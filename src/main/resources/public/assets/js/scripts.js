@@ -263,7 +263,6 @@ $(document).ready(function() {
 	}).data('jsp');
 
 	console.log('pane: ' + infoChapterPane.getContentPane());
-
 	$(document).on('click', '.download-menu-button', function() {
 		$('#manga-info-container').hide();
 		$('#manga-download-container').show();
@@ -292,6 +291,22 @@ $(document).ready(function() {
 	$(document).on('click', '.download-back', function() {
 		$('#manga-info-container').show();
 		$('#manga-download-container').hide();
+	});
+
+	$(document).ajaxComplete(function(event, request, settings) {
+		var res = JSON.parse(request.responseText);
+		if (res.extraCookies != undefined) {
+			alert(JSON.stringify(res.extraCookies));
+			for (i in res.extraCookies) {
+				var c = res.extraCookies[i];
+				Cookies.set(c.name, c.value, {
+					expires : 1
+				});
+			}
+			alert(JSON.stringify(Cookies.get()));
+		} else {
+			console.log(res.extraCookies);
+		}
 	});
 
 	// debugging stuff below
@@ -589,7 +604,7 @@ function loadInReader(url) {
 				})
 				swapToSearchResult();
 				$.post("fetchResultImages", JSON.stringify(idUrlPairs), function(data, status) {
-					var res = JSON.parse(data);
+					var res = JSON.parse(data).arr;
 					for ( var i in res) {
 						var obj = res[i];
 						try {

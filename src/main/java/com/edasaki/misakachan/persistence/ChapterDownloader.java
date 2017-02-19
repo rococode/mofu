@@ -22,11 +22,15 @@ public class ChapterDownloader {
     }
 
     public static JSONObject getChapterFromURLAsJSON(String url) {
+        JSONObject jo = new JSONObject();
+        return getChapterFromURLAsJSON(url, jo);
+    }
+
+    public static JSONObject getChapterFromURLAsJSON(String url, JSONObject jo) {
         Chapter chapter = getChapterFromURL(url);
         if (chapter == null) {
             return null;
         }
-        JSONObject jo = new JSONObject();
         jo.put("type", "url");
         jo.put("source", chapter.source.getSourceName());
         jo.put("mangaName", chapter.getMangaTitle());

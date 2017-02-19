@@ -1,3 +1,8 @@
+0.0.44 - Feb 18 2017
+- fixed another null pointer issue
+- wrote a ton of code to try to get past a cookie issue, only to get cheesed by same-origin policy (always forget it exists lol)
+- since it was a lot of code (maybe stuff worth reusing in the future?), I'll push this commit now and restart in the next commit
+
 0.0.43 - Feb 18 2017
 - info & download panels now work much better on unusual window sizes
 - manga page url conversion now takes collections instead of list

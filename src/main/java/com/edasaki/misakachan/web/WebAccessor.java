@@ -1,14 +1,13 @@
 package com.edasaki.misakachan.web;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
@@ -58,7 +57,7 @@ public final class WebAccessor {
     private static final String[] CLOUDFLARE_REGEX = {
             "(?s).*\\Q<title>\\E\\s*\\QPlease wait 5 seconds...\\E\\s*\\Q</title>\\E.*"
     };
-    private static final Map<String, String> cookies = new HashMap<String, String>();
+    private static final Map<String, String> COOKIES = new HashMap<String, String>();
 
     private static volatile boolean initialized = false;
 
@@ -95,6 +94,17 @@ public final class WebAccessor {
         });
     }
 
+    public static void appendCookies(JSONObject jo) {
+        JSONArray arr = new JSONArray();
+        for (Entry<String, String> e : COOKIES.entrySet()) {
+            JSONObject tuple = new JSONObject();
+            tuple.put("name", e.getKey());
+            tuple.put("value", e.getValue());
+            arr.put(tuple);
+        }
+        jo.put("extraCookies", arr);
+    }
+
     private static void waitInitialize() {
         while (!initialized) {
             if (!startedInitializing) {
@@ -114,7 +124,7 @@ public final class WebAccessor {
         conn.userAgent(USER_AGENT);
         conn.ignoreHttpErrors(true);
         // add all loaded cookies
-        conn.cookies(cookies);
+        conn.cookies(COOKIES);
         if (conditions != null) {
             for (AbstractExtra a : conditions) {
                 if (a instanceof ExtraModifiers) {
@@ -183,7 +193,6 @@ public final class WebAccessor {
             if (!success) {
                 res = getWithPhantom(url, conditions);
             }
-            M.edb("finished " + url);
         }
         return null;
     }
@@ -272,8 +281,8 @@ public final class WebAccessor {
                 e.printStackTrace();
             } finally {
                 if (!map.isEmpty()) {
-                    cookies.putAll(map);
-                    M.debug("cookiemap: " + cookies);
+                    COOKIES.putAll(map);
+                    M.debug("cookiemap: " + COOKIES);
                 }
             }
             return map;
@@ -308,7 +317,6 @@ public final class WebAccessor {
                     if (fc instanceof FinishedCondition) {
                         done &= ((FinishedCondition) fc).finished(src);
                         if (!done) {
-                            //                            System.out.println(src);
                             break;
                         }
                     }
@@ -326,7 +334,7 @@ public final class WebAccessor {
         } else {
             return driver.getPageSource();
         }
-        return null;
+        return "";
     }
 
     private static boolean isCloudflare(String src) {

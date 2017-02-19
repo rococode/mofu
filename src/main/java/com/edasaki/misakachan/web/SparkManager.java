@@ -1,5 +1,6 @@
 package com.edasaki.misakachan.web;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import com.edasaki.misakachan.utils.logging.M;
 
 import spark.Request;
 import spark.Response;
+import spark.Route;
 import spark.Spark;
 
 public class SparkManager {
@@ -43,21 +45,38 @@ public class SparkManager {
     public void startWebserver() {
         Spark.port(10032);
         Spark.staticFileLocation("/public");
-        Spark.post("/load", this::loadRequestedURL);
-        Spark.post("/search", this::search);
-        Spark.get("/changelog", this::loadChangelog);
-        Spark.post("/lookup", this::lookup);
-        Spark.post("/fetchResultImages", this::fetchResultImages);
-        Spark.post("/download", this::downloadSingle);
-        Spark.post("/downloadbatch", this::downloadByURL);
+        Spark.post("/load", processRouteObj(this::loadRequestedURL));
+        Spark.post("/search", processRouteObj(this::search));
+        Spark.get("/changelog", processRouteObj(this::loadChangelog));
+        Spark.post("/lookup", processRouteObj(this::lookup));
+        Spark.post("/fetchResultImages", processRouteObj(this::fetchResultImages));
+        Spark.post("/download", processRouteObj(this::downloadSingle));
+        Spark.post("/downloadbatch", processRouteObj(this::downloadByURL));
+    }
+
+    public Route processRouteObj(TriConsumer<Request, Response, JSONObject> consumer) {
+        Route r = new Route() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                JSONObject jo = new JSONObject();
+                consumer.apply(request, response, jo);
+                WebAccessor.appendCookies(jo);
+                return jo;
+            }
+        };
+        return r;
+    }
+
+    @FunctionalInterface
+    private interface TriConsumer<A, B, C> {
+        void apply(A a, B b, C c);
     }
 
     public int getPort() {
         return Spark.port();
     }
 
-    private String downloadByURL(Request req, Response res) {
-        JSONObject result = new JSONObject();
+    private void downloadByURL(Request req, Response res, JSONObject result) {
         M.debug("Received batch download request");
         M.debug(req.body());
         try {
@@ -79,11 +98,9 @@ public class SparkManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result.toString();
     }
 
-    private String downloadSingle(Request req, Response res) {
-        JSONObject result = new JSONObject();
+    private void downloadSingle(Request req, Response res, JSONObject result) {
         try {
             JSONObject o = new JSONObject(req.body());
             M.debug(o.toString(4));
@@ -100,17 +117,15 @@ public class SparkManager {
             }
             Misaka.instance().persist.saveChapter(title, source, chapterNumber, pages);
             result.put("status", "success");
-            return result.toString();
+            return;
         } catch (Exception e) {
             e.printStackTrace();
         }
         result.put("status", "failure");
-        return result.toString();
     }
 
-    private String lookup(Request req, Response res) {
+    private void lookup(Request req, Response res, JSONObject jo) {
         String url = req.body();
-        JSONObject jo = new JSONObject();
         for (AbstractSource source : sources) {
             if (source.matchInfo(url)) {
                 jo.put("status", "success");
@@ -119,16 +134,16 @@ public class SparkManager {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                return jo.toString();
+                return;
             }
         }
         jo.put("status", "failure");
         jo.put("reason", "Invalid URL.");
-        return jo.toString();
     }
 
-    private String fetchResultImages(Request req, Response res) {
+    private void fetchResultImages(Request req, Response res, JSONObject jo) {
         JSONArray ja = new JSONArray();
+        jo.put("arr", ja);
         JSONArray urlArray = new JSONArray(req.body());
         for (int k = 0; k < urlArray.length(); k++) {
             int counter = 0;
@@ -136,27 +151,24 @@ public class SparkManager {
             String id = obj.getString("id");
             String url = obj.getString("url");
             while (!cachedURLToImage.containsKey(url)) {
-                if (counter++ > 5 * 3) { //5 is one second, max 3 sec hang per image
+                if (counter++ > 5 * 10) { //5 is one second, max 10 sec hang per image
                     break;
                 }
-                System.out.println("waiting for " + url + " in " + cachedURLToImage);
+                System.out.println("Waiting for " + url + " in " + cachedURLToImage);
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            JSONObject jo = new JSONObject();
-            jo.put("id", id);
-            jo.put("imgUrl", cachedURLToImage.getOrDefault(url, "http://edasaki.com/i/test-page.png"));
-            ja.put(jo);
+            JSONObject jsonobject = new JSONObject();
+            jsonobject.put("id", id);
+            jsonobject.put("imgUrl", cachedURLToImage.getOrDefault(url, "http://edasaki.com/i/test-page.png"));
+            ja.put(jsonobject);
         }
-        return ja.toString();
-
     }
 
-    private String loadChangelog(Request req, Response res) {
-        JSONObject jo = new JSONObject();
+    private void loadChangelog(Request req, Response res, JSONObject jo) {
         List<String> ls = Misaka.instance().changelog.getChangelog();
         JSONArray lines = new JSONArray();
         if (ls == null || ls.size() == 0) {
@@ -167,30 +179,26 @@ public class SparkManager {
                 lines.put(s);
             jo.put("lines", lines);
         }
-        return jo.toString();
     }
 
-    private String loadRequestedURL(Request req, Response res) {
+    private void loadRequestedURL(Request req, Response res, JSONObject jo) {
         String url = req.body();
-        JSONObject jo = ChapterDownloader.getChapterFromURLAsJSON(url);
-        if (jo != null) {
-            return jo.toString();
+        if (ChapterDownloader.getChapterFromURLAsJSON(url, jo) == null) {
+            search(req, res, jo);
         }
-        return search(req, res);
     }
 
-    private String search(Request req, Response res) {
+    private void search(Request req, Response res, JSONObject jo) {
         String searchPhrase = req.body();
         if (searchPhrase == null || searchPhrase.length() == 0)
-            return "";
-        JSONObject jo = new JSONObject();
+            return;
         jo.put("type", "search");
         jo.put("searchPhrase", searchPhrase);
         List<Callable<SearchResultSet>> searches = new ArrayList<Callable<SearchResultSet>>();
         for (AbstractSource source : sources) {
             SearchAction sa = source.getSearch();
             searches.add(() -> {
-                return sa.search(searchPhrase);
+                return sa.search(URLEncoder.encode(searchPhrase, "UTF-8"));
             });
         }
         List<Future<SearchResultSet>> futures = MultiThreadTaskManager.queueTasks(searches);
@@ -221,7 +229,6 @@ public class SparkManager {
         }
         jo.put("results", results);
         prefetchImages();
-        return jo.toString();
     }
 
     private void prefetchImages() {

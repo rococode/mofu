@@ -79,15 +79,15 @@ public abstract class AbstractSource {
             List<String> ls = e.getValue();
             SearchResult sr = new SearchResult(ls.get(0), ls.size() > 1 ? ls.subList(1, e.getValue().size()) : null, e.getKey());
             res.add(sr);
-            System.out.println("ADded sr " + sr);
         }
         return createResultSet(res);
     }
 
     protected String selectFirst(Element ele, String selector) {
         Elements e = ele.select(selector);
-        if (e.isEmpty())
+        if (e.isEmpty()) {
             return "";
+        }
         return e.first().text();
     }
 
