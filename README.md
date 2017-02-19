@@ -46,6 +46,11 @@ Because having one is fancy :)
 
 
 ## Setup Instructions
+> **Important!** You may be asked for permissions to run PhantomJS. I know it sounds super sketchy, but I promise it isn't haha.  
+> PhantomJS is this pretty large & reputable project: http://phantomjs.org. It's basically a browser that doesn't have any UI so it runs invisibly.  
+> It's used in misakachan to get past pesky Cloudflare blocks (those "pls wait 5 seconds" things like on KissManga.com) without spamming you with new browser windows.  
+> If you want to make sure it's not doing anything shady (better safe than sorry!), the relevant code is in `WebAccessor.java`.
+
 1. Install **Java 8** if you don't already have it. **misakachan requires Java 8, and won't work properly with Java 7!** 
  - [Click here to go to the Java 8 JRE download page](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
 2. Download the latest version from [the Releases page](https://github.com/edasaki/misakachan/releases)
@@ -64,6 +69,15 @@ Download the latest version of misakachan from [the Releases page](https://githu
 Of course you can also fork the repo and build from source.
 
 ## FAQs
+
+### What's PhantomJS? A virus?
+
+Please see "Setup Instructions" (relevant section copied here).
+
+> **Important!** You may be asked for permissions to run PhantomJS. I know it sounds super sketchy, but I promise it isn't haha.  
+> PhantomJS is this pretty large & reputable project: http://phantomjs.org. It's basically a browser that doesn't have any UI so it runs invisibly.  
+> It's used in misakachan to get past pesky Cloudflare blocks (those "pls wait 5 seconds" things like on KissManga.com) without spamming you with new browser windows.  
+> If you want to make sure it's not doing anything shady (better safe than sorry!), the relevant code is in `WebAccessor.java`.
 
 ### Is this ready for use?
 I use a super relaxed version of [Semantic Versioning](http://semver.org/), which basically means I'm too lazy to stick to all those specific rules but misakachan's versioning will look vaguely like that.
