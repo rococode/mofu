@@ -1,6 +1,10 @@
 package com.edasaki.misakachan.web;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -197,7 +201,7 @@ public final class WebAccessor {
                     PHANTOM = ((ExtraModifiers) ae).modify(PHANTOM);
                 }
             }
-//            PHANTOM.manage().
+            //            PHANTOM.manage().
             try {
                 PHANTOM.executeScript("document.removeChild(document.documentElement);");
                 Thread.sleep(15L);

@@ -15,7 +15,7 @@ import com.edasaki.misakachan.manga.Series;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
-import com.edasaki.misakachan.utils.MCacheUtils;
+import com.edasaki.misakachan.utils.MCache;
 import com.edasaki.misakachan.utils.logging.M;
 
 public class MangaHere extends AbstractSource {
@@ -32,13 +32,13 @@ public class MangaHere extends AbstractSource {
 
     @Override
     public Series getSeries(String url) {
-        Document doc = MCacheUtils.getDocument(url);
+        Document doc = MCache.getDocument(url);
         if (doc == null)
             return null;
         Series series = new Series();
         series.source = this.getSourceName();
         Element detail = doc.select(".detail_topText").first();
-        series.imageURL = doc.select(".manga_detail_top").first().select("img.img").first().absUrl("src");
+        series.imageURL = getImageURL(doc);
         series.title = doc.select("meta[property=og:title").first().attr("content");
         series.description = detail.select("#show").first().ownText();
         series.authors = selectFirst(detail, "a[href^=http://www.mangahere.co/author/]");
@@ -63,7 +63,7 @@ public class MangaHere extends AbstractSource {
     @Override
     public Chapter getChapterFromSite(String url) {
         M.debug("getting " + url);
-        Document doc = MCacheUtils.getDocument(url);
+        Document doc = MCache.getDocument(url);
         if (doc == null)
             return null;
         Elements dropdownSelector = doc.select("select.wid60 > option");
@@ -118,7 +118,7 @@ public class MangaHere extends AbstractSource {
             }
             String prefix = "http://www.mangahere.co/search.php?name_method=cw&author_method=cw&artist_method=cw&advopts=1&name=";
             String url = prefix + searchTerm;
-            Document doc = MCacheUtils.getDocument(url);
+            Document doc = MCache.getDocument(url);
             if (doc == null)
                 return null;
             // update last search time after site has been accessed
@@ -133,7 +133,7 @@ public class MangaHere extends AbstractSource {
                 List<String> associatedNames = new ArrayList<String>();
                 associatedNames.add(link.attr("rel"));
                 if (altText.contains("...")) {
-                    Document detailed = MCacheUtils.getDocument(link.absUrl("href"));
+                    Document detailed = MCache.getDocument(link.absUrl("href"));
                     Elements altNameLabel = detailed.select("label:contains(Alternative Name)");
                     for (Element altNameLabelEle : altNameLabel) {
                         try {

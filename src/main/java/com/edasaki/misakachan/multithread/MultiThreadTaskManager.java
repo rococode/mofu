@@ -13,7 +13,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.jsoup.nodes.Document;
 
-import com.edasaki.misakachan.utils.MCacheUtils;
+import com.edasaki.misakachan.utils.MCache;
 
 public class MultiThreadTaskManager {
 
@@ -42,7 +42,7 @@ public class MultiThreadTaskManager {
         List<Future<Document>> futures = new ArrayList<Future<Document>>();
         for (String pageURL : urls) {
             Callable<Document> c = () -> {
-                return MCacheUtils.getDocument(pageURL);
+                return MCache.getDocument(pageURL);
             };
             futures.add(MultiThreadTaskManager.queueTask(c));
         }

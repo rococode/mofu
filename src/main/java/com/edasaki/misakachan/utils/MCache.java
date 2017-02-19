@@ -11,7 +11,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-public class MCacheUtils {
+public class MCache {
 
     private static boolean initialized = false;
 

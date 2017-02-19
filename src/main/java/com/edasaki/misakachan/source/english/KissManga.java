@@ -17,8 +17,7 @@ import com.edasaki.misakachan.manga.Chapter;
 import com.edasaki.misakachan.manga.Series;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
-import com.edasaki.misakachan.utils.MCacheUtils;
-import com.edasaki.misakachan.utils.logging.M;
+import com.edasaki.misakachan.utils.MCache;
 import com.edasaki.misakachan.web.ExtraModifiers;
 import com.edasaki.misakachan.web.FinishedCondition;
 import com.edasaki.misakachan.web.WebAccessor;
@@ -37,31 +36,35 @@ public class KissManga extends AbstractSource {
 
     @Override
     public Series getSeries(String url) {
-        Document doc = MCacheUtils.getDocument(url);
+        Document doc = MCache.getDocument(url);
         if (doc == null)
             return null;
         Series series = new Series();
-        //        series.source = this.getSourceName();
-        //        Element detail = doc.select(".detail_topText").first();
-        //        series.imageURL = doc.select(".manga_detail_top").first().select("img.img").first().absUrl("src");
-        //        series.title = doc.select("meta[property=og:title").first().attr("content");
-        //        series.description = detail.select("#show").first().ownText();
-        //        series.authors = selectFirst(detail, "a[href^=http://www.mangahere.co/author/]");
-        //        series.artists = selectFirst(detail, "a[href^=http://www.mangahere.co/artist/]");
-        //        Elements labels = detail.select("label");
-        //        for (Element e : labels) {
-        //            if (e.text().contains("Genre")) {
-        //                series.genres = e.parent().ownText();
-        //            } else if (e.text().contains("Alternative")) {
-        //                series.altNames = e.parent().ownText();
-        //            }
-        //        }
-        //        Elements chapters = doc.select(".detail_list > ul:not([class]) > li");
-        //        for (Element chapter : chapters) {
-        //            String cURL = chapter.select("a").first().absUrl("href");
-        //            String cName = chapter.select("a").first().text();
-        //            series.addChapter(cName, cURL);
-        //        }
+        series.source = this.getSourceName();
+        series.imageURL = getImageURL(doc);
+        series.title = attempt(DEFAULT_TITLE, () -> {
+            return doc.select(".bigChar").first().ownText();
+        });
+        series.description = attempt(DEFAULT_DESCRIPTION, () -> {
+            return doc.select(".info:contains(Summary)").first().parent().nextElementSibling().ownText();
+        });
+        series.authors = attempt(DEFAULT_AUTHOR, () -> {
+            return doc.select(".info:contains(Author) + a").first().ownText();
+        });
+        series.genres = attempt(DEFAULT_GENRE, () -> {
+            String s;
+            return (s = doc.select(".info:contains(Genre) + a").first().parent().text()).substring(s.indexOf(':') + 1);
+        });
+        Elements chapters = attempt(DEFAULT_ELEMENTS, () -> {
+            return doc.select(".listing tr > td:first-child > a");
+        });
+        for (Element chapter : chapters) {
+            attempt(() -> {
+                String cURL = chapter.absUrl("href");
+                String cName = chapter.ownText();
+                series.addChapter(cName, cURL);
+            });
+        }
         return series;
     }
 
@@ -102,19 +105,19 @@ public class KissManga extends AbstractSource {
             if (doc == null)
                 return null;
             // update last search time after site has been accessed
-            M.debug(doc);
             Elements entries = doc.select(".listing tr > td:first-child");
             Map<String, List<String>> linkMap = new HashMap<String, List<String>>();
             for (Element td : entries) {
-                Element title = Jsoup.parseBodyFragment(td.attr("title"), doc.baseUri()).body();
-                Element link = title.select("a").first();
-                link.setBaseUri("http://kissmanga.com");
-                String name = link.ownText();
-                List<String> ls = new ArrayList<String>();
-                ls.add(name);
-                String href = link.absUrl("href");
-                M.debug("href of : " + href + " for " + link);
-                linkMap.put(href, ls);
+                attempt(() -> {
+                    Element title = Jsoup.parseBodyFragment(td.attr("title"), doc.baseUri()).body();
+                    Element link = title.select("a").first();
+                    link.setBaseUri("http://kissmanga.com");
+                    String name = link.ownText();
+                    List<String> ls = new ArrayList<String>();
+                    ls.add(name);
+                    String href = link.absUrl("href");
+                    linkMap.put(href, ls);
+                });
             }
             System.out.println("LINKS: " + linkMap);
 
@@ -124,7 +127,9 @@ public class KissManga extends AbstractSource {
 
     @Override
     public String getImageURL(Document doc) {
-        return doc.select("#rightside > .rightBox > .barContent img").first().absUrl("src");
+        return attempt(DEFAULT_IMAGE, () -> {
+            return doc.select("#rightside > .rightBox > .barContent img").first().absUrl("src");
+        });
     }
 
 }

@@ -15,6 +15,16 @@ import com.edasaki.misakachan.manga.Series;
 
 public abstract class AbstractSource {
 
+    public static final String DEFAULT_IMAGE = "http://edasaki.com/i/test-page.png";
+    public static final String DEFAULT_TITLE = "Unknown Title";
+    public static final String DEFAULT_DESCRIPTION = "No description available.";
+    public static final String DEFAULT_AUTHOR = "Unknown Author";
+    public static final String DEFAULT_ARTIST = "";
+    public static final String DEFAULT_GENRE = "";
+    public static final String DEFAULT_ALTNAMES = "";
+    public static final String DEFAULT_SOURCE = "Unknown Source";
+    public static final Elements DEFAULT_ELEMENTS = new Elements();
+
     /**
      * @param url the url to match
      * @return <code>true</code> if the given URL matches this source's URL pattern
@@ -77,5 +87,32 @@ public abstract class AbstractSource {
         if (e.isEmpty())
             return "";
         return e.first().text();
+    }
+
+    @FunctionalInterface
+    protected interface ExecutorWithDefault<E> {
+        public E execute();
+    }
+
+    @FunctionalInterface
+    protected interface VoidExecutor {
+        public void execute();
+    }
+
+    protected static <E> E attempt(E defaultValue, ExecutorWithDefault<E> exec) {
+        try {
+            return exec.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return defaultValue;
+    }
+
+    protected static void attempt(VoidExecutor exec) {
+        try {
+            exec.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

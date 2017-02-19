@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>misakachan</groupId>
 	<artifactId>misakachan</artifactId>
-	<version>0.0.40</version>
+	<version>0.0.42</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
@@ -19,7 +19,7 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin> 
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
 				<configuration>
@@ -62,13 +62,12 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<dependency>
-			<!-- jsoup HTML parser library @ http://jsoup.org/ -->
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.10.2</version>
-			<scope>compile</scope>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jsoup</groupId> -->
+<!-- 			<artifactId>jsoup</artifactId> -->
+<!-- 			<version>1.10.2</version> -->
+<!-- 			<scope>compile</scope> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>

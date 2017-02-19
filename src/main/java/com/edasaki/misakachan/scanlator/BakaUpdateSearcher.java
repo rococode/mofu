@@ -16,7 +16,7 @@ import org.jsoup.select.Elements;
 
 import com.edasaki.misakachan.Misaka;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
-import com.edasaki.misakachan.utils.MCacheUtils;
+import com.edasaki.misakachan.utils.MCache;
 import com.edasaki.misakachan.utils.MStringUtils;
 import com.edasaki.misakachan.utils.logging.MTimer;
 import com.edasaki.misakachan.utils.logging.NoDebug;
@@ -65,7 +65,7 @@ public class BakaUpdateSearcher {
                     Map<Element, List<String>> urls = new HashMap<Element, List<String>>();
                     try {
                         final String connectionURL = PREFIX + currPage + SEARCH + URLEncoder.encode(title.trim(), CHARSET);
-                        Document doc = MCacheUtils.getDocument(connectionURL);
+                        Document doc = MCache.getDocument(connectionURL);
                         String txt = doc.text();
                         if (txt.contains("There are no") || txt.contains("make your query more restrictive.")) {
                             // search complete, mark page as last valid page
@@ -118,7 +118,7 @@ public class BakaUpdateSearcher {
     }
 
     protected Map<ScanGroup, List<String>> getGroups(String bestURL) {
-        Document detailPage = MCacheUtils.getDocument(bestURL);
+        Document detailPage = MCache.getDocument(bestURL);
         if (detailPage == null)
             return new HashMap<>();
         Elements sCats = detailPage.select(GROUP_SELECTOR);

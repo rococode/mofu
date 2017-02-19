@@ -7,15 +7,17 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.edasaki.misakachan.source.AbstractSource;
+
 public class Series {
-    public String imageURL;
-    public String title;
-    public String authors;
-    public String artists;
-    public String genres;
-    public String altNames;
-    public String description;
-    public String source;
+    public String imageURL = AbstractSource.DEFAULT_IMAGE;
+    public String title = AbstractSource.DEFAULT_TITLE;
+    public String authors = AbstractSource.DEFAULT_AUTHOR;
+    public String artists = AbstractSource.DEFAULT_ARTIST;
+    public String genres = AbstractSource.DEFAULT_GENRE;
+    public String altNames = AbstractSource.DEFAULT_ALTNAMES;
+    public String description = AbstractSource.DEFAULT_DESCRIPTION;
+    public String source = AbstractSource.DEFAULT_SOURCE;
     private JSONArray scanlatorArr;
     private List<ChapterListing> chapters = new ArrayList<ChapterListing>();
 
@@ -30,7 +32,10 @@ public class Series {
         for (Field f : Series.class.getFields()) {
             if (f.getType() == String.class) {
                 try {
-                    f.set(this, ((String) f.get(this)).trim());
+                    String curr = ((String) f.get(this));
+                    if (curr != null) {
+                        f.set(this, curr.trim());
+                    }
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -63,8 +68,9 @@ public class Series {
         jo.put("description", description);
         jo.put("source", source);
         jo.put("chapters", getChaptersJSON());
-        if (this.scanlatorArr != null)
+        if (this.scanlatorArr != null) {
             jo.put("scanlator", this.scanlatorArr);
+        }
         return jo;
     }
 

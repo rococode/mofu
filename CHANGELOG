@@ -1,3 +1,9 @@
+0.0.42 - Feb 18 2017
+- temporarily downgraded Jsoup dependency due to bug: https://github.com/jhy/jsoup/pull/831
+- fixed NPE in Series
+- added better error handling for missing Series fields
+- added better error handling for failed lookups
+
 0.0.41 - Feb 18 2017
 - added MIT license to project
 - readme updates

@@ -20,7 +20,7 @@ import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.source.SearchResult;
 import com.edasaki.misakachan.source.SearchResultSet;
-import com.edasaki.misakachan.utils.MCacheUtils;
+import com.edasaki.misakachan.utils.MCache;
 import com.edasaki.misakachan.utils.logging.M;
 
 import spark.Request;
@@ -114,7 +114,11 @@ public class SparkManager {
         for (AbstractSource source : sources) {
             if (source.matchInfo(url)) {
                 jo.put("status", "success");
-                jo.put("series", source.getSeries(url).getSeriesObject());
+                try {
+                    jo.put("series", source.getSeries(url).getSeriesObject());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 return jo.toString();
             }
         }
@@ -227,7 +231,7 @@ public class SparkManager {
                     Future<String> f = MultiThreadTaskManager.queueTask(() -> {
                         String url = s.url;
                         M.edb("attempting url " + s.url + " " + s.title);
-                        Document doc = MCacheUtils.getDocument(url);
+                        Document doc = MCache.getDocument(url);
                         String img = src.getImageURL(doc);
                         return img;
                     });
