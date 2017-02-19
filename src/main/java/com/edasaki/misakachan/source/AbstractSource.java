@@ -17,6 +17,8 @@ public abstract class AbstractSource {
 
     public static final String DEFAULT_IMAGE = "http://edasaki.com/i/test-page.png";
     public static final String DEFAULT_TITLE = "Unknown Title";
+    public static final String DEFAULT_CHAPTER = "Unknown Chapter";
+    public static final String DEFAULT_CHAPTER_NUMBER = "000";
     public static final String DEFAULT_DESCRIPTION = "No description available.";
     public static final String DEFAULT_AUTHOR = "Unknown Author";
     public static final String DEFAULT_ARTIST = "";

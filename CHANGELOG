@@ -1,3 +1,11 @@
+0.0.43 - Feb 18 2017
+- info & download panels now work much better on unusual window sizes
+- manga page url conversion now takes collections instead of list
+- library saving now detects "chapter" in chapter names and avoids folder names like "Chapter Ch.83"
+- finished KissManga source!
+- search request now checks for null body
+- Artist label hides if Artist isn't found
+
 0.0.42 - Feb 18 2017
 - temporarily downgraded Jsoup dependency due to bug: https://github.com/jhy/jsoup/pull/831
 - fixed NPE in Series

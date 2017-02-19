@@ -181,6 +181,8 @@ public class SparkManager {
 
     private String search(Request req, Response res) {
         String searchPhrase = req.body();
+        if (searchPhrase == null || searchPhrase.length() == 0)
+            return "";
         JSONObject jo = new JSONObject();
         jo.put("type", "search");
         jo.put("searchPhrase", searchPhrase);

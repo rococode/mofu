@@ -606,12 +606,15 @@ $loadingSquareSize: 85px;
   left: 0;
   right: 0;
   display: none;
+  overflow-y: scroll;
+  overflow-x: scroll;
 }
 
 .manga-info-container {
   $info-width: 50%;
   $info-height: 520px;
   $min-width: 650px;
+  $min-height: $info-height + 20;
 
   width: $info-width;
   min-width: $min-width;
@@ -619,13 +622,18 @@ $loadingSquareSize: 85px;
   height: auto;
   background-color: $color-background-dark;
   border: 3px solid $color-text-dark;
+  margin: 10px;
 
   @media (min-width: $min-width) {
-    position: fixed;
-    top: 50%;
+    position: absolute;
     left: 50%;
-    margin-top: -$info-height / 1.5;
     margin-left: -$info-width / 2;
+  }
+
+  @media (min-height: $min-height) {
+    position: absolute;
+    top: 50%;
+    margin-top: -$info-height / 1.5;
   }
 
   padding: 10px;
@@ -717,6 +725,7 @@ $loadingSquareSize: 85px;
   $info-width: 50%;
   $info-height: 520px;
   $min-width: 650px;
+  $min-height: $info-height + 20;
 
   display: none;
   width: $info-width;
@@ -725,13 +734,18 @@ $loadingSquareSize: 85px;
   height: auto;
   background-color: $color-background-dark;
   border: 3px solid $color-text-dark;
+  margin: 10px;
 
   @media (min-width: $min-width) {
-    position: fixed;
-    top: 50%;
+    position: absolute;
     left: 50%;
-    margin-top: -$info-height / 1.5;
     margin-left: -$info-width / 2;
+  }
+
+  @media (min-height: $min-height) {
+    position: absolute;
+    top: 50%;
+    margin-top: -$info-height / 1.5;
   }
 
   padding: 7px 10px 10px;

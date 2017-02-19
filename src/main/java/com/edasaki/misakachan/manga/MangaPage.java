@@ -1,6 +1,8 @@
 package com.edasaki.misakachan.manga;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class MangaPage {
@@ -20,10 +22,13 @@ public class MangaPage {
         return this.url;
     }
 
-    public static List<MangaPage> convertURLs(List<String> urls) {
+    public static List<MangaPage> convertURLs(Collection<String> urls) {
         List<MangaPage> pages = new ArrayList<MangaPage>();
-        for (int k = 0; k < urls.size(); k++)
-            pages.add(new MangaPage(k + 1, urls.get(k)));
+        int pageNumber = 1;
+        Iterator<String> iter = urls.iterator();
+        while (iter.hasNext()) {
+            pages.add(new MangaPage(pageNumber++, iter.next()));
+        }
         return pages;
     }
 }

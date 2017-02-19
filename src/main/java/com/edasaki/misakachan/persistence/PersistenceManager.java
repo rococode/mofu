@@ -111,7 +111,10 @@ public class PersistenceManager {
         String url = Misaka.instance().baka.getURL(title);
         M.debug("got " + url);
         int index = 0;
-        File dir = new File(PATH + File.separator + "library" + File.separator + title + " - " + source + File.separator + "Chapter " + chapterNumber);
+        if (!(chapterNumber.startsWith("ch") || chapterNumber.startsWith("Ch"))) {
+            chapterNumber = "Chapter " + chapterNumber;
+        }
+        File dir = new File(PATH + File.separator + "library" + File.separator + title + " - " + source + File.separator + chapterNumber);
         if (!dir.exists()) {
             dir.mkdirs();
         }

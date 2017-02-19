@@ -232,12 +232,12 @@ $(document).ready(function() {
 			$('#download-selected-button').text('Download ' + checked + ' Chapter' + (checked == 1 ? "" : "s") + "!");
 		}
 	});
-	
+
 	$('#download-selected-button').on('click', function() {
 		var chaps = $(this).parent().find('.chapter-wrapper');
 		var arr = [];
 		chaps.each(function() {
-			if($(this).hasClass('selected-for-download')) {
+			if ($(this).hasClass('selected-for-download')) {
 				arr.push($(this).find('.hidden-info').text());
 			}
 		});
@@ -252,7 +252,7 @@ $(document).ready(function() {
 
 	addBottomPadding($('#top-bottom-buttons'), 50);
 	addBottomPadding($('#download-button'), 50);
-	
+
 	downloadChapterPane = $('.manga-download-container > #chapter-pane').jScrollPane({
 		contentWidth : '0px',
 		autoReinitialise : true
@@ -263,7 +263,7 @@ $(document).ready(function() {
 	}).data('jsp');
 
 	console.log('pane: ' + infoChapterPane.getContentPane());
-	
+
 	$(document).on('click', '.download-menu-button', function() {
 		$('#manga-info-container').hide();
 		$('#manga-download-container').show();
@@ -295,7 +295,7 @@ $(document).ready(function() {
 	});
 
 	// debugging stuff below
-	swapToSearchResult();
+	// swapToSearchResult();
 
 	// $('#manga-info-container > #chapter-pane').jScrollPane({
 	// contentWidth : '0px',
@@ -474,7 +474,12 @@ function populateContainer(series) {
 	}
 	e.find('.genre').html('<b>' + pluralize('Genre', series.genres, [ ',', ';' ]) + '</b>: ' + series.genres);
 	e.find('.author').html('<b>' + pluralize('Author', series.authors, [ ',', ';' ]) + '</b>: ' + series.authors);
-	e.find('.artist').html('<b>' + pluralize('Artist', series.artists, [ ',', ';' ]) + '</b>: ' + series.artists);
+	if (series.artists.length == 0) {
+		e.find('.artist').hide();
+	} else {
+		e.find('.artist').show();
+		e.find('.artist').html('<b>' + pluralize('Artist', series.artists, [ ',', ';' ]) + '</b>: ' + series.artists);
+	}
 	if (series.description.length > 0) {
 		e.find('.desc').html('<b>Description</b>: ' + series.description);
 	}

@@ -459,7 +459,9 @@ div, img {
   top: 0;
   left: 0;
   right: 0;
-  display: none; }
+  display: none;
+  overflow-y: scroll;
+  overflow-x: scroll; }
 
 .manga-info-container {
   width: 50%;
@@ -468,14 +470,18 @@ div, img {
   height: auto;
   background-color: #272727;
   border: 3px solid #555;
+  margin: 10px;
   padding: 10px; }
   @media (min-width: 650px) {
     .manga-info-container {
-      position: fixed;
-      top: 50%;
+      position: absolute;
       left: 50%;
-      margin-top: -346.66667px;
       margin-left: -25%; } }
+  @media (min-height: 540px) {
+    .manga-info-container {
+      position: absolute;
+      top: 50%;
+      margin-top: -346.66667px; } }
   .manga-info-container .top-wrapper {
     display: block; }
   .manga-info-container .title {
@@ -535,14 +541,18 @@ div, img {
   height: auto;
   background-color: #272727;
   border: 3px solid #555;
+  margin: 10px;
   padding: 7px 10px 10px; }
   @media (min-width: 650px) {
     .manga-download-container {
-      position: fixed;
-      top: 50%;
+      position: absolute;
       left: 50%;
-      margin-top: -346.66667px;
       margin-left: -25%; } }
+  @media (min-height: 540px) {
+    .manga-download-container {
+      position: absolute;
+      top: 50%;
+      margin-top: -346.66667px; } }
   .manga-download-container .chapter-header {
     text-align: center;
     width: 100%;
