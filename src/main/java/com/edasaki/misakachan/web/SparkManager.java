@@ -1,6 +1,8 @@
 package com.edasaki.misakachan.web;
 
+import java.io.File;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,7 +37,7 @@ public class SparkManager {
 
     public AbstractSource[] sources;
 
-    private static final Map<String, String> cachedURLToImage = new HashMap<String, String>();
+    private static final Map<String, String> cachedURLToLocalImage = new HashMap<String, String>();
 
     private List<SearchResultSet> lastSearchResults;
 
@@ -43,8 +47,12 @@ public class SparkManager {
     }
 
     public void startWebserver() {
+        //        Spark.externalStaticFileLocation(PersistenceManager.getCacheDir().toString());
         Spark.port(10032);
         Spark.staticFileLocation("/public");
+        Spark.exception(Exception.class, (exception, request, response) -> {
+            exception.printStackTrace();
+        });
         Spark.post("/load", processRouteObj(this::loadRequestedURL));
         Spark.post("/search", processRouteObj(this::search));
         Spark.get("/changelog", processRouteObj(this::loadChangelog));
@@ -141,6 +149,8 @@ public class SparkManager {
         jo.put("reason", "Invalid URL.");
     }
 
+    private int lastCachedSize = 0;
+
     private void fetchResultImages(Request req, Response res, JSONObject jo) {
         JSONArray ja = new JSONArray();
         jo.put("arr", ja);
@@ -150,11 +160,11 @@ public class SparkManager {
             JSONObject obj = urlArray.getJSONObject(k);
             String id = obj.getString("id");
             String url = obj.getString("url");
-            while (!cachedURLToImage.containsKey(url)) {
-                if (counter++ > 5 * 10) { //5 is one second, max 10 sec hang per image
+            while (!cachedURLToLocalImage.containsKey(url)) {
+                if (cachedURLToLocalImage.size() != lastCachedSize && counter++ > 5 * 10) { //5 is one second, max 10 sec hang per image
                     break;
                 }
-                System.out.println("Waiting for " + url + " in " + cachedURLToImage);
+                System.out.println("Waiting for " + url + " in " + cachedURLToLocalImage);
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
@@ -163,9 +173,10 @@ public class SparkManager {
             }
             JSONObject jsonobject = new JSONObject();
             jsonobject.put("id", id);
-            jsonobject.put("imgUrl", cachedURLToImage.getOrDefault(url, "http://edasaki.com/i/test-page.png"));
+            jsonobject.put("imgUrl", cachedURLToLocalImage.getOrDefault(url, "http://edasaki.com/i/test-page.png"));
             ja.put(jsonobject);
         }
+        lastCachedSize = cachedURLToLocalImage.size();
     }
 
     private void loadChangelog(Request req, Response res, JSONObject jo) {
@@ -234,22 +245,42 @@ public class SparkManager {
     private void prefetchImages() {
         for (SearchResultSet set : this.lastSearchResults) {
             MultiThreadTaskManager.queueTask(() -> {
-                Map<String, Future<String>> individualFutures = new HashMap<String, Future<String>>();
+                Map<String, Future<File>> individualFutures = new HashMap<String, Future<File>>();
                 AbstractSource src = set.getAbstractSource();
                 for (SearchResult s : set.getResults()) {
-                    Future<String> f = MultiThreadTaskManager.queueTask(() -> {
-                        String url = s.url;
-                        M.edb("attempting url " + s.url + " " + s.title);
-                        Document doc = MCache.getDocument(url);
-                        String img = src.getImageURL(doc);
-                        return img;
-                    });
-                    individualFutures.put(s.url, f);
+                    if (!cachedURLToLocalImage.containsKey(s.url)) {
+                        Future<File> f = MultiThreadTaskManager.queueTask(() -> {
+                            String url = s.url;
+                            Document doc = MCache.getDocument(url);
+                            String img = src.getImageURL(doc);
+                            return MCache.getFile(img);
+                        });
+                        individualFutures.put(s.url, f);
+                    }
                 }
                 MultiThreadTaskManager.wait(individualFutures.values());
-                for (Entry<String, Future<String>> entry : individualFutures.entrySet()) {
+                for (Entry<String, Future<File>> entry : individualFutures.entrySet()) {
                     try {
-                        cachedURLToImage.put(entry.getKey(), entry.getValue().get());
+                        File f = entry.getValue().get();
+                        if (f == null) {
+                            M.edb("ERROR: Null file for " + entry.getKey());
+                            continue;
+                        }
+                        //                        M.debug("Downloaded file to " + f + " at " + f.getAbsolutePath());
+                        String name = f.getName().replaceAll("[^a-zA-Z0-9]", "");
+                        Spark.get("/" + name, (req, res) -> {
+                            //                            AbstractFileResolvingResource resource = new ExternalResource(f.getAbsolutePath());
+                            //                            String contentType = MimeType.fromResource(resource);
+                            //                            res.type(contentType);
+                            byte[] bytes = Files.readAllBytes(f.toPath());
+                            HttpServletResponse raw = res.raw();
+                            raw.getOutputStream().write(bytes);
+                            raw.getOutputStream().flush();
+                            raw.getOutputStream().close();
+                            //                            M.debug("Got content type: " + contentType);
+                            return res;
+                        });
+                        cachedURLToLocalImage.put(entry.getKey(), name);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

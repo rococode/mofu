@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,7 +25,7 @@ import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.utils.MCache;
 import com.edasaki.misakachan.utils.logging.M;
 import com.edasaki.misakachan.web.ExtraModifiers;
-import com.edasaki.misakachan.web.FinishedCondition;
+import com.edasaki.misakachan.web.FinishedCondition.FinishedResponseCondition;
 import com.edasaki.misakachan.web.WebAccessor;
 
 public class KissManga extends AbstractSource {
@@ -145,10 +146,10 @@ public class KissManga extends AbstractSource {
                     return driver;
                 }
 
-            }, new FinishedCondition() {
+            }, new FinishedResponseCondition() {
                 @Override
-                public boolean finished(String src) {
-                    boolean res = src.contains("class=\"listing\"");
+                public boolean finished(Response response) {
+                    boolean res = response.body().contains("class=\"listing\"");
                     return res;
                 }
 

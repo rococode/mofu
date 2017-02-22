@@ -3,7 +3,7 @@ package com.edasaki.misakachan.test.tests;
 import com.edasaki.misakachan.test.annotations.TestClass;
 import com.edasaki.misakachan.test.annotations.TestMethod;
 import com.edasaki.misakachan.utils.logging.MTimer;
-import com.edasaki.misakachan.web.FinishedCondition;
+import com.edasaki.misakachan.web.FinishedCondition.FinishedStringCondition;
 import com.edasaki.misakachan.web.WebAccessor;
 
 @TestClass(solo = false)
@@ -14,7 +14,7 @@ public class WebAccessorTests {
         WebAccessor.initialize();
         MTimer timer = new MTimer();
         WebAccessor.getURL("http://www.mangahere.co/manga/gekkan_shoujo_nozaki_kun/");
-        WebAccessor.getURL("http://kissmanga.com/manga/yotsubato", new FinishedCondition() {
+        WebAccessor.getURL("http://kissmanga.com/manga/yotsubato", new FinishedStringCondition() {
             @Override
             public boolean finished(String src) {
                 return src.contains("class=\"listing\"");

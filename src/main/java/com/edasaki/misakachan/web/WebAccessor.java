@@ -1,5 +1,7 @@
 package com.edasaki.misakachan.web;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,8 +24,11 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.edasaki.misakachan.Misaka;
 import com.edasaki.misakachan.multithread.MultiThreadTaskManager;
+import com.edasaki.misakachan.persistence.PersistenceManager;
 import com.edasaki.misakachan.utils.logging.M;
 import com.edasaki.misakachan.utils.logging.MTimer;
+import com.edasaki.misakachan.web.FinishedCondition.FinishedResponseCondition;
+import com.edasaki.misakachan.web.FinishedCondition.FinishedStringCondition;
 
 import io.github.bonigarcia.wdm.PhantomJsDriverManager;
 
@@ -123,6 +128,7 @@ public final class WebAccessor {
         conn.method(method);
         conn.userAgent(USER_AGENT);
         conn.ignoreHttpErrors(true);
+        conn.ignoreContentType(true);
         // add all loaded cookies
         conn.cookies(COOKIES);
         if (conditions != null) {
@@ -143,25 +149,74 @@ public final class WebAccessor {
         return exec(url, Method.GET, conditions);
     }
 
+    private static interface Blah<E> {
+        public E execute(Response response);
+
+        public E execute(String src);
+    }
+
+    public static File download(String url, AbstractExtra... conditions) {
+        return connectAndExecute(url, Method.GET, new Blah<File>() {
+            @Override
+            public File execute(Response response) {
+                File f = null;
+                try {
+                    String fileName = url.replaceAll("\\W+", "") + System.nanoTime() + ".png";
+                    f = new File(PersistenceManager.getCacheDir(), fileName);
+                    f.deleteOnExit();
+                    FileOutputStream out = new FileOutputStream(f);
+                    out.write(response.bodyAsBytes());
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return f;
+            }
+
+            @Override
+            public File execute(String src) {
+                return null;
+            }
+        }, conditions);
+    }
+
     public static Document exec(String url, Method method, AbstractExtra... conditions) {
+        return connectAndExecute(url, method, new Blah<Document>() {
+
+            @Override
+            public Document execute(Response response) {
+                try {
+                    return response.parse();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            public Document execute(String src) {
+                return null;
+            }
+
+        }, conditions);
+    }
+
+    public static <E> E connectAndExecute(String url, Method method, Blah<E> blah, AbstractExtra... conditions) {
         M.debug("WebAccessor: Getting " + url);
         Connection conn = getConnection(url, method, conditions);
-        Document res = null;
+        E res = null;
         try {
             Response response = conn.execute();
             if (response.statusCode() == 200) {
-                M.edb("Success - Didn't need Selenium!");
-                res = response.parse();
-                return res;
-                //                return conn.get();
+                //                M.edb("Success - Didn't need Selenium!");
+                return blah.execute(response);
             } else if (response.statusCode() == 503) { // oh no, cloudflare!
                 waitInitialize(); // maybe it'll be preloaded!
                 conn = getConnection(url, method, conditions);
                 response = conn.execute();
                 if (response.statusCode() == 200) {
                     M.edb("it was preloaded!");
-                    res = Jsoup.parse(response.body());
-                    return res;
+                    return blah.execute(response);
                 } else {
                     // wasn't preloaded :(
                     M.edb("wasn't preloaded, oh well");
@@ -170,7 +225,7 @@ public final class WebAccessor {
                     response = conn.execute();
                     if (response.statusCode() == 200) {
                         M.edb("done!");
-                        return conn.get();
+                        return blah.execute(response);
                     } else {
                         M.edb("FAILED ON " + url + ", code " + response.statusCode());
                     }
@@ -185,13 +240,15 @@ public final class WebAccessor {
             boolean success = true;
             if (conditions != null && res != null) {
                 for (AbstractExtra ae : conditions) {
-                    if (ae instanceof FinishedCondition) {
-                        success &= ((FinishedCondition) ae).finished(res.html());
+                    if (res instanceof String && ae instanceof FinishedStringCondition) {
+                        success &= ((FinishedStringCondition) ae).finished((String) res);
+                    } else if (res instanceof Response && ae instanceof FinishedResponseCondition) {
+                        success &= ((FinishedResponseCondition) ae).finished((Response) res);
                     }
                 }
             }
             if (!success) {
-                res = getWithPhantom(url, conditions);
+                res = getWithPhantom(url, blah, conditions);
             }
         }
         return null;
@@ -202,7 +259,7 @@ public final class WebAccessor {
         return getCookies(url, true);
     }
 
-    private static Document getWithPhantom(String url, AbstractExtra... conditions) {
+    private static <E> E getWithPhantom(String url, Blah<E> exec, AbstractExtra... conditions) {
         synchronized (PHANTOM_LOCK) {
             M.edb("Getting with phantom: " + url);
             for (AbstractExtra ae : conditions) {
@@ -221,7 +278,7 @@ public final class WebAccessor {
                 while (counter++ < 100) {
                     if (!isCloudflare(src)) { // probably shouldn't happen lul
                         src = waitFullLoad(PHANTOM, conditions);
-                        return Jsoup.parse(src);
+                        return exec.execute(src);
                     } else {
                         //                        PHANTOM.manage().deleteAllCookies();
                         Thread.sleep(250L);
@@ -235,7 +292,7 @@ public final class WebAccessor {
                                     Thread.sleep(25L);
                                 }
                                 src = waitFullLoad(PHANTOM, conditions); // only wait for conditions before return
-                                return Jsoup.parse(src);
+                                return exec.execute(src);
                             }
                         }
                     }

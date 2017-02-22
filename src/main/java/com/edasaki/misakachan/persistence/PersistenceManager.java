@@ -25,17 +25,42 @@ import com.edasaki.misakachan.utils.logging.M;
 public class PersistenceManager {
 
     private static final String PATH = "./misaka";
-    private File dir;
+    private static File dir;
     private HashMap<MisakaFile, File> loadedFiles = new HashMap<MisakaFile, File>();
 
-    public PersistenceManager() {
+    static {
         dir = new File(PATH);
         if (!dir.exists())
             dir.mkdirs();
+        Runnable r = () -> { // clear cache
+            File cacheDir;
+            if ((cacheDir = getCacheDir()) != null) {
+                for (File cachedFile : cacheDir.listFiles()) {
+                    cachedFile.delete();
+                }
+            }
+        };
+        r.run();
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                r.run();
+            }
+        });
+    }
+
+    public PersistenceManager() {
     }
 
     public void get() {
 
+    }
+
+    public static File getCacheDir() {
+        File cache = new File(dir, "cache");
+        if (!cache.exists()) {
+            cache.mkdirs();
+        }
+        return cache;
     }
 
     public void loadFiles() {

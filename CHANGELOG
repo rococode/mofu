@@ -1,3 +1,6 @@
+0.0.45 - Feb 21 2017
+- added new caching system (incomplete, only a prototype atm)
+
 0.0.44 - Feb 18 2017
 - fixed another null pointer issue
 - wrote a ton of code to try to get past a cookie issue, only to get cheesed by same-origin policy (always forget it exists lol)

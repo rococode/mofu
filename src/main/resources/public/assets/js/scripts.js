@@ -293,21 +293,22 @@ $(document).ready(function() {
 		$('#manga-download-container').hide();
 	});
 
-	$(document).ajaxComplete(function(event, request, settings) {
-		var res = JSON.parse(request.responseText);
-		if (res.extraCookies != undefined) {
-			alert(JSON.stringify(res.extraCookies));
-			for (i in res.extraCookies) {
-				var c = res.extraCookies[i];
-				Cookies.set(c.name, c.value, {
-					expires : 1
-				});
-			}
-			alert(JSON.stringify(Cookies.get()));
-		} else {
-			console.log(res.extraCookies);
-		}
-	});
+	// $(document).ajaxComplete(function(event, request, settings) {
+	// alert(request);
+	// var res = JSON.parse(request.responseText);
+	// if (res.extraCookies != undefined) {
+	// alert(JSON.stringify(res.extraCookies));
+	// for (i in res.extraCookies) {
+	// var c = res.extraCookies[i];
+	// Cookies.set(c.name, c.value, {
+	// expires : 1
+	// });
+	// }
+	// alert(JSON.stringify(Cookies.get()));
+	// } else {
+	// console.log(res.extraCookies);
+	// }
+	// });
 
 	// debugging stuff below
 	// swapToSearchResult();
@@ -549,7 +550,7 @@ function loadInReader(url) {
 					var sourceObj = res.results[i];
 					var sourceName = sourceObj.sourceName;
 					var links = sourceObj.links;
-					console.log('found ' + links);
+					// console.log('found ' + links);
 					var html = '<div class="search-source">';
 					html += '<div class="search-source-name"><a href="#">' + sourceName + ' (' + sourceObj.links.length + ')</a> <i class="search-source-toggle fa fa-angle-double-up"></i></div>';
 					for ( var j in links) {
@@ -557,7 +558,7 @@ function loadInReader(url) {
 						var title = links[j].title;
 						var url = links[j].url;
 						var alt = links[j].alt;
-						console.log(title + " " + url);
+						// console.log(title + " " + url);
 						html += '<div class="search-result">';
 						var id = 'search-result-image-' + uniqueId++;
 						html += '<img id="' + id + '"src="' + "http://edasaki.com/i/test-page.png" + '" />';
@@ -607,7 +608,16 @@ function loadInReader(url) {
 					var res = JSON.parse(data).arr;
 					for ( var i in res) {
 						var obj = res[i];
+						console.log('testing ' + obj.imgUrl);
 						try {
+							$.ajax({
+								url : obj.imgUrl,
+								dataType : "jsonp",
+							}).done(function() {
+								console.log(obj.imgUrl + " worked!");
+							}).fail(function() {
+								console.log(obj.imgUrl + " FAILED!");
+							})
 							$('#' + obj.id).attr('src', obj.imgUrl);
 						} catch (err) {
 							console.log('error loading image for ' + obj);
