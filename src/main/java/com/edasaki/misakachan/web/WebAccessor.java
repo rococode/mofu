@@ -46,9 +46,13 @@ public final class WebAccessor {
             {
                     "http://kissmanga.com/", //manga/yotsubato",
                     new FinishedCondition[] {
-                    //                            (src) -> {
-                    //                                return src.contains("class=\"listing\"");
-                    //                            }
+                            new FinishedStringCondition() {
+
+                                @Override
+                                public boolean finished(String res) {
+                                    return res.contains("class=\"listing\"");
+                                }
+                            }
                     }
             },
     };
@@ -129,6 +133,7 @@ public final class WebAccessor {
         conn.userAgent(USER_AGENT);
         conn.ignoreHttpErrors(true);
         conn.ignoreContentType(true);
+        conn.timeout(10000);
         // add all loaded cookies
         conn.cookies(COOKIES);
         if (conditions != null) {

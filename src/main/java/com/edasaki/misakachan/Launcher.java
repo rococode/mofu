@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
+import com.edasaki.misakachan.persistence.PersistenceManager;
 import com.edasaki.misakachan.utils.MFileUtils;
 import com.edasaki.misakachan.version.Version;
+import com.google.common.io.Files;
 
 public class Launcher {
 

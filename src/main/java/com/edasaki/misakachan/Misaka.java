@@ -13,12 +13,12 @@ import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.english.KissManga;
 import com.edasaki.misakachan.source.english.MangaHere;
 import com.edasaki.misakachan.version.Version;
-import com.edasaki.misakachan.web.SparkManager;
 import com.edasaki.misakachan.web.WebAccessor;
+import com.edasaki.misakachan.web.spark.SparkManager;
 
 public class Misaka {
 
-    private static final AbstractSource SOURCES[] = {
+    public static final AbstractSource[] SOURCES = {
             new MangaHere(),
             new KissManga(),
             //            new TestSource(),
@@ -63,7 +63,7 @@ public class Misaka {
 
         // Do this last, since we want to be sure everything else is ready
         this.updateStatus("Initializing webserver...");
-        this.spark = new SparkManager(SOURCES);
+        this.spark = new SparkManager();
         this.spark.startWebserver();
         this.updateStatus("Webserver successfully started.");
         this.updateStatus("Now listening on 0.0.0.0:" + this.spark.getPort() + "...");

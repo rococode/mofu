@@ -12,7 +12,7 @@ import com.edasaki.misakachan.utils.logging.M;
 public class ChapterDownloader {
 
     public static Chapter getChapterFromURL(String url) {
-        for (AbstractSource source : Misaka.instance().spark.sources) {
+        for (AbstractSource source : Misaka.SOURCES) {
             if (source.match(url)) {
                 Chapter chapter = source.getChapter(url);
                 return chapter;

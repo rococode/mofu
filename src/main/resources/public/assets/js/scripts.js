@@ -114,7 +114,7 @@ $(document).ready(function() {
 	});
 
 	// placeholder stuff
-	var str = "Enter the name of a manga to search for sources, or type a specific URL to load it immediately!";
+	var str = "";
 	$('#load-input-url').attr('placeholder', str);
 	$('#load-input-url').val("");
 	$('#load-input-url').focusin(function() {

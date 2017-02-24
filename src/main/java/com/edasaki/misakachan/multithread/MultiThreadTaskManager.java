@@ -42,7 +42,8 @@ public class MultiThreadTaskManager {
         List<Future<Document>> futures = new ArrayList<Future<Document>>();
         for (String pageURL : urls) {
             Callable<Document> c = () -> {
-                return MCache.getDocument(pageURL);
+                Document doc = MCache.getDocument(pageURL);
+                return doc;
             };
             futures.add(MultiThreadTaskManager.queueTask(c));
         }
