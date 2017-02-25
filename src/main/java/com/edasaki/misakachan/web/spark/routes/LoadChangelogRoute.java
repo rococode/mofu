@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.edasaki.misakachan.Misaka;
-import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.web.spark.TriRouteBase;
 
 import spark.Request;

@@ -1,18 +1,12 @@
 package com.edasaki.misakachan.web.spark.routes;
 
-import java.io.File;
 import java.net.URLEncoder;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Vector;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -26,18 +20,16 @@ import com.edasaki.misakachan.source.SearchAction;
 import com.edasaki.misakachan.source.SearchResult;
 import com.edasaki.misakachan.source.SearchResultSet;
 import com.edasaki.misakachan.utils.MCache;
-import com.edasaki.misakachan.utils.logging.M;
 import com.edasaki.misakachan.web.spark.TriRouteBase;
 
 import spark.Request;
 import spark.Response;
-import spark.Spark;
 
 public class LoadRequestedURLRoute implements TriRouteBase {
     private List<SearchResultSet> lastSearchResults;
 
     public LoadRequestedURLRoute() {
-        this.lastSearchResults = new ArrayList<SearchResultSet>();
+        this.lastSearchResults = new Vector<SearchResultSet>();
     }
 
     @Override
@@ -90,48 +82,23 @@ public class LoadRequestedURLRoute implements TriRouteBase {
     private void prefetchImages() {
         for (SearchResultSet set : this.lastSearchResults) {
             MultiThreadTaskManager.queueTask(() -> {
-                Map<String, Future<File>> individualFutures = new HashMap<String, Future<File>>();
                 AbstractSource src = set.getAbstractSource();
+                List<Future<Void>> futures = new ArrayList<Future<Void>>();
                 for (SearchResult s : set.getResults()) {
-                    if (!FetchResultImagesRoute.cachedURLToLocalImage.containsKey(s.url)) {
-                        Future<File> f = MultiThreadTaskManager.queueTask(() -> {
+                    if (!MCache.isCached(s.url)) {
+                        Future<Void> f = MultiThreadTaskManager.queueTask(() -> {
                             String url = s.url;
                             Document doc = MCache.getDocument(url);
                             String img = src.getImageURL(doc);
-                            return MCache.getFile(img);
+                            MCache.cacheImageToURL(url, img);
+                            return null;
                         });
-                        individualFutures.put(s.url, f);
+                        futures.add(f);
                     }
                 }
-                MultiThreadTaskManager.wait(individualFutures.values());
-                for (Entry<String, Future<File>> entry : individualFutures.entrySet()) {
-                    try {
-                        File f = entry.getValue().get();
-                        if (f == null) {
-                            M.edb("ERROR: Null file for " + entry.getKey());
-                            continue;
-                        }
-                        //                        M.debug("Downloaded file to " + f + " at " + f.getAbsolutePath());
-                        String name = f.getName().replaceAll("[^a-zA-Z0-9]", "");
-                        Spark.get("/" + name, (req, res) -> {
-                            //                            AbstractFileResolvingResource resource = new ExternalResource(f.getAbsolutePath());
-                            //                            String contentType = MimeType.fromResource(resource);
-                            //                            res.type(contentType);
-                            byte[] bytes = Files.readAllBytes(f.toPath());
-                            HttpServletResponse raw = res.raw();
-                            raw.getOutputStream().write(bytes);
-                            raw.getOutputStream().flush();
-                            raw.getOutputStream().close();
-                            //                            M.debug("Got content type: " + contentType);
-                            return res;
-                        });
-                        FetchResultImagesRoute.cachedURLToLocalImage.put(entry.getKey(), name);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                MultiThreadTaskManager.wait(futures);
                 this.lastSearchResults.remove(set);
-                return true;
+                return null;
             });
         }
     }

@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.edasaki.misakachan.source.AbstractSource;
+import com.edasaki.misakachan.utils.MCache;
 
 public class Series {
     public String imageURL = AbstractSource.DEFAULT_IMAGE;
@@ -59,7 +60,7 @@ public class Series {
             postProcess();
         }
         JSONObject jo = new JSONObject();
-        jo.put("imageURL", imageURL);
+        jo.put("imageURL", MCache.getCachedImage(imageURL, imageURL));
         jo.put("title", title);
         jo.put("authors", authors);
         jo.put("artists", artists);

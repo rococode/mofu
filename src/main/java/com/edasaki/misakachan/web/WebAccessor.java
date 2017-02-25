@@ -376,8 +376,8 @@ public final class WebAccessor {
                 String src = driver.getPageSource();
                 boolean done = true;
                 for (AbstractExtra fc : conditions) {
-                    if (fc instanceof FinishedCondition) {
-                        done &= ((FinishedCondition) fc).finished(src);
+                    if (fc instanceof FinishedStringCondition) {
+                        done &= ((FinishedStringCondition) fc).finished(src);
                         if (!done) {
                             break;
                         }

@@ -1,3 +1,7 @@
+0.0.47 - Feb 25 2017
+- Finished implementing most of image cache system for cover pages (still need to implement it for pages/downloading)
+- manga info panel now displays cached image as well
+
 0.0.46 - Feb 24 2017
 - increased jsoup timeout to 10 seconds
 - did a lot of refactoring - all routes are now classes
