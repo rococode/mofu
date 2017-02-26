@@ -262,7 +262,6 @@ $(document).ready(function() {
 		autoReinitialise : true
 	}).data('jsp');
 
-	console.log('pane: ' + infoChapterPane.getContentPane());
 	$(document).on('click', '.download-menu-button', function() {
 		$('#manga-info-container').hide();
 		$('#manga-download-container').show();
@@ -280,43 +279,30 @@ $(document).ready(function() {
 				</div>');
 		}
 		downloadChapterPane.reinitialise();
-		// console.log('props: ' + pane.prop('offsetHeight'));
-		// if (pane.prop('offsetHeight') < pane.prop('scrollHeight') || pane.prop('offsetWidth') < pane.prop('scrollWidth')) {
-		// console.log('dl has overflow');
-		// } else {
-		// console.log('dl doesn\'t overflow');
-		// }
 	});
 
+	var originalTrackerH, originalTrackerW
+	$('#tracker-container').on('click', function(e) {
+		if (e.target != this)
+			return;
+		$(this).hide();
+	});
+	$('#tracker-button').on('click', function() {
+		$('#tracker-container').toggle();
+		var bot = ($('.footer').outerHeight() + parseInt($('#tracker-container').css('top'), 10)) + "px";
+		console.log("setting bot to " + bot);
+		$('#tracker-container').css('bottom', bot);
+	});
+	
+	
 	$(document).on('click', '.download-back', function() {
 		$('#manga-info-container').show();
 		$('#manga-download-container').hide();
 	});
 
-	// $(document).ajaxComplete(function(event, request, settings) {
-	// alert(request);
-	// var res = JSON.parse(request.responseText);
-	// if (res.extraCookies != undefined) {
-	// alert(JSON.stringify(res.extraCookies));
-	// for (i in res.extraCookies) {
-	// var c = res.extraCookies[i];
-	// Cookies.set(c.name, c.value, {
-	// expires : 1
-	// });
-	// }
-	// alert(JSON.stringify(Cookies.get()));
-	// } else {
-	// console.log(res.extraCookies);
-	// }
-	// });
-
 	// debugging stuff below
 	// swapToSearchResult();
-
-	// $('#manga-info-container > #chapter-pane').jScrollPane({
-	// contentWidth : '0px',
-	// autoReinitialise : true
-	// });
+	$('#tracker-button').click();
 
 });
 

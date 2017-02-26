@@ -1,3 +1,8 @@
+0.0.48 - Feb 25 2017
+- added prototype of tracker interface
+- misakachan now minimizes to tray (will make this optional in the future)
+- added prototype for tray notifications (alerting for new chapters)
+
 0.0.47 - Feb 25 2017
 - Finished implementing most of image cache system for cover pages (still need to implement it for pages/downloading)
 - manga info panel now displays cached image as well

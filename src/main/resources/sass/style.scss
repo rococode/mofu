@@ -112,11 +112,137 @@ div, img {
   }
 }
 
-.history {
+.tracker {
   margin-top: 10px;
-  font-family: 'Comfortaa', cursive;
-  border: 1px solid black;
   text-align: center;
+
+  .button {
+    @extend .unselectable;
+
+    border: 3px solid $color-button-hover;
+    border-radius: 5px;
+    font-family: 'Comfortaa', cursive;
+    display: inline-block;
+    background-color: $color-button-main;
+    color: $color-button-text;
+    padding: 5px;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $color-button-hover;
+    }
+  }
+
+  .container {
+    $margins: 0;
+
+    display: none;
+    position: fixed;
+    top: $margins;
+    left: $margins;
+    right: $margins;
+    bottom: $margins;
+
+    .inner-container {
+      width: 70%;
+      min-width: 300px;
+      max-width: 1200px;
+      height: 95%;
+      margin: 10px auto 0;
+      vertical-align: middle;
+      background-color: $color-background-dark;
+      border: 3px solid $color-text-dark;
+      padding: 5px;
+    }
+  }
+
+  .section {
+    border: 1px solid $color-text-hover;
+    border-radius: 5px;
+    background-color: $color-background-main;
+
+    .title {
+      @extend .unselectable;
+
+      font-size: 1.3em;
+      background-color: $color-button-main;
+      color: $color-button-text;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      padding: 2px 0;
+      margin-bottom: 3px;
+    }
+
+    &.favorites {
+      height: 49%;
+      margin-bottom: 1%;
+    }
+
+    &.history {
+      height: 48%;
+    }
+
+    .tracker-listing {
+      cursor: pointer;
+
+      $name-width: 40%;
+      $icon-width: 5%;
+      $spacing: 100% - ($name-width + 3 * $icon-width);
+
+      /* 2 of these! */
+
+      border-bottom: 1px solid $color-text-main;
+      padding: 3px 0;
+      text-align: left;
+      font-size: 1.05em;
+
+      &:hover {
+        background-color: $color-background-dark;
+      }
+
+      div {
+        display: inline-block;
+      }
+
+      .name {
+        padding-left: 5px;
+        width: $name-width;
+        overflow: visible;
+        white-space: nowrap;
+
+        .fav {
+          &.active {
+            color: #ffd700;
+          }
+
+          text-align: center;
+        }
+
+        .source {
+          font-size: 0.8em;
+          color: $color-text-medium-hover;
+          padding-bottom: 2px;
+        }
+      }
+
+      .lastread {
+        overflow: visible;
+        white-space: nowrap;
+        padding-right: 5px;
+        float: right;
+        width: $spacing;
+        text-align: right;
+      }
+
+      .alert {
+        text-align: center;
+
+        &.active {
+          color: #59d933;
+        }
+      }
+    }
+  }
 }
 
 .reader-container {
@@ -405,6 +531,7 @@ $loadingSquareSize: 85px;
 }
 
 .changelog {
+  display: none;
   text-align: center;
   width: 100%;
   font-family: 'Ubuntu', sans-serif;

@@ -15,7 +15,7 @@ div, img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover {
+.unselectable, .tracker .button, .tracker .section .title, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -86,11 +86,89 @@ div, img {
     .loader-form button[type=submit]:hover {
       background-color: #ffd740; }
 
-.history {
+.tracker {
   margin-top: 10px;
-  font-family: 'Comfortaa', cursive;
-  border: 1px solid black;
   text-align: center; }
+  .tracker .button {
+    border: 3px solid #ffd740;
+    border-radius: 5px;
+    font-family: 'Comfortaa', cursive;
+    display: inline-block;
+    background-color: #ffe57f;
+    color: #373737;
+    padding: 5px;
+    font-weight: bold; }
+    .tracker .button:hover {
+      background-color: #ffd740; }
+  .tracker .container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
+    .tracker .container .inner-container {
+      width: 70%;
+      min-width: 300px;
+      max-width: 1200px;
+      height: 95%;
+      margin: 10px auto 0;
+      vertical-align: middle;
+      background-color: #272727;
+      border: 3px solid #555;
+      padding: 5px; }
+  .tracker .section {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #373737; }
+    .tracker .section .title {
+      font-size: 1.3em;
+      background-color: #ffe57f;
+      color: #373737;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      padding: 2px 0;
+      margin-bottom: 3px; }
+    .tracker .section.favorites {
+      height: 49%;
+      margin-bottom: 1%; }
+    .tracker .section.history {
+      height: 48%; }
+    .tracker .section .tracker-listing {
+      cursor: pointer;
+      /* 2 of these! */
+      border-bottom: 1px solid #ccc;
+      padding: 3px 0;
+      text-align: left;
+      font-size: 1.05em; }
+      .tracker .section .tracker-listing:hover {
+        background-color: #272727; }
+      .tracker .section .tracker-listing div {
+        display: inline-block; }
+      .tracker .section .tracker-listing .name {
+        padding-left: 5px;
+        width: 40%;
+        overflow: visible;
+        white-space: nowrap; }
+        .tracker .section .tracker-listing .name .fav {
+          text-align: center; }
+          .tracker .section .tracker-listing .name .fav.active {
+            color: #ffd700; }
+        .tracker .section .tracker-listing .name .source {
+          font-size: 0.8em;
+          color: #aaa;
+          padding-bottom: 2px; }
+      .tracker .section .tracker-listing .lastread {
+        overflow: visible;
+        white-space: nowrap;
+        padding-right: 5px;
+        float: right;
+        width: 45%;
+        text-align: right; }
+      .tracker .section .tracker-listing .alert {
+        text-align: center; }
+        .tracker .section .tracker-listing .alert.active {
+          color: #59d933; }
 
 .reader-container {
   display: none; }
@@ -313,6 +391,7 @@ div, img {
     vertical-align: middle; }
 
 .changelog {
+  display: none;
   text-align: center;
   width: 100%;
   font-family: 'Ubuntu', sans-serif; }

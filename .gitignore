@@ -11,3 +11,4 @@ media/
 phantomjsdriver.log
 *.jar
 !POMUpdater.jar
+.vscode/

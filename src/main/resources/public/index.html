@@ -3,6 +3,7 @@
   Copyright 2016 Edasaki
 -->
 <html>
+
 <head>
 <title>misakachan</title>
 <meta charset="utf-8" />
@@ -30,7 +31,11 @@
 <!--  misakachan stuff -->
 <script type="text/javascript" src="assets/js/scripts.js"></script>
 </head>
+
 <body>
+	<!-----------------------------------------
+      Home Page 
+    ------------------------------------------>
 	<div id="home-container" class="home-container">
 		<img class="logo unselectable" src="assets/gfx/logo.png" />
 		<form id="loader-form" class="loader-form">
@@ -44,10 +49,68 @@
 			</h1>
 			<div class="changelog-text" id="changelog-text"></div>
 		</div>
-		<div class="history">
-			<h1>History</h1>
+		<div class="tracker">
+			<div id="tracker-button" class="button">Open Tracker</div>
+			<div id="tracker-container" class="container">
+				<div class="inner-container">
+					<div id="tracker-favorites" class="section favorites">
+						<div class="title">Favorites</div>
+						<div class="tracker-listing">
+							<div class="name">
+								<div class="fav active">
+									<span class="fa fa-star"></span>
+								</div>
+								Ika Musume
+								<div class="source">(MangaHere)</div>
+							</div>
+							<div class="lastread">
+								Chapter 305
+								<div class="alert">
+									<span class="fa fa-bell-o"></span>
+								</div>
+							</div>
+						</div>
+						<div class="tracker-listing">
+							<div class="name">
+								<div class="fav active">
+									<span class="fa fa-star"></span>
+								</div>
+								Yuru Yuri
+								<div class="source">(KissManga)</div>
+							</div>
+							<div class="lastread">
+								Ch.12
+								<div class="alert active">
+									<span class="fa fa-bell"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tracker-history" class="section history">
+						<div class="title">History</div>
+						<div class="tracker-listing">
+							<div class="name">
+								<div class="fav">
+									<span class="fa fa-star-o"></span>
+								</div>
+								Gekkan Shoujo Nozaki-kun
+								<div class="source">(KissManga)</div>
+							</div>
+							<div class="lastread">
+								Ch 89
+								<div class="alert active">
+									<span class="fa fa-bell"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	<!-----------------------------------------
+      Reader Page 
+    ------------------------------------------>
 	<div id="reader-container" class="reader-container">
 		<div id="reader-title" class="reader-title">Gekkan Shoujo Nozaki</div>
 		<div id="info-source" class="hidden-info"></div>
@@ -86,6 +149,9 @@
 			<span id="download-button-icon" class="fa fa-download"></span>
 		</div>
 	</div>
+	<!-----------------------------------------
+      Loading Page 
+    ------------------------------------------>
 	<div id="loading-container" class="loading-container">
 		<div id="loading-bg-wrapper" class="loading-bg-wrapper">
 			<div class="loading-display">
@@ -102,6 +168,9 @@
 			</div>
 		</div>
 	</div>
+	<!-----------------------------------------
+      Search Results Page 
+    ------------------------------------------>
 	<div id="search-result-container" class="search-result-container">
 		<!--  search bar at top of page on search results page -->
 		<form id="re-search-form" class="re-search-form">
@@ -157,4 +226,5 @@
 		<a href="http://edasaki.com" target="_blank">&copy; Edasaki 2017</a> | Please remember to support the original authors and translation groups if you can!
 	</div>
 </body>
+
 </html>

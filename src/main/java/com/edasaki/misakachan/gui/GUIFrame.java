@@ -1,11 +1,25 @@
 package com.edasaki.misakachan.gui;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Desktop.Action;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.IOException;
+import java.net.URI;
 import java.time.LocalTime;
 
 import javax.swing.BorderFactory;
@@ -16,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -23,6 +38,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import com.edasaki.misakachan.utils.MFileUtils;
+import com.edasaki.misakachan.utils.logging.M;
 
 @SuppressWarnings("serial")
 public class GUIFrame extends JFrame {
@@ -32,6 +48,22 @@ public class GUIFrame extends JFrame {
     private JScrollPane consoleScrollPane;
     private JTextArea consoleTextArea = new JTextArea();
     private JButton button = new JButton("Launch Browser");
+
+    private static TrayIcon trayIcon;
+
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                cleanup();
+            }
+        });
+    }
+
+    public static void cleanup() {
+        if (trayIcon != null) {
+            SystemTray.getSystemTray().remove(trayIcon);
+        }
+    }
 
     private void configureButton(JPanel panel) {
 
@@ -78,24 +110,91 @@ public class GUIFrame extends JFrame {
         super("misakachan");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        ImageIcon icon;
         try {
-            icon = new ImageIcon(MFileUtils.getResourceAsFile(ICON_URL).toURI().toURL());
+            final ImageIcon icon = new ImageIcon(MFileUtils.getResourceAsFile(ICON_URL).toURI().toURL());
             setIconImage(icon.getImage());
+
+            JPanel panel = new JPanel(new BorderLayout());
+
+            configureButton(panel);
+            configureConsole(panel);
+
+            panel.setPreferredSize(new Dimension(600, 300));
+            panel.setBackground(Color.CYAN);
+            getContentPane().add(panel);
+            pack();
+            if (SystemTray.isSupported()) {
+                addWindowStateListener(new WindowStateListener() {
+                    public void windowStateChanged(WindowEvent e) {
+                        M.edb("Captured: " + e.getNewState());
+                        if (e.getNewState() == Frame.ICONIFIED) {
+                            trayIcon = new TrayIcon(icon.getImage());
+                            trayIcon.setImageAutoSize(true);
+                            trayIcon.setToolTip("misakachan");
+                            // Create a pop-up menu components
+                            final PopupMenu popup = new PopupMenu();
+                            MenuItem forumsItem = new MenuItem("Forums");
+                            forumsItem.addActionListener((event) -> {
+                                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
+                                    try {
+                                        Desktop.getDesktop().browse(new URI("http://misakachan.net"));
+                                    } catch (Exception e2) {
+                                        e2.printStackTrace();
+                                    }
+                                }
+                            });
+                            MenuItem githubItem = new MenuItem("GitHub");
+                            githubItem.addActionListener((event) -> {
+                                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
+                                    try {
+                                        Desktop.getDesktop().browse(new URI("https://github.com/edasaki/misakachan"));
+                                    } catch (Exception e2) {
+                                        e2.printStackTrace();
+                                    }
+                                }
+                            });
+                            MenuItem exitItem = new MenuItem("Exit");
+                            exitItem.addActionListener((event) -> {
+                                System.exit(0);
+                            });
+                            //Add components to pop-up menu
+                            popup.add(forumsItem);
+                            popup.add(githubItem);
+                            popup.addSeparator();
+                            popup.add(exitItem);
+                            trayIcon.setPopupMenu(popup);
+                            trayIcon.addMouseListener(new MouseAdapter() {
+                                @Override
+                                public void mouseClicked(MouseEvent e) {
+                                    if (SwingUtilities.isLeftMouseButton(e)) {
+                                        setVisible(true);
+                                        SystemTray.getSystemTray().remove(trayIcon);
+                                        setState(Frame.NORMAL);
+                                        toFront();
+                                        repaint();
+                                    }
+                                }
+                            });
+                            try {
+                                SystemTray.getSystemTray().add(trayIcon);
+                                setVisible(false);
+                                try {
+                                    Thread.sleep(100L);
+                                    trayIcon.displayMessage("misaka alert", "misakachan is now minimized\nto the system tray!", MessageType.NONE);
+                                } catch (InterruptedException e1) {
+                                    e1.printStackTrace();
+                                }
+                            } catch (AWTException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            }
+            setLocationRelativeTo(null);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        JPanel panel = new JPanel(new BorderLayout());
-
-        configureButton(panel);
-        configureConsole(panel);
-
-        panel.setPreferredSize(new Dimension(600, 300));
-        panel.setBackground(Color.CYAN);
-        getContentPane().add(panel);
-        pack();
-        setLocationRelativeTo(null);
     }
 
     public void setButtonListener(ActionListener listener) {
