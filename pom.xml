@@ -5,7 +5,6 @@
 	<artifactId>misakachan</artifactId>
 	<version>0.0.48</version>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
 		<resources>
 			<resource>
 				<directory>${basedir}</directory>
