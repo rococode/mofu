@@ -12,6 +12,8 @@ import com.edasaki.misakachan.scanlator.BakaUpdateManager;
 import com.edasaki.misakachan.source.AbstractSource;
 import com.edasaki.misakachan.source.english.KissManga;
 import com.edasaki.misakachan.source.english.MangaHere;
+import com.edasaki.misakachan.source.french.BleachMx;
+import com.edasaki.misakachan.source.french.LireScan;
 import com.edasaki.misakachan.version.Version;
 import com.edasaki.misakachan.web.WebAccessor;
 import com.edasaki.misakachan.web.spark.SparkManager;
@@ -21,6 +23,8 @@ public class Misaka {
     public static final AbstractSource[] SOURCES = {
             new MangaHere(),
             new KissManga(),
+            new BleachMx(),
+            new LireScan()
             //            new TestSource(),
     };
 
