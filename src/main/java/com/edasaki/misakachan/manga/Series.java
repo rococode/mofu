@@ -19,6 +19,7 @@ public class Series {
     public String altNames = AbstractSource.DEFAULT_ALTNAMES;
     public String description = AbstractSource.DEFAULT_DESCRIPTION;
     public String source = AbstractSource.DEFAULT_SOURCE;
+
     private JSONArray scanlatorArr;
     private List<ChapterListing> chapters = new ArrayList<ChapterListing>();
 

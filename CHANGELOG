@@ -1,3 +1,7 @@
+0.0.49 - Feb 26 2017
+- added LireScan source (French - credits to Yassine Farich @ https://github.com/yassinefarich)
+- added BleachMx source (French - credits to Yassine Farich @ https://github.com/yassinefarich)
+
 0.0.48 - Feb 25 2017
 - added prototype of tracker interface
 - misakachan now minimizes to tray (will make this optional in the future)

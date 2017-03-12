@@ -2,6 +2,7 @@ package com.edasaki.misakachan.test.tests;
 
 import com.edasaki.misakachan.test.annotations.TestClass;
 import com.edasaki.misakachan.test.annotations.TestMethod;
+
 import com.google.common.truth.Truth;
 
 @TestClass(enabled = true)

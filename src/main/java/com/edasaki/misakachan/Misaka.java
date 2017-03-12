@@ -21,6 +21,7 @@ public class Misaka {
     public static final AbstractSource[] SOURCES = {
             new MangaHere(),
             new KissManga(),
+            //            new LireScan(),
             //            new TestSource(),
     };
 
