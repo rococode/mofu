@@ -12,3 +12,5 @@ phantomjsdriver.log
 *.jar
 !POMUpdater.jar
 .vscode/
+.idea/
+Misakachan.iml
