@@ -1,15 +1,13 @@
 package com.edasaki.misakachan.gui;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
+import com.edasaki.misakachan.utils.MFileUtils;
+
+import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Hashtable;
-
-import com.edasaki.misakachan.utils.MFileUtils;
 
 public class FontManager {
     private static HashMap<String, Font> loadedFonts = new HashMap<String, Font>();

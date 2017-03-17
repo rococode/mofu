@@ -16,6 +16,7 @@ public class GuiManager {
     public void showFrame() {
         frame = new GUIFrame();
         frame.setVisible(true);
+        frame.requestFocus();
         frame.setButtonListener((e) -> {
             launchBrowser();
         });
@@ -44,8 +45,8 @@ public class GuiManager {
     public GuiManager() {
     }
 
-    public void updateStatus(String s) {
-        frame.println(s);
+    public void updateStatus(String status) {
+        frame.println(status);
     }
 
     protected class EnterKeyDispatcher implements KeyEventDispatcher {

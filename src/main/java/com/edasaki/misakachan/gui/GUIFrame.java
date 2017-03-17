@@ -1,78 +1,66 @@
 package com.edasaki.misakachan.gui;
 
-import java.awt.AWTException;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Desktop;
+import com.edasaki.misakachan.utils.MFileUtils;
+
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.*;
 import java.awt.Desktop.Action;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.net.URI;
 import java.time.LocalTime;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-
-import com.edasaki.misakachan.utils.MFileUtils;
-import com.edasaki.misakachan.utils.logging.M;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("serial")
-public class GUIFrame extends JFrame {
+public final class GUIFrame extends JFrame {
     private static final String ICON_URL = "/public/assets/gfx/icon256-t.png";
 
-    private JPanel consolePanel;
-    private JScrollPane consoleScrollPane;
     private JTextArea consoleTextArea = new JTextArea();
     private JButton button = new JButton("Launch Browser");
 
     private static TrayIcon trayIcon;
 
     static {
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                cleanup();
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(new Thread(GUIFrame::cleanup));
     }
 
-    public static void cleanup() {
+    private static void cleanup() {
         if (trayIcon != null) {
             SystemTray.getSystemTray().remove(trayIcon);
         }
     }
 
-    private void configureButton(JPanel panel) {
+    protected void setButtonListener(ActionListener listener) {
+        button.addActionListener(listener);
+    }
 
-        //        button.setBorderPainted(false);
+    protected void println(String s) {
+        StringBuilder sb = new StringBuilder();
+        LocalTime now = LocalTime.now();
+        sb.append(String.format("%02d", now.getHour()));
+        sb.append(':');
+        sb.append(String.format("%02d", now.getMinute()));
+        sb.append(':');
+        sb.append(String.format("%02d", now.getSecond()));
+        sb.append('.');
+        sb.append(String.format("%03d", TimeUnit.NANOSECONDS.toMillis(now.getNano())));
+        sb.append(' ');
+        sb.append('>');
+        sb.append('>');
+        sb.append(' ');
+        sb.append(s);
+        sb.append('\n');
+        sb.append(consoleTextArea.getText());
+        consoleTextArea.setText(sb.toString());
+        consoleTextArea.setCaretPosition(0);
+    }
+
+    private void configureButton(JPanel panel) {
         button.setFocusPainted(false);
-        //        button.setContentAreaFilled(false);
         button.setForeground(Color.decode("#D5654C"));
         button.setBackground(Color.decode("#F1E0BF"));
-
         Border line = new LineBorder(Color.decode("#96B0A3"), 20);
         Border innerline = new LineBorder(Color.decode("#8AA296"), 5);
         Border margin = new EmptyBorder(30, 0, 30, 0);
@@ -84,8 +72,8 @@ public class GUIFrame extends JFrame {
     }
 
     private void configureConsole(JPanel panel) {
-        consolePanel = new JPanel(new BorderLayout());
-        consoleScrollPane = new JScrollPane(consoleTextArea);
+        JPanel consolePanel = new JPanel(new BorderLayout());
+        JScrollPane consoleScrollPane = new JScrollPane(consoleTextArea);
         consoleScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         consoleTextArea.setEditable(false);
         Font f = FontManager.getFont("/public/assets/fonts/RobotoMono-Regular.ttf");
@@ -93,7 +81,6 @@ public class GUIFrame extends JFrame {
         consoleTextArea.setFont(f);
         consoleTextArea.setBorder(BorderFactory.createEmptyBorder(5, 8, 0, 0));
         consolePanel.add(consoleScrollPane);
-
         TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "  Status  ");
         border.setTitlePosition(TitledBorder.TOP);
         border.setTitleJustification(TitledBorder.CENTER);
@@ -106,61 +93,69 @@ public class GUIFrame extends JFrame {
         panel.add(consolePanel);
     }
 
+    private void configurePhantomWarning(JPanel panel) {
+        JPanel jsPanel = new JPanel(new BorderLayout());
+        JTextArea text = new JTextArea();
+        Font f = FontManager.getFont("/public/assets/fonts/RobotoMono-Regular.ttf");
+        f = f.deriveFont(Font.PLAIN, 10f);
+        text.setFont(f);
+        Border border = BorderFactory.createEmptyBorder(5, 8, 5, 8);
+        text.setBorder(border);
+        text.setLineWrap(true);
+        text.setWrapStyleWord(true);
+        text.setText("NOTE: You may be asked for permission to run \"PhantomJS.exe\". It sounds super sketchy, I know. It's actually a pretty big open-source project that's essentially a web browser without a UI. misakachan uses it to access some sites like KissManga. You can read more about it at https://github.com/ariya/phantomjs (click here to open in browser).");
+        text.addMouseListener(new BrowseMouseAction("https://github.com/ariya/phantomjs", 2000L));
+        text.setBackground(Color.decode("#96B0A3"));
+        text.setEnabled(false);
+        text.setEditable(false);
+        text.setHighlighter(null);
+        text.setDisabledTextColor(Color.decode("#555555"));
+        jsPanel.add(text);
+        panel.add(jsPanel, BorderLayout.PAGE_END);
+    }
+
     public GUIFrame() {
         super("misakachan");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         try {
+            // Set icon
             final ImageIcon icon = new ImageIcon(MFileUtils.getResourceAsFile(ICON_URL).toURI().toURL());
             setIconImage(icon.getImage());
-
+            // Build panel
             JPanel panel = new JPanel(new BorderLayout());
-
             configureButton(panel);
             configureConsole(panel);
-
-            panel.setPreferredSize(new Dimension(600, 300));
-            panel.setBackground(Color.CYAN);
+            configurePhantomWarning(panel);
+            panel.setPreferredSize(new Dimension(600, 375));
             getContentPane().add(panel);
             pack();
+
+            // Support for minimize to tray
             if (SystemTray.isSupported()) {
                 addWindowStateListener(new WindowStateListener() {
                     public void windowStateChanged(WindowEvent e) {
-                        M.edb("Captured: " + e.getNewState());
+                        // Move to tray icon
                         if (e.getNewState() == Frame.ICONIFIED) {
                             trayIcon = new TrayIcon(icon.getImage());
                             trayIcon.setImageAutoSize(true);
                             trayIcon.setToolTip("misakachan");
-                            // Create a pop-up menu components
+                            // Initialize menu
                             final PopupMenu popup = new PopupMenu();
+                            // Forums link
                             MenuItem forumsItem = new MenuItem("Forums");
-                            forumsItem.addActionListener((event) -> {
-                                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
-                                    try {
-                                        Desktop.getDesktop().browse(new URI("http://misakachan.net"));
-                                    } catch (Exception e2) {
-                                        e2.printStackTrace();
-                                    }
-                                }
-                            });
+                            forumsItem.addActionListener(new BrowseAction("http://misakachan.net"));
+                            popup.add(forumsItem);
+                            // GitHub link
                             MenuItem githubItem = new MenuItem("GitHub");
-                            githubItem.addActionListener((event) -> {
-                                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
-                                    try {
-                                        Desktop.getDesktop().browse(new URI("https://github.com/edasaki/misakachan"));
-                                    } catch (Exception e2) {
-                                        e2.printStackTrace();
-                                    }
-                                }
-                            });
+                            githubItem.addActionListener(new BrowseAction("https://github.com/edasaki/misakachan"));
+                            popup.add(githubItem);
+                            // Divider
+                            popup.addSeparator();
+                            // Exit
                             MenuItem exitItem = new MenuItem("Exit");
                             exitItem.addActionListener((event) -> {
                                 System.exit(0);
                             });
-                            //Add components to pop-up menu
-                            popup.add(forumsItem);
-                            popup.add(githubItem);
-                            popup.addSeparator();
                             popup.add(exitItem);
                             trayIcon.setPopupMenu(popup);
                             trayIcon.addMouseListener(new MouseAdapter() {
@@ -197,26 +192,67 @@ public class GUIFrame extends JFrame {
         }
     }
 
-    public void setButtonListener(ActionListener listener) {
-        button.addActionListener(listener);
+    private static final class BrowseAction implements ActionListener {
+        private String url;
+
+        private BrowseAction(String url) {
+            this.url = url;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    public void println(String s) {
-        StringBuilder sb = new StringBuilder();
-        LocalTime now = LocalTime.now();
-        sb.append(String.format("%02d", now.getHour()));
-        sb.append(':');
-        sb.append(String.format("%02d", now.getMinute()));
-        sb.append(':');
-        sb.append(String.format("%02d", now.getSecond()));
-        sb.append(' ');
-        sb.append('>');
-        sb.append('>');
-        sb.append(' ');
-        sb.append(s);
-        sb.append('\n');
-        sb.append(consoleTextArea.getText());
-        consoleTextArea.setText(sb.toString());
-        consoleTextArea.setCaretPosition(0);
+    private static final class BrowseMouseAction implements MouseListener {
+        private String url;
+        private long delay;
+        private long last;
+
+        private BrowseMouseAction(String url, long delay) {
+            this.url = url;
+            this.delay = delay;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (System.currentTimeMillis() - last < delay)
+                return;
+            last = System.currentTimeMillis();
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Action.BROWSE)) {
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
     }
 }

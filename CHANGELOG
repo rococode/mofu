@@ -1,3 +1,9 @@
+0.0.50 - Mar 16 2017
+- It's been a while! I've been ultra busy with exams (quarter system so finals start in March lol), but I'm all done now!
+- add small notice about PhantomJS on launcher (so people don't get spooked...)
+- added milliseconds to console output
+- fixed up pom.xml source specification
+
 0.0.49 - Feb 26 2017
 - added LireScan source (French - credits to Yassine Farich @ https://github.com/yassinefarich)
 - added BleachMx source (French - credits to Yassine Farich @ https://github.com/yassinefarich)
