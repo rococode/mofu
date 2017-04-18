@@ -1,3 +1,5 @@
+## So i kind of arbitrarily decided to rename this project to mofu and got the name mofu.moe lol... I felt misakachan is way too long of a name (although it's cute hehe) so I'll be updating stuff throughout the project to reflect the name change
+
 <p align="center"><img src="src/main/resources/public/assets/gfx/logo.png" width="450px" /></p align="center">
 
 
