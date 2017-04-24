@@ -4,7 +4,7 @@
 
 ## Oh and I'm planning to rename misakachan to mofu (hosted at mofu.moe), just a heads up. misakachan was too long of a name :(
 
-<p align="center"><img src="src/main/resources/public/assets/gfx/logo.png" width="450px" /></p align="center">
+<p align="center"><img src="src/assets/gfx/logo.png" width="450px" /></p align="center">
 
 
 # misakachan
