@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+            "preLaunchTask": "build-all",
+            "runtimeArgs": [
+                "${workspaceRoot}",
+                "--enable-logging",
+                "--remote-debugging-port=9222"
+            ],
+            "sourceMaps": false
+        }
+    ]
+}

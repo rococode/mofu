@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>★ mofu.moe ★</title>
+    <link rel="icon" type="image/x-icon" href="assets/gfx/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="assets/gfx/icon256-t.png" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
+    <!-- styles needed by jScrollPane - include in your own sites -->
+    <link type="text/css" href="assets/css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
+    <!-- the mousewheel plugin -->
+    <script type="text/javascript" src="assets/js/jquery.mousewheel.js"></script>
+    <!-- the mwheelIntent plugin -->
+    <script type="text/javascript" src="assets/js/mwheelIntent.js"></script>
+    <!-- the jScrollPane script -->
+    <script type="text/javascript" src="assets/js/jquery.jscrollpane.min.js"></script>
+    <!-- cookie manager -->
+    <script type="text/javascript" src="assets/js/js.cookie.js"></script>
+    <!-- textfit -->
+    <script type="text/javascript" src="assets/js/textFit.min.js"></script>
+    <!--  misakachan stuff -->
+    <script type="text/javascript" src="assets/js/scripts.js"></script>
+</head>
+
+<body>
+    <div id="content"></div>
+</body>
+
+<!-- inject:js -->
+<script src="js/vendor.js"></script>
+<!-- endinject -->
+
+<script>
+    System.config({
+        map: {
+            'react': '../node_modules/react/dist/react.js',
+            'react-dom': '../node_modules/react-dom/dist/react-dom.js'
+        },
+        packages: {
+            js: {
+                defaultExtension: 'js'
+            }
+        }
+    });
+    System.import('js/index.js').then(null, console.error.bind(console));
+</script>
+
+</html>

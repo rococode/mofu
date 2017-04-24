@@ -1,4 +1,8 @@
-## So i kind of arbitrarily decided to rename this project to mofu and got the name mofu.moe lol... I felt misakachan is way too long of a name (although it's cute hehe) so I'll be updating stuff throughout the project to reflect the name change
+# misakachan is currently being completely rewritten using pure web technologies (instead of the old weird Java stuff). 
+
+## Unfortunately this will probably take some time, but stay tuned for updates! I think the end result will be much better (I wouldn't be doing it otherwise :P). 
+
+## Oh and I'm planning to rename misakachan to mofu (hosted at mofu.moe), just a heads up. misakachan was too long of a name :(
 
 <p align="center"><img src="src/main/resources/public/assets/gfx/logo.png" width="450px" /></p align="center">
 

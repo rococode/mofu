@@ -1,3 +1,6 @@
+0.0.51 - Mar 19 2017
+- added confirmation dialogue to phantomjs popup
+
 0.0.50 - Mar 16 2017
 - It's been a while! I've been ultra busy with exams (quarter system so finals start in March lol), but I'm all done now!
 - add small notice about PhantomJS on launcher (so people don't get spooked...)
