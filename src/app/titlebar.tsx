@@ -1,4 +1,6 @@
 import React from 'react';
+// <reference path="../../node_modules/@types/electron/index.d.ts" />
+const electron = require('electron').remote;
 
 export default class TitleBar extends React.Component<{}, {}> {
     public render() {
@@ -9,8 +11,8 @@ export default class TitleBar extends React.Component<{}, {}> {
                 </div>
                 <div className="right">
                     <button className="minimize button" onClick={minimize}></button>
-                    <button className="maximize button"></button>
-                    <button className="exit button"></button>
+                    <button className="maximize button" onClick={maximize}></button>
+                    <button className="exit button" onClick={exit}></button>
                 </div>
             </div>
         )
@@ -18,6 +20,13 @@ export default class TitleBar extends React.Component<{}, {}> {
 }
 
 function minimize() {
-    // let windows = electron.BrowserWindow.getAllWindows();
-    // console.log(windows);
+    electron.BrowserWindow.getFocusedWindow().minimize();
+}
+
+function maximize() {
+    electron.BrowserWindow.getFocusedWindow().maximize();
+}
+
+function exit() {
+    electron.app.quit();
 }

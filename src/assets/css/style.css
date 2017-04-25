@@ -824,7 +824,7 @@ img {
   .title-bar .right {
     position: absolute;
     right: 5px;
-    top: 5px;
+    top: 7px;
     color: #eee;
     cursor: pointer !important;
     display: inline-block; }

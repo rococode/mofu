@@ -1,3 +1,9 @@
+# 0.1.3 - Apr 24 2017
+- after almost a full day, I FINALLY figured out how to import electron lmao
+
+# 0.1.2 - Apr 24 2017
+- various small fixes, still working on environment setup
+
 # 0.1.1 - Apr 24 2017
 - stuff seems to mostly work now? idk lol at least there don't appear to be any warnings/errors
 
