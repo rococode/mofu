@@ -69,11 +69,11 @@ gulp.task('build-vendor', function () {
 
 gulp.task('build-app', function () {
 
-    var project = typescript.createProject('tsconfig.json', { sortOutput: true });
+    var project = typescript.createProject('tsconfig.json');
 
     var tsResult = project.src()
         .pipe(sourcemaps.init())
-        .pipe(typescript(project));
+        .pipe(project());
 
     return tsResult.js
         .pipe(sourcemaps.write())

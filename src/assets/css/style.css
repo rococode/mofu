@@ -10,7 +10,8 @@ body {
   color: #ccc;
   font-family: 'Ubuntu', sans-serif; }
 
-div, img {
+div,
+img {
   padding: 0;
   margin: 0;
   vertical-align: bottom; }
@@ -38,7 +39,10 @@ div, img {
   width: 100%;
   font-size: 0.8em;
   padding: 10px 0; }
-  .footer a, .footer a:hover, .footer a:visited, .footer a:active {
+  .footer a,
+  .footer a:hover,
+  .footer a:visited,
+  .footer a:active {
     text-decoration: none;
     color: inherit;
     cursor: pointer; }
@@ -353,29 +357,35 @@ div, img {
   animation-delay: 0.9s; }
 
 @-webkit-keyframes sk-foldCubeAngle {
-  0%, 10% {
+  0%,
+  10% {
     -webkit-transform: perspective(140px) rotateX(-180deg);
     transform: perspective(140px) rotateX(-180deg);
     opacity: 0; }
-  25%, 75% {
+  25%,
+  75% {
     -webkit-transform: perspective(140px) rotateX(0deg);
     transform: perspective(140px) rotateX(0deg);
     opacity: 1; }
-  90%, 100% {
+  90%,
+  100% {
     -webkit-transform: perspective(140px) rotateY(180deg);
     transform: perspective(140px) rotateY(180deg);
     opacity: 0; } }
 
 @keyframes sk-foldCubeAngle {
-  0%, 10% {
+  0%,
+  10% {
     -webkit-transform: perspective(140px) rotateX(-180deg);
     transform: perspective(140px) rotateX(-180deg);
     opacity: 0; }
-  25%, 75% {
+  25%,
+  75% {
     -webkit-transform: perspective(140px) rotateX(0deg);
     transform: perspective(140px) rotateX(0deg);
     opacity: 1; }
-  90%, 100% {
+  90%,
+  100% {
     -webkit-transform: perspective(140px) rotateY(180deg);
     transform: perspective(140px) rotateY(180deg);
     opacity: 0; } }
@@ -484,7 +494,10 @@ div, img {
   margin: 5px auto 0;
   padding-bottom: 5px;
   background-color: #323232; }
-  .search-results a, .search-results a:hover, .search-results a:visited, .search-results a:active {
+  .search-results a,
+  .search-results a:hover,
+  .search-results a:visited,
+  .search-results a:active {
     text-decoration: none;
     color: inherit;
     cursor: pointer; }
@@ -611,7 +624,10 @@ div, img {
     display: block !important; }
   .manga-info-container .manga-description-container {
     height: 75px; }
-  .manga-info-container .alt, .manga-info-container .genre, .manga-info-container .author, .manga-info-container .artist {
+  .manga-info-container .alt,
+  .manga-info-container .genre,
+  .manga-info-container .author,
+  .manga-info-container .artist {
     margin-bottom: 3px; }
 
 .manga-download-container {
@@ -769,7 +785,8 @@ div, img {
     -ms-transition: all 0.5s linear;
     -moz-transition: all 0.5s linear;
     transition: all 0.5s linear; }
-  .download-menu-button .arrow_box:after, .download-menu-button .arrow_box:before {
+  .download-menu-button .arrow_box:after,
+  .download-menu-button .arrow_box:before {
     right: 100%;
     top: 50%;
     border: solid transparent;
@@ -793,13 +810,42 @@ div, img {
   width: 100%;
   background-color: #171717;
   margin: 0 0;
-  padding: 10px 10px;
+  padding: 12px 0 11px;
   text-align: center;
   -webkit-app-region: drag; }
   .title-bar .title {
+    -webkit-app-region: no-drag;
     color: #eee;
     font-family: 'Comfortaa', cursive;
     cursor: pointer;
-    font-size: 20px; }
-  .title-bar .button {
-    -webkit-app-region: no-drag; }
+    display: inline-block;
+    height: 16px;
+    font-size: 16px; }
+  .title-bar .right {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #eee;
+    cursor: pointer !important;
+    display: inline-block; }
+    .title-bar .right .button {
+      border: none;
+      outline: none;
+      -webkit-app-region: no-drag;
+      width: 30px;
+      height: 30px;
+      background-size: 26px;
+      background-color: transparent;
+      background-position: 50%;
+      -webkit-filter: grayscale(100%) brightness(5) brightness(70%);
+      filter: grayscale(100%) brightness(5) brightness(70%); }
+      .title-bar .right .button:hover {
+        -webkit-filter: grayscale(100%) brightness(5);
+        filter: grayscale(100%) brightness(5);
+        cursor: pointer; }
+      .title-bar .right .button.minimize {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHRyYW5zZm9ybT0ibWF0cml4KDAgLTEgLTEgMCAyNCAyNCkiPgogICAgPHBvbHlnb24gZmlsbD0iIzRGNTQ1QyIgcG9pbnRzPSI2IDYgOCA2IDggMTggNiAxOCIvPgogICAgPHBvbHlnb24gcG9pbnRzPSIwIDI0IDAgMCAyNCAwIDI0IDI0Ii8+CiAgPC9nPgo8L3N2Zz4K); }
+      .title-bar .right .button.maximize {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPHBvbHlnb24gcG9pbnRzPSIwIDAgMjQgMCAyNCAyNCAwIDI0Ii8+CiAgICA8cGF0aCBmaWxsPSIjNEY1NDVDIiBkPSJNNywxMiBMNSwxMiBMNSwxOSBMMTIsMTkgTDEyLDE3IEw3LDE3IEw3LDEyIFogTTUsMTIgTDcsMTIgTDcsNyBMMTIsNyBMMTIsNSBMNSw1IEw1LDEyIFogTTEyLDE3IEwxMiwxOSBMMTksMTkgTDE5LDEyIEwxNywxMiBMMTcsMTcgTDEyLDE3IFogTTEyLDUgTDEyLDcgTDE3LDcgTDE3LDEyIEwxOSwxMiBMMTksNSBMMTIsNSBaIi8+CiAgPC9nPgo8L3N2Zz4K); }
+      .title-bar .right .button.exit {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPHBvbHlnb24gcG9pbnRzPSIwIDAgMjQgMCAyNCAyNCAwIDI0Ii8+CiAgICA8cG9seWdvbiBmaWxsPSIjNEY1NDVDIiBwb2ludHM9IjE5IDYuNDEgMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMiIvPgogIDwvZz4KPC9zdmc+Cg==); }

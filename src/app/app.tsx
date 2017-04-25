@@ -1,5 +1,6 @@
 import React from 'react';
 import Footer from './footer';
+import TitleBar from './titlebar';
 
 export default class App extends React.Component<{}, {}> {
     public render() {
@@ -9,17 +10,5 @@ export default class App extends React.Component<{}, {}> {
             <Footer />
             </div>
         );
-    }
-}
-
-export class TitleBar extends React.Component<{}, {}> {
-    public render() {
-        return (
-            <div className="title-bar">
-                <div className="title">
-                    mofu.moe
-                </div>
-            </div>
-        )
     }
 }
