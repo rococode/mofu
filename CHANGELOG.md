@@ -1,3 +1,6 @@
+# 0.1.1 - Apr 24 2017
+- stuff seems to mostly work now? idk lol at least there don't appear to be any warnings/errors
+
 # 0.1.0 - Apr 23 2017
 - began complete rewrite of misakachan (now known as mofu)
 - new tech stack is Electron+Typescript+React+Webpack+SASS+bit of jquery/js

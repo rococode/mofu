@@ -9,7 +9,7 @@
             "preLaunchTask": "build-all",
             "runtimeArgs": [
                 "${workspaceRoot}",
-                "--enable-logging",
+                // "--enable-logging",
                 "--remote-debugging-port=9222"
             ],
             "sourceMaps": false

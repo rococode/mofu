@@ -14,6 +14,10 @@
     <link type="text/css" href="assets/css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+    <!--https://stackoverflow.com/questions/32621988/electron-jquery-is-not-defined-->
+    <script>
+        if (typeof module === 'object') { window.module = module; module = undefined; }
+    </script>
     <script type="text/javascript" src="assets/js/jquery-3.1.1.min.js"></script>
     <!-- the mousewheel plugin -->
     <script type="text/javascript" src="assets/js/jquery.mousewheel.js"></script>
@@ -26,7 +30,10 @@
     <!-- textfit -->
     <script type="text/javascript" src="assets/js/textFit.min.js"></script>
     <!--  misakachan stuff -->
-    <script type="text/javascript" src="assets/js/scripts.js"></script>
+    <!--<script type="text/javascript" src="assets/js/scripts.js"></script>-->
+    <script>
+        if (window.module) module = window.module;
+    </script>
 </head>
 
 <body>
@@ -38,18 +45,19 @@
 <!-- endinject -->
 
 <script>
-    System.config({
-        map: {
-            'react': '../node_modules/react/dist/react.js',
-            'react-dom': '../node_modules/react-dom/dist/react-dom.js'
-        },
-        packages: {
-            js: {
-                defaultExtension: 'js'
+        System.config({
+            map: {
+                'react': '../node_modules/react/dist/react.js',
+                'react-dom': '../node_modules/react-dom/dist/react-dom.js'
+            },
+            packages: {
+                js: {
+                    defaultExtension: 'js'
+                }
             }
-        }
-    });
-    System.import('js/index.js').then(null, console.error.bind(console));
+        });
+        System.import('js/index.js').then(null, console.error.bind(console));
+
 </script>
 
 </html>
