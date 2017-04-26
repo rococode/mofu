@@ -1,3 +1,13 @@
+# 0.1.5 - Apr 25 2017
+- loading panel is now unselectable as intended
+- added new logo to title bar
+- made all main containers visible by default - we're using react now so they aren't rendered together
+- unmaximizing (whatever thats called) now works properly
+- add zoom in/out on title bar
+
+# 0.1.4 - Apr 24 2017
+- added Home component (incomplete)
+
 # 0.1.3 - Apr 24 2017
 - after almost a full day, I FINALLY figured out how to import electron lmao
 

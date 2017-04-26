@@ -16,7 +16,7 @@ img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .tracker .button, .tracker .section .title, .top-bottom-buttons span, .download-button span, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover, .title-bar {
+.unselectable, .tracker .button, .tracker .section .title, .top-bottom-buttons span, .download-button span, .loading-container, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover, .title-bar {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -174,9 +174,6 @@ img {
         .tracker .section .tracker-listing .alert.active {
           color: #59d933; }
 
-.reader-container {
-  display: none; }
-
 .reader-title {
   font-family: 'Crimson Text', serif;
   display: block;
@@ -260,9 +257,6 @@ img {
       cursor: pointer; }
       .download-button span:hover div {
         visibility: visible; }
-
-.loading-container {
-  display: none; }
 
 .loading-bg-wrapper {
   background-color: #373737;
@@ -440,9 +434,6 @@ img {
 .jspDrag {
   background-color: #555; }
 
-.search-result-container {
-  display: none; }
-
 .re-search-form {
   text-align: center;
   margin-top: 10px; }
@@ -553,7 +544,6 @@ img {
   top: 0;
   left: 0;
   right: 0;
-  display: none;
   overflow-y: scroll;
   overflow-x: scroll; }
 
@@ -631,7 +621,6 @@ img {
     margin-bottom: 3px; }
 
 .manga-download-container {
-  display: none;
   width: 50%;
   min-width: 650px;
   min-height: 520px;
@@ -810,21 +799,44 @@ img {
   width: 100%;
   background-color: #171717;
   margin: 0 0;
-  padding: 12px 0 11px;
+  height: 30px;
   text-align: center;
   -webkit-app-region: drag; }
   .title-bar .title {
+    content: url("../gfx/mofumoe-borderless-black.png");
+    padding-top: 6px;
+    background-size: contain;
     -webkit-app-region: no-drag;
     color: #eee;
     font-family: 'Comfortaa', cursive;
     cursor: pointer;
     display: inline-block;
-    height: 16px;
-    font-size: 16px; }
+    height: 18px; }
+  .title-bar .left {
+    position: absolute;
+    left: 5px;
+    top: -3px;
+    color: #aaa;
+    display: inline-block; }
+    .title-bar .left .button {
+      display: inline-block;
+      border: none;
+      outline: none;
+      -webkit-app-region: no-drag;
+      font-size: 30px;
+      height: 30px;
+      padding: 0 0;
+      margin: 0 0;
+      width: 20px;
+      vertical-align: top;
+      text-align: center; }
+      .title-bar .left .button:hover {
+        color: #eee;
+        cursor: pointer !important; }
   .title-bar .right {
     position: absolute;
     right: 5px;
-    top: 7px;
+    top: 3px;
     color: #eee;
     cursor: pointer !important;
     display: inline-block; }
@@ -832,9 +844,9 @@ img {
       border: none;
       outline: none;
       -webkit-app-region: no-drag;
-      width: 30px;
-      height: 30px;
-      background-size: 26px;
+      width: 27px;
+      height: 27px;
+      background-size: 23px;
       background-color: transparent;
       background-position: 50%;
       -webkit-filter: grayscale(100%) brightness(5) brightness(70%);
@@ -846,6 +858,8 @@ img {
       .title-bar .right .button.minimize {
         background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHRyYW5zZm9ybT0ibWF0cml4KDAgLTEgLTEgMCAyNCAyNCkiPgogICAgPHBvbHlnb24gZmlsbD0iIzRGNTQ1QyIgcG9pbnRzPSI2IDYgOCA2IDggMTggNiAxOCIvPgogICAgPHBvbHlnb24gcG9pbnRzPSIwIDI0IDAgMCAyNCAwIDI0IDI0Ii8+CiAgPC9nPgo8L3N2Zz4K); }
       .title-bar .right .button.maximize {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPHBvbHlnb24gcG9pbnRzPSIwIDAgMjQgMCAyNCAyNCAwIDI0Ii8+CiAgICA8cGF0aCBmaWxsPSIjNEY1NDVDIiBkPSJNNywxMiBMNSwxMiBMNSwxOSBMMTIsMTkgTDEyLDE3IEw3LDE3IEw3LDEyIFogTTUsMTIgTDcsMTIgTDcsNyBMMTIsNyBMMTIsNSBMNSw1IEw1LDEyIFogTTEyLDE3IEwxMiwxOSBMMTksMTkgTDE5LDEyIEwxNywxMiBMMTcsMTcgTDEyLDE3IFogTTEyLDUgTDEyLDcgTDE3LDcgTDE3LDEyIEwxOSwxMiBMMTksNSBMMTIsNSBaIi8+CiAgPC9nPgo8L3N2Zz4K); }
+      .title-bar .right .button.unmaximize {
         background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPHBvbHlnb24gcG9pbnRzPSIwIDAgMjQgMCAyNCAyNCAwIDI0Ii8+CiAgICA8cGF0aCBmaWxsPSIjNEY1NDVDIiBkPSJNNywxMiBMNSwxMiBMNSwxOSBMMTIsMTkgTDEyLDE3IEw3LDE3IEw3LDEyIFogTTUsMTIgTDcsMTIgTDcsNyBMMTIsNyBMMTIsNSBMNSw1IEw1LDEyIFogTTEyLDE3IEwxMiwxOSBMMTksMTkgTDE5LDEyIEwxNywxMiBMMTcsMTcgTDEyLDE3IFogTTEyLDUgTDEyLDcgTDE3LDcgTDE3LDEyIEwxOSwxMiBMMTksNSBMMTIsNSBaIi8+CiAgPC9nPgo8L3N2Zz4K); }
       .title-bar .right .button.exit {
         background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPHBvbHlnb24gcG9pbnRzPSIwIDAgMjQgMCAyNCAyNCAwIDI0Ii8+CiAgICA8cG9seWdvbiBmaWxsPSIjNEY1NDVDIiBwb2ludHM9IjE5IDYuNDEgMTcuNTkgNSAxMiAxMC41OSA2LjQxIDUgNSA2LjQxIDEwLjU5IDEyIDUgMTcuNTkgNi40MSAxOSAxMiAxMy40MSAxNy41OSAxOSAxOSAxNy41OSAxMy40MSAxMiIvPgogIDwvZz4KPC9zdmc+Cg==); }

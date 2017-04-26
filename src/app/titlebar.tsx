@@ -1,32 +1,58 @@
 import React from 'react';
-// <reference path="../../node_modules/@types/electron/index.d.ts" />
+const autoBind =  require('react-autobind');
 const electron = require('electron').remote;
+const open = require('open');
 
-export default class TitleBar extends React.Component<{}, {}> {
+interface Props {
+    zoomOut,
+    zoomIn
+}
+
+export default class TitleBar extends React.Component<Props, {}> {
+
+    constructor(props) {
+        super(props);
+        autoBind(this);
+    }
+
     public render() {
+        let isMax = electron.BrowserWindow.getFocusedWindow() ? electron.BrowserWindow.getFocusedWindow().isMaximized() : false
+        console.log(isMax);
         return (
             <div className="title-bar">
-                <div className="title">
-                    mofu.moe
+                <div className="left">
+                    <div className="button zoom-out" onClick={this.props.zoomOut}>-</div>
+                    <div className="button zoom-in" onClick={this.props.zoomIn}>+</div>
                 </div>
+                <div className="title" onClick={this.mofumoe}></div>
                 <div className="right">
-                    <button className="minimize button" onClick={minimize}></button>
-                    <button className="maximize button" onClick={maximize}></button>
-                    <button className="exit button" onClick={exit}></button>
+                    <button className="minimize button" onClick={this.minimize}></button>
+                    {isMax ? (<button className="unmaximize button" onClick={this.unmaximize}></button>) : (<button className="maximize button" onClick={this.maximize}></button>)}
+                    <button className="exit button" onClick={this.exit}></button>
                 </div>
             </div>
         )
     }
-}
 
-function minimize() {
-    electron.BrowserWindow.getFocusedWindow().minimize();
-}
+    private mofumoe() {
+        open("http://mofu.moe");
+    }
 
-function maximize() {
-    electron.BrowserWindow.getFocusedWindow().maximize();
-}
+    private minimize() {
+        electron.BrowserWindow.getFocusedWindow().minimize();
+    }
 
-function exit() {
-    electron.app.quit();
+    private unmaximize() {
+        electron.BrowserWindow.getFocusedWindow().unmaximize();
+        this.forceUpdate();
+    }
+
+    private maximize() {
+        electron.BrowserWindow.getFocusedWindow().maximize();
+        this.forceUpdate();
+    }
+
+    private exit() {
+        electron.app.quit();
+    }
 }
