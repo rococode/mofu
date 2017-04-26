@@ -1,14 +1,24 @@
-# misakachan is currently being completely rewritten using pure web technologies (instead of the old weird Java stuff). 
+<p align="center"><img src="src/assets/gfx/mofumoe.png" width="450px" /></p align="center">
 
-## Unfortunately this will probably take some time, but stay tuned for updates! I think the end result will be much better (I wouldn't be doing it otherwise :P). 
+## Notice
 
-## Oh and I'm planning to rename misakachan to mofu (hosted at mofu.moe), just a heads up. misakachan was too long of a name :(
+mofu (previously known as misakachan) is currently being rewritten with a completely new codebase (Electron/Typescript/React)
 
-<p align="center"><img src="src/assets/gfx/logo.png" width="450px" /></p align="center">
+Versions 0.1.x are on the new codebase, and 0.0.x are the old one (Java core).
 
+There is a working Java JAR file release on the releases page, but it will not be supported in the future. Consider it a sneak peek :)
 
-# misakachan
-misakachan is a modern manga reader that can be run on any computer with Java! 
+**Until this notice disappears, I can't guarantee the accuracy of the stuff below!**
+
+**In particular, the setup/installation instructions and features are almost CERTAINLY outdated and inaccurate.**
+
+Once I've finished rewriting most of the features, this notice will disappear :)
+
+---
+
+# mofu
+
+mofu is a modern manga reader that can be run on any computer with Java! 
 
 Join us on Discord to see sneak peeks for upcoming features, give suggestions & feedback, or just hang out! 
 
@@ -16,12 +26,13 @@ I'm basically always online while I'm awake, and I try to respond to everyone wh
 
 [<img src="https://discordapp.com/api/guilds/268574742032809985/widget.png?style=shield">](https://discord.gg/pMucKJ5)  
 
-#### What is misakachan?
+#### What is mofu?
 
 Reading manga on a smartphone or tablet nowadays is such a pleasure. There are so many great apps to choose from; just look at how much [tachiyomi](https://github.com/inorichi/tachiyomi) can do!  
-Unfortunately, the same awesome browsing experience doesn't really exist for computers. The only programs available for Windows/Mac/Linux look and feel like they were designed 5+ years ago (mostly because, well, they were). Aside from having to use laggy, ad-ridden aggregate readers or resorting to clunky browser extensions, there aren't many options to choose from.  
 
-misakachan hopes to close this gap and bring some of the great functionality available for Android/iOS to folks who also want to read manga on their computers!
+Unfortunately, the same awesome browsing experience doesn't really exist (yet!) for computers. The only programs available for Windows/Mac/Linux look and feel like they were designed 5+ years ago (because, well, many of them were). Most of them aren't even for manga, they're just kind of generic comic book readers that load in folders of images. Aside from having to use laggy, ad-ridden aggregate readers or resorting to clunky browser extensions, there aren't many options to choose from.  
+
+mofu hopes to close this gap and bring some of the great functionality available for Android/iOS to folks who also want to read manga on their computers!
 
 ### Table of Contents
 
@@ -33,10 +44,7 @@ misakachan hopes to close this gap and bring some of the great functionality ava
 - [Tech Stack](#tech-stack)
 - [License](#license)
 
-Because having one is fancy :)
-
 ## Features
-- Runs in your web browser so you can resize & zoom as much as you like!
 - Vertical (one long page) reading mode
 - Search through supported sources for manga to read (currently limited to searching by title only)
 - Loads full chapters in just a couple seconds
@@ -70,7 +78,7 @@ Because having one is fancy :)
 ## Download
 Just in case you missed it in "Setup" above lol.
 
-Download the latest version of misakachan from [the Releases page](https://github.com/edasaki/misakachan/releases)
+Download the latest version of mofu from [the Releases page](https://github.com/edasaki/mofu/releases)
 
 Of course you can also fork the repo and build from source.
 
@@ -103,35 +111,27 @@ New sources are pretty painful to code, although they typically are similar to o
 
 Probably, if it's nothing too wild. The best way to make sure your suggestion isn't forgotten is to post an issue here on GitHub.
 
-### Why Java?
-
-I could make up some stuff about how Java is nice because it's crossplatform and stuff, but the real reason is that I just happen to be best at coding in Java lol. And UI design is a pain with most non-web languages (just my opinion), so having a nice library for creating a lightweight embedded webserver is super useful since you can make much prettier interfaces!
-
 ### Do you accept pull requests?
-Not at the moment. The code is just way too disorganized at this stage, and I'm always refactoring things. I'll start accepting PRs when things are a bit more stable and cleaned up.
-
-### How is the name "misakachan" stylized?
-Just like that, lowercase m and no dash. I'm not really a fan of uppercase when it comes to romanizations, dunno why. Lowercase m looks cuter!
+Yes! But in the current stage the code is not very well structured and changes frequently, so please keep that in mind.
 
 ### Hey! This is mean to scanlators; people should always read off of scanlator's official websites. 
-I think everyone acknowledges that scanlators do all the hard work when it comes to translating manga. I say this as a translator myself - I TL a couple Japanese web novels in my spare time at [Project Accelerator](http://project-accelerator.net/) and have worked on a few manga translations as well.
+Everyone acknowledges that scanlators do all the hard work when it comes to translating manga. I say this as a translator myself - I (very infrequently) TL a couple Japanese web novels in my spare time at [Project Accelerator](http://project-accelerator.net/) and have worked on a few manga translations as well.
 
 For the average reader, although scanlators' efforts are certainly appreciated, it's more convenient to use an aggregate site than to find the scanlator's official website and read from there. It's not ideal, but it's just the way the world works. Many, many people use aggregate sites exclusively (they wouldn't exist if it weren't a viable business model), but the majority of those sites don't give any credit to the scanlators. 
 
-With that unfortunate truth in mind, misakachan has code written specifically to combine convenience with respect. Whenever you load up a manga in misakachan, misaka will try to find the manga on [MangaUpdates](https://www.mangaupdates.com/) to locate the scanlators who've done hard work translating that manga, and then credits them in the reader interface!
+With that unfortunate truth in mind, mofu has code written specifically to combine convenience with proper credit. Whenever you load up a manga in mofu, mofu will try to find the manga on [MangaUpdates](https://www.mangaupdates.com/) to locate the scanlators who've done hard work translating that manga, and then credits them in the reader interface, along with a link to their site if one can be found.
 
 ## Tech Stack
 
 Here's a quick overview of the specific tools and technologies used in misakachan, for anyone interested:
 
- - **Java** - core stuff
- - **SparkJava** - embedded webserver
- - **HTML, CSS, JS/jQuery, SASS** - frontend design and AJAX to link to Java backend
- - **JSoup** - DOM fetching and parsing
- - **Selenium w/ PhantomJS** - mostly used for bypassing cloudflare and getting dynamically loaded content
- - **Google Truth** - assertion framework
- - **Maven** - compiling
+ - **Electron** - desktop app framework
+ - **Typescript** - implementation language
+ - **React** - UI stuff
+ - **Javascript & jQuery** - sprinkled in here and there
+ - **SASS** - CSS preprocessing
+ - **PhantomJS** - mostly used for bypassing cloudflare and getting dynamically loaded content
 
 ## License
 
-misakachan is available under [whatever license is currently in the root directory (probably the MIT license)](LICENSE).
+mofu is available under [whatever license is currently in the root directory (probably the MIT license)](LICENSE).
