@@ -1,8 +1,8 @@
 <p align="center"><img src="src/assets/gfx/mofumoe.png" width="450px" /></p align="center">
 
-## Notice
+## Notice - PLEASE READ ULTRA IMPORTANT!!!
 
-mofu (previously known as misakachan) is currently being rewritten with a completely new codebase (Electron/Typescript/React)
+mofu (previously known as misakachan) is currently being rewritten with a completely new codebase (Electron/Typescript/React). This means that **most features are currently broken**.
 
 Versions 0.1.x are on the new codebase, and 0.0.x are the old one (Java core).
 
