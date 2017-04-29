@@ -17,7 +17,6 @@ export default class App extends React.Component<{}, State> {
     }
 
     updateZoom(newZoom: number) {
-
         this.setState({ zoomFactor: newZoom });
     }
 

@@ -63,6 +63,7 @@ img {
 
 .loader-form {
     text-align: center;
+    margin-top: 5%;
     %common {
         font-family: 'Ubuntu', sans-serif;
         background-color: $color-button-main;
@@ -94,13 +95,15 @@ img {
         @extend %common;
         padding: 8px 32px;
         text-decoration: none;
-        display: inline-block;
+        display: block;
         cursor: pointer;
         color: $color-button-text;
         border: 3px solid $color-background-dark;
         border-radius: 7px;
         font-weight: bold;
         font-size: 1.5em;
+        margin: 0 auto;
+        outline: none;
         &:hover {
             background-color: $color-button-hover;
         }
@@ -110,61 +113,42 @@ img {
 .tracker {
     margin-top: 10px;
     text-align: center;
-    .button {
-        @extend .unselectable;
-        border: 3px solid $color-button-hover;
-        border-radius: 5px;
-        font-family: 'Comfortaa', cursive;
-        display: inline-block;
-        background-color: $color-button-main;
-        color: $color-button-text;
-        padding: 5px;
-        font-weight: bold;
-        &:hover {
-            background-color: $color-button-hover;
-        }
-    }
     .container {
-        $margins: 0;
-        display: none;
-        position: fixed;
-        top: $margins;
-        left: $margins;
-        right: $margins;
-        bottom: $margins;
         .inner-container {
-            width: 70%;
-            min-width: 300px;
-            max-width: 1200px;
-            height: 95%;
-            margin: 10px auto 0;
+            margin: 0 auto;
+            width: 90%;
             vertical-align: middle;
             background-color: $color-background-dark;
-            border: 3px solid $color-text-dark;
-            padding: 5px;
+            border: 1px solid $color-text-medium-hover;
+            padding: 8px;
+        }
+    }
+    .title {
+        @extend .unselectable;
+        font-size: 1.3em; // background-color: $color-button-main;
+        color: $color-button-text;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        $tab-width: 50%;
+        .tab {
+            padding: 2px 0;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            display: inline-block;
+            width: $tab-width;
+            background: $color-button-main;
+            &.active {
+                background: $color-button-hover;
+            }
         }
     }
     .section {
         border: 1px solid $color-text-hover;
-        border-radius: 5px;
+        border-top-width: 2px;
+        padding-top: 1px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
         background-color: $color-background-main;
-        .title {
-            @extend .unselectable;
-            font-size: 1.3em;
-            background-color: $color-button-main;
-            color: $color-button-text;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            padding: 2px 0;
-            margin-bottom: 3px;
-        }
-        &.favorites {
-            height: 49%;
-            margin-bottom: 1%;
-        }
-        &.history {
-            height: 48%;
-        }
         .tracker-listing {
             cursor: pointer;
             $name-width: 40%;
@@ -172,7 +156,7 @@ img {
             $spacing: 100% - ($name-width + 3 * $icon-width);
             /* 2 of these! */
             border-bottom: 1px solid $color-text-main;
-            padding: 3px 0;
+            padding: 5px 0;
             text-align: left;
             font-size: 1.05em;
             &:hover {
@@ -191,11 +175,12 @@ img {
                         color: #ffd700;
                     }
                     text-align: center;
+                    padding-right: 5px;
                 }
                 .source {
+                    padding-left: 5px;
                     font-size: 0.8em;
                     color: $color-text-medium-hover;
-                    padding-bottom: 2px;
                 }
             }
             .lastread {
@@ -208,6 +193,7 @@ img {
             }
             .alert {
                 text-align: center;
+                padding-left: 5px;
                 &.active {
                     color: #59d933;
                 }

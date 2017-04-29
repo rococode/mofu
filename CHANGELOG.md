@@ -1,3 +1,10 @@
+# 0.1.6 - Apr 29 2017
+- dev tools no longer open on launch
+- redesigned home page - tracker now is automatically open and shows directly below the search button
+- Enter and Tab now work on the home page to search and focus the search box, respectively
+- started a bit of work on basic backend structure
+- abstracted tracker and trackeritem into separate components
+
 # 0.1.5 - Apr 25 2017
 - loading panel is now unselectable as intended
 - added new logo to title bar

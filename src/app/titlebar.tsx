@@ -17,7 +17,6 @@ export default class TitleBar extends React.Component<Props, {}> {
 
     public render() {
         let isMax = electron.BrowserWindow.getFocusedWindow() ? electron.BrowserWindow.getFocusedWindow().isMaximized() : false
-        console.log(isMax);
         return (
             <div className="title-bar">
                 <div className="left">

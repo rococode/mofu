@@ -16,7 +16,7 @@ img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .tracker .button, .tracker .section .title, .top-bottom-buttons span, .download-button span, .loading-container, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover, .title-bar {
+.unselectable, .tracker .title, .top-bottom-buttons span, .download-button span, .loading-container, .changelog i:hover, .search-result-title, .search-source-name i:hover, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover, .title-bar {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -53,7 +53,8 @@ img {
   max-width: 40%; }
 
 .loader-form {
-  text-align: center; }
+  text-align: center;
+  margin-top: 5%; }
   .loader-form input[type=text], .loader-form button[type=submit] {
     font-family: 'Ubuntu', sans-serif;
     background-color: #ffe57f;
@@ -80,69 +81,54 @@ img {
   .loader-form button[type=submit] {
     padding: 8px 32px;
     text-decoration: none;
-    display: inline-block;
+    display: block;
     cursor: pointer;
     color: #373737;
     border: 3px solid #272727;
     border-radius: 7px;
     font-weight: bold;
-    font-size: 1.5em; }
+    font-size: 1.5em;
+    margin: 0 auto;
+    outline: none; }
     .loader-form button[type=submit]:hover {
       background-color: #ffd740; }
 
 .tracker {
   margin-top: 10px;
   text-align: center; }
-  .tracker .button {
-    border: 3px solid #ffd740;
-    border-radius: 5px;
-    font-family: 'Comfortaa', cursive;
-    display: inline-block;
-    background-color: #ffe57f;
+  .tracker .container .inner-container {
+    margin: 0 auto;
+    width: 90%;
+    vertical-align: middle;
+    background-color: #272727;
+    border: 1px solid #aaa;
+    padding: 8px; }
+  .tracker .title {
+    font-size: 1.3em;
     color: #373737;
-    padding: 5px;
-    font-weight: bold; }
-    .tracker .button:hover {
-      background-color: #ffd740; }
-  .tracker .container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0; }
-    .tracker .container .inner-container {
-      width: 70%;
-      min-width: 300px;
-      max-width: 1200px;
-      height: 95%;
-      margin: 10px auto 0;
-      vertical-align: middle;
-      background-color: #272727;
-      border: 3px solid #555;
-      padding: 5px; }
-  .tracker .section {
-    border: 1px solid #eee;
-    border-radius: 5px;
-    background-color: #373737; }
-    .tracker .section .title {
-      font-size: 1.3em;
-      background-color: #ffe57f;
-      color: #373737;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; }
+    .tracker .title .tab {
+      padding: 2px 0;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
-      padding: 2px 0;
-      margin-bottom: 3px; }
-    .tracker .section.favorites {
-      height: 49%;
-      margin-bottom: 1%; }
-    .tracker .section.history {
-      height: 48%; }
+      display: inline-block;
+      width: 50%;
+      background: #ffe57f; }
+      .tracker .title .tab.active {
+        background: #ffd740; }
+  .tracker .section {
+    border: 1px solid #eee;
+    border-top-width: 2px;
+    padding-top: 1px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #373737; }
     .tracker .section .tracker-listing {
       cursor: pointer;
       /* 2 of these! */
       border-bottom: 1px solid #ccc;
-      padding: 3px 0;
+      padding: 5px 0;
       text-align: left;
       font-size: 1.05em; }
       .tracker .section .tracker-listing:hover {
@@ -155,13 +141,14 @@ img {
         overflow: visible;
         white-space: nowrap; }
         .tracker .section .tracker-listing .name .fav {
-          text-align: center; }
+          text-align: center;
+          padding-right: 5px; }
           .tracker .section .tracker-listing .name .fav.active {
             color: #ffd700; }
         .tracker .section .tracker-listing .name .source {
+          padding-left: 5px;
           font-size: 0.8em;
-          color: #aaa;
-          padding-bottom: 2px; }
+          color: #aaa; }
       .tracker .section .tracker-listing .lastread {
         overflow: visible;
         white-space: nowrap;
@@ -170,7 +157,8 @@ img {
         width: 45%;
         text-align: right; }
       .tracker .section .tracker-listing .alert {
-        text-align: center; }
+        text-align: center;
+        padding-left: 5px; }
         .tracker .section .tracker-listing .alert.active {
           color: #59d933; }
 
