@@ -34,6 +34,10 @@ Unfortunately, the same awesome browsing experience doesn't really exist (yet!) 
 
 mofu hopes to close this gap and bring some of the great functionality available for Android/iOS to folks who also want to read manga on their computers!
 
+#### Got any screenshots?
+
+Yup! [Just go to the pics directory or click here :)](./pics)
+
 ### Table of Contents
 
 - [Features](#features)
