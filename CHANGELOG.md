@@ -1,3 +1,11 @@
+# 0.1.8 - Apr 29 2017
+- forced scrollbars to have no style for now (might use custom styling in the future since electron is webkit)
+- got MangaHere backend searching working! (backend as in, it doesn't display anything yet)
+- searching from home now goes to loading page, then search results
+- tsc now targets es2015
+- added accessor to fetch html using a hidden electron window
+- added manga series abstract
+
 # 0.1.7 - Apr 29 2017
 - tweaked tracker styling to remove the ugly border around it
 - fixed sourcemaps

@@ -13,6 +13,11 @@ body {
     font-family: 'Ubuntu', sans-serif;
 }
 
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
 div,
 img {
     padding: 0;
@@ -991,19 +996,19 @@ $loadingSquareSize: 85px;
     width: 100%;
     background-color: $color-background-super-dark;
     margin: 0 0;
-    height: 30px;
+    height: 35px;
     text-align: center;
     -webkit-app-region: drag;
     .title {
         content: url('../gfx/mofumoe-borderless-black.png');
-        padding-top: 6px;
+        padding-top: 12px;
         background-size: contain;
         -webkit-app-region: no-drag;
         color: $color-text-hover;
         font-family: 'Comfortaa', cursive;
         cursor: pointer;
         display: inline-block;
-        height: 18px;
+        height: 16px;
     }
     .left {
         position: absolute;

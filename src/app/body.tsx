@@ -4,6 +4,8 @@ import Reader from './body/reader'
 import SearchRes from './body/searchres'
 import Loading from './body/loading'
 
+const autobind = require('react-autobind')
+
 export enum BodyState {
     Home,
     SearchResults,
@@ -24,13 +26,18 @@ export default class Body extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         this.state = { bodyState: BodyState.Home };
+        autobind(this)
+    }
+
+    changeState(state: BodyState) {
+        this.setState({ bodyState: state });
     }
 
     public render() {
         let res;
         switch (this.state.bodyState) {
             case BodyState.Home:
-                res = <Home />
+                res = <Home callback={this.changeState} />
                 break;
             case BodyState.SearchResults:
                 res = <SearchRes />

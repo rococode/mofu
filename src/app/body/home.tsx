@@ -1,14 +1,19 @@
 import React from 'react';
 import Tracker from './home/tracker';
-import SearchManager from '../backend/search-manager';
+import SearchManager from '../backend/search/search-manager';
+import { BodyState } from '../body'
 
 const autoBind = require('react-autobind');
 
-interface StartSearchState {
+interface HomeState {
     searchPhrase: string
 }
 
-export default class Home extends React.Component<{}, StartSearchState> {
+interface HomeProps {
+    callback : (state : BodyState) => void
+}
+
+export default class Home extends React.Component<HomeProps, HomeState> {
 
     constructor(props) {
         super(props);
@@ -56,8 +61,8 @@ export default class Home extends React.Component<{}, StartSearchState> {
     search() {
         if (!this.state || !this.state.searchPhrase) return;
         let searchPhrase = this.state.searchPhrase
-        console.log("Searching for " + searchPhrase);
-        SearchManager.test(searchPhrase);
+        this.props.callback(BodyState.Loading);
+        SearchManager.search(this.props.callback, searchPhrase);
     }
 
 }

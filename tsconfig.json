@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "rootDir" : "src/app",
-    "target": "ES5",
+    "target": "es2015",
     "module": "system",
     "moduleResolution": "node",
     "sourceMap": true,
