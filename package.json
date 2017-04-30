@@ -27,6 +27,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-typescript": "^3.1.6",
     "open": "0.0.5",
+    "pouchdb": "^6.2.0",
     "react": "^15.0.2",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.0.2",

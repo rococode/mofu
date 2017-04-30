@@ -1,4 +1,11 @@
-# 0.1.6 - Apr 29 2017
+# 0.1.7 - Apr 29 2017
+- tweaked tracker styling to remove the ugly border around it
+- fixed sourcemaps
+- added debug launch task for vscode (requires chrome debugger extension)
+- tracker listing modularized more and clicking to toggle fav/alert now works
+- added pouchDB dependency for local db
+
+# 0.1.6 - Apr 28 2017
 - dev tools no longer open on launch
 - redesigned home page - tracker now is automatically open and shows directly below the search button
 - Enter and Tab now work on the home page to search and focus the search box, respectively

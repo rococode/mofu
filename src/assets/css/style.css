@@ -101,15 +101,17 @@ img {
     width: 90%;
     vertical-align: middle;
     background-color: #272727;
-    border: 1px solid #aaa;
-    padding: 8px; }
+    border: 1px solid #272727;
+    border-radius: 9px;
+    padding: 10px; }
   .tracker .title {
-    font-size: 1.3em;
+    font-size: 1.25em;
     color: #373737;
     border-top-left-radius: 5px;
-    border-top-right-radius: 5px; }
+    border-top-right-radius: 5px;
+    background-color: #ffe57f; }
     .tracker .title .tab {
-      padding: 2px 0;
+      padding: 5px 0;
       border-top-left-radius: 5px;
       border-top-right-radius: 5px;
       display: inline-block;

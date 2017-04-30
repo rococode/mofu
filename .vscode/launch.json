@@ -12,7 +12,25 @@
                 // "--enable-logging",
                 "--remote-debugging-port=9222"
             ],
-            "sourceMaps": false
+            "outFiles": [
+                "${workspaceRoot}/dist/**/*.js"
+            ],
+            "sourceMaps": true
+        },
+        {
+            "name": "Debug renderer process",
+            "type": "chrome",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+            "runtimeArgs": [
+                "${workspaceRoot}/dist",
+                "--enable-logging",
+                "--remote-debugging-port=9222"
+            ],
+            "preLaunchTask": "build-all",
+            "webRoot": "${workspaceRoot}/dist",
+            "sourceMaps": true,
+            "internalConsoleOptions": "openOnSessionStart"
         }
     ]
 }

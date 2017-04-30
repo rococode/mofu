@@ -119,19 +119,21 @@ img {
             width: 90%;
             vertical-align: middle;
             background-color: $color-background-dark;
-            border: 1px solid $color-text-medium-hover;
-            padding: 8px;
+            border: 1px solid $color-background-dark;
+            border-radius: 9px;
+            padding: 10px;
         }
     }
     .title {
         @extend .unselectable;
-        font-size: 1.3em; // background-color: $color-button-main;
+        font-size: 1.25em; // background-color: $color-button-main;
         color: $color-button-text;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
+        background-color: $color-button-main;
         $tab-width: 50%;
         .tab {
-            padding: 2px 0;
+            padding: 5px 0;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
             display: inline-block;

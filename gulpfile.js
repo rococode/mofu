@@ -68,7 +68,6 @@ gulp.task('build-vendor', function () {
 });
 
 gulp.task('build-app', function () {
-
     var project = typescript.createProject('tsconfig.json');
 
     var tsResult = project.src()
@@ -76,7 +75,7 @@ gulp.task('build-app', function () {
         .pipe(project());
 
     return tsResult.js
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('../maps', {sourceRoot: "../../src/app"}))
         .pipe(gulp.dest('dist/js'));
 });
 
