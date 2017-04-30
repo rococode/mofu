@@ -1,7 +1,3 @@
-<style>
-img {width: 50%;}
-</style>
-
 ## Home Page
 
-![](./1.png)
+<img src="./1.png" style="width: 50%" />
