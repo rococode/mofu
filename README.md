@@ -28,11 +28,15 @@ I'm basically always online while I'm awake, and I try to respond to everyone wh
 
 #### What is mofu?
 
+**tl;dr mofu is a modern manga reader for desktop computers. Features (completed & planned) include tracking reading progress, notifications on new chapters, reader appearance settings, convenient hotkeys, customizable color themes, and much more!**
+
 Reading manga on a smartphone or tablet nowadays is such a pleasure. There are so many great apps to choose from; just look at how much [tachiyomi](https://github.com/inorichi/tachiyomi) can do!  
 
-Unfortunately, the same awesome browsing experience doesn't really exist (yet!) for computers. The only programs available for Windows/Mac/Linux look and feel like they were designed 5+ years ago (because, well, many of them were). Most of them aren't even for manga, they're just kind of generic comic book readers that load in folders of images. Aside from having to use laggy, ad-ridden aggregate readers or resorting to clunky browser extensions, there aren't many options to choose from.  
+Unfortunately, the same awesome browsing experience doesn't really exist (yet!) for computers. And that's pretty weird, since normally you'd think that desktops should be able to do everything that phones can, and more.
 
-mofu hopes to close this gap and bring some of the great functionality available for Android/iOS to folks who also want to read manga on their computers!
+For whatever reason, the only programs available for Windows/Mac/Linux look and feel like they were designed 5+ years ago (because, well, many of them were). Most of them aren't even for manga, they're just kind of generic comic book readers that load in folders of images. Aside from having to use laggy, ad-ridden aggregate readers or resorting to clunky browser extensions, there aren't many options to choose from.
+
+The goal of mofu is to close the gap and bring an awesome manga reading experience to desktops and laptops!
 
 #### Got any screenshots?
 
@@ -132,8 +136,10 @@ Here's a quick overview of the specific tools and technologies used in misakacha
  - **Electron** - desktop app framework
  - **Typescript** - implementation language
  - **React** - UI stuff
+ - **cheerio** - DOM parsing
  - **Javascript & jQuery** - sprinkled in here and there
  - **SASS** - CSS preprocessing
+ - **PouchDB** - local data storage
  - **PhantomJS** - mostly used for bypassing cloudflare and getting dynamically loaded content
 
 ## License
