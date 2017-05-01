@@ -1,3 +1,14 @@
+# 0.1.9 - Apr 30 2017
+- added cheerio dependency for DOM parsing
+- search callback now takes SearchResult[]
+- MangaHere searching works (returns a Promise<SearchResult[]>)
+- web accessor now runs entirely in the background with validator to check for completion
+- change in body state now passes search results if new state is results page
+- fixed default display/visibility on manga info/download popups
+- added explicit typing declarations to tsconfig (maybe not necessary)
+- added string-key dictionary; currently unused, turns out you can't iterate it very easily so it's not all that useful...
+- added search result listing component (currently combines all listings from one source into a single component, may need to eventually split further)
+
 # 0.1.8 - Apr 29 2017
 - forced scrollbars to have no style for now (might use custom styling in the future since electron is webkit)
 - got MangaHere backend searching working! (backend as in, it doesn't display anything yet)

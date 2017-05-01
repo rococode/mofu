@@ -1,7 +1,20 @@
 import React from 'react';
+import SearchResult from '../backend/search/search-result'
+import SearchResultListing from './search/search-res-listing'
 
-export default class SearchRes extends React.Component<{}, {}> {
+interface Props {
+    results: SearchResult[]
+}
+
+export default class SearchResultsPage extends React.Component<Props, any> {
+
+    constructor(props) {
+        super(props)
+    }
+
     public render() {
+        console.log("rendering: " + this.props.results);
+        console.log(this.props.results)
         return (
             <div id="search-result-container" className="search-result-container">
                 {/*<!--  search bar at top of page on search results page -->*/}
@@ -10,7 +23,7 @@ export default class SearchRes extends React.Component<{}, {}> {
                     <button type="submit" value="Load">Search</button>
                 </form>
                 <div id="search-results-title" className="search-results-title">Results</div>
-                <div className="search-results"></div>
+                <SearchResultListing results={this.props.results} />
 
                 <div id="manga-info-full-page-container" className="manga-info-full-page-container">
                     <div id="manga-info-container" className="manga-info-container">
