@@ -1,3 +1,10 @@
+# 0.1.11 - May 1 2017
+- fixed a bug with unregistering key listeners
+- added functionality to search bar on the search results page - it works now
+- info popup now appears on clicking a manga title
+- clicking outside of the popup closes it (surprisingly hard to do with React...)
+- info and download popups are now visible by default (since they aren't on DOM at all unless needed, thanks to React)
+
 # 0.1.10 - May 1 2017
 - abstracted source names and listings to separate properties/components
 - search results page now shows the original query at the time

@@ -1,7 +1,7 @@
 import React from 'react'
 import Home from './body/home'
 import Reader from './body/reader'
-import SearchResultsPage from './body/searchres'
+import SearchResultsPage from './body/results-page'
 import Loading from './body/loading'
 import SearchResult from './backend/search/search-result'
 import SourceResult from './backend/search/source-result'
@@ -48,7 +48,7 @@ export default class Body extends React.Component<Props, State> {
                 res = <Home callback={this.changeState} lastSearchCallback={this.setLastSearch}/>
                 break;
             case BodyState.SearchResults:
-                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults}/>
+                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults} callback={this.changeState} lastSearchCallback={this.setLastSearch}/>
                 break;
             case BodyState.Reader:
                 res = <Reader />

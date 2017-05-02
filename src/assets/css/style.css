@@ -532,7 +532,6 @@ img {
     font-size: 0.7em; }
 
 .manga-info-full-page-container {
-  display: none;
   background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
   bottom: 0;
@@ -616,7 +615,6 @@ img {
     margin-bottom: 3px; }
 
 .manga-download-container {
-  display: none;
   width: 50%;
   min-width: 650px;
   min-height: 520px;

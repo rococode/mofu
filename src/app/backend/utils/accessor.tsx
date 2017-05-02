@@ -13,9 +13,9 @@ export async function getLowPriority(url: string, validator?: (s: string) => boo
         await delay(250)
     }
     lowPrioritySearches++
-    console.log("done waiting, getting url " + url)
+    // console.log("done waiting, getting url " + url)
     let res = get(url, validator)
-    console.log("got " + await res);
+    // console.log("got " + await res);
     lowPrioritySearches--;
     return res;
 }
@@ -42,9 +42,10 @@ export default async function get(url: string, validator?: (s: string) => boolea
     win.setTitle("mofu searcher")
     let myId = uniqueId++
     let promise: Promise<string> = undefined
-    electron.ipcMain.on('page-html', function (event, message) {
+    let listener = function (event, message) {
         let id = message.id;
         let doc = message.doc;
+        console.log("got id " + id);
         if (id != myId) {
             return
         }
@@ -54,8 +55,10 @@ export default async function get(url: string, validator?: (s: string) => boolea
         try {
             win.close();
         } catch (e) { }
-    });
-    await delay(200)
+        electron.ipcMain.removeListener('page-html', listener);
+    }
+    electron.ipcMain.on('page-html', listener)
+    await delay(100)
     let js = `require('electron').ipcRenderer.send('page-html', {id: ` + myId + `, doc: document.documentElement.outerHTML});`
     while (promise === undefined) {
         win.webContents.executeJavaScript(js)

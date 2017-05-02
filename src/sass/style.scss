@@ -664,7 +664,6 @@ $loadingSquareSize: 85px;
 }
 
 .manga-info-full-page-container {
-    display: none;
     background-color: rgba(black, 0.7);
     position: fixed;
     bottom: 0;
@@ -770,7 +769,6 @@ $loadingSquareSize: 85px;
 }
 
 .manga-download-container {
-    display: none;
     $info-width: 50%;
     $info-height: 520px;
     $min-width: 650px;

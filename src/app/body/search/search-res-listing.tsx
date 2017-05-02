@@ -6,7 +6,8 @@ const cheerio: CheerioAPI = require('cheerio')
 
 interface Props {
     results: SearchResult[],
-    sourceName: string
+    sourceName: string,
+    callback: (url: string) => void
 }
 
 export default class SearchResultListing extends React.Component<Props, any> {
@@ -18,7 +19,7 @@ export default class SearchResultListing extends React.Component<Props, any> {
         let listings = []
         let counter = 0;
         this.props.results.forEach(res => {
-            listings.push(<IndividualListing title={res.title} url={res.url} altNames={res.altNames} key={++counter} />)
+            listings.push(<IndividualListing title={res.title} url={res.url} altNames={res.altNames} key={++counter} callback={this.props.callback}/>)
         });
 
         return (
@@ -40,7 +41,8 @@ let listingCounter = 1;
 interface IndividualListingProps {
     title: string,
     altNames: string[],
-    url: string
+    url: string, 
+    callback: (url: string) => void
 }
 
 interface IndividualListingState {
@@ -79,14 +81,18 @@ class IndividualListing extends React.Component<IndividualListingProps, Individu
             <div className="search-result">
                 <img id={"search-result-image-" + id} src={this.state.imageURL} />
                 <div className="search-result-name">
-                    <div className="search-result-title">{this.props.title}</div>
+                    <div className="search-result-title" onClick={this.loadInfo}>{this.props.title}</div>
                     <div className="alt-names">
                         {this.props.altNames && this.props.altNames.length > 0 ? "Alternate Names: " + this.props.altNames.join(", ") : ""}
                     </div>
-                    <div className="hidden-info">{this.props.url}</div>
                 </div>
             </div>
         )
+    }
+
+    loadInfo() {
+        let url = this.props.url
+        this.props.callback(url)
     }
 
 }

@@ -26,7 +26,7 @@ export default class Home extends React.Component<HomeProps, HomeState> {
     }
 
     componentWillUnmount() {
-        document.addEventListener("keydown", this.keyDown);
+        document.removeEventListener("keydown", this.keyDown);
     }
 
     references: { input: HTMLInputElement } = {

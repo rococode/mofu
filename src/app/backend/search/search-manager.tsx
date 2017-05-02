@@ -15,9 +15,16 @@ class SearchManager {
         let res: SourceResult[] = []
         res.push({
             sourceName: "MangaHere",
-            results: await MangaHere.search(s)
+            results: await this.timeout(MangaHere.search(s))
         })
         callback(BodyState.SearchResults, res);
+    }
+
+    // forces a timeout of 10 seconds
+    timeout(x) {
+        return Promise.race([x, new Promise(function(resolve, reject) {
+            setTimeout(resolve, 10000, [])
+        })]);
     }
 
 }
