@@ -1,6 +1,7 @@
 import { BodyState } from '../../body'
 import MangaHere from '../sources/english/mangahere'
 import SearchResult from './search-result'
+import SourceResult from './source-result'
 
 const electron = require('electron').remote
 
@@ -10,8 +11,12 @@ class SearchManager {
 
     }
 
-    public async search(callback: (state: BodyState, results?: SearchResult[]) => void, s: string) {
-        let res : SearchResult[] = await MangaHere.search(s);
+    public async search(callback: (state: BodyState, results?: SourceResult[]) => void, s: string) {
+        let res: SourceResult[] = []
+        res.push({
+            sourceName: "MangaHere",
+            results: await MangaHere.search(s)
+        })
         callback(BodyState.SearchResults, res);
     }
 

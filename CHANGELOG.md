@@ -1,3 +1,8 @@
+# 0.1.10 - May 1 2017
+- abstracted source names and listings to separate properties/components
+- search results page now shows the original query at the time
+- image loading for series covers now works! runs in the background using hidden electron windows
+
 # 0.1.9 - Apr 30 2017
 - added cheerio dependency for DOM parsing
 - search callback now takes SearchResult[]

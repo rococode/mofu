@@ -22,7 +22,7 @@ export class MangaHere extends MangaSource {
         console.log("got " + s);
         let $ = cheerio.load(s);
         let mainLinks = $('.result_search > dl > dt > a.name_one')
-        let res: SearchResult[] = [] 
+        let res: SearchResult[] = []
         mainLinks.toArray().forEach(link => {
             let names: string[] = []
             let alt = $(link.parentNode.parentNode).children('dd')
@@ -33,6 +33,11 @@ export class MangaHere extends MangaSource {
                 element = element.trim()
                 if (element.length > 0 && element.indexOf("...") == -1) {
                     names.push(element)
+                } else if (element.indexOf("...") > -1) {
+                    element.split("...").forEach(e => {
+                        if (e.length > 0)
+                            names.push(e.trim())
+                    });
                 }
             });
             let href: string = $(link).attr("href")

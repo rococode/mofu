@@ -1,9 +1,10 @@
 import React from 'react'
 import Home from './body/home'
 import Reader from './body/reader'
-import SearchResultPage from './body/searchres'
+import SearchResultsPage from './body/searchres'
 import Loading from './body/loading'
 import SearchResult from './backend/search/search-result'
+import SourceResult from './backend/search/source-result'
 
 const autobind = require('react-autobind')
 
@@ -20,7 +21,8 @@ interface Props {
 
 interface State {
     bodyState: BodyState,
-    latestResults?: SearchResult[]
+    latestResults?: SourceResult[],
+    lastSearch? : string
 }
 
 export default class Body extends React.Component<Props, State> {
@@ -31,18 +33,22 @@ export default class Body extends React.Component<Props, State> {
         autobind(this)
     }
 
-    changeState(state: BodyState, result?: SearchResult[]) {
+    changeState(state: BodyState, result?: SourceResult[]) {
         this.setState({ bodyState: state, latestResults: result });
+    }
+
+    setLastSearch(s : string) {
+        this.setState({lastSearch: s});
     }
 
     public render() {
         let res;
         switch (this.state.bodyState) {
             case BodyState.Home:
-                res = <Home callback={this.changeState} />
+                res = <Home callback={this.changeState} lastSearchCallback={this.setLastSearch}/>
                 break;
             case BodyState.SearchResults:
-                res = <SearchResultPage results={this.state.latestResults}/>
+                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults}/>
                 break;
             case BodyState.Reader:
                 res = <Reader />

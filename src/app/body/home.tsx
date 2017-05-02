@@ -10,7 +10,8 @@ interface HomeState {
 }
 
 interface HomeProps {
-    callback : (state : BodyState) => void
+    callback: (state: BodyState) => void,
+    lastSearchCallback
 }
 
 export default class Home extends React.Component<HomeProps, HomeState> {
@@ -50,7 +51,7 @@ export default class Home extends React.Component<HomeProps, HomeState> {
             this.references.input.focus();
         } if (e.key == 'Enter') {
             e.preventDefault();
-            this.search(); 
+            this.search();
         }
     }
 
@@ -59,9 +60,11 @@ export default class Home extends React.Component<HomeProps, HomeState> {
     }
 
     search() {
-        if (!this.state || !this.state.searchPhrase) return;
+        if (!this.state || !this.state.searchPhrase)
+            return;
         let searchPhrase = this.state.searchPhrase
         this.props.callback(BodyState.Loading);
+        this.props.lastSearchCallback(searchPhrase);
         SearchManager.search(this.props.callback, searchPhrase);
     }
 

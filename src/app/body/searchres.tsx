@@ -1,9 +1,11 @@
 import React from 'react';
 import SearchResult from '../backend/search/search-result'
+import SourceResult from '../backend/search/source-result'
 import SearchResultListing from './search/search-res-listing'
 
 interface Props {
-    results: SearchResult[]
+    results: SourceResult[],
+    lastSearch: string
 }
 
 export default class SearchResultsPage extends React.Component<Props, any> {
@@ -13,8 +15,13 @@ export default class SearchResultsPage extends React.Component<Props, any> {
     }
 
     public render() {
-        console.log("rendering: " + this.props.results);
-        console.log(this.props.results)
+        let sources = []
+        let counter = 0
+        this.props.results.forEach(source => {
+            sources.push(
+                <SearchResultListing results={source.results} sourceName={source.sourceName} key={++counter} />
+            )
+        });
         return (
             <div id="search-result-container" className="search-result-container">
                 {/*<!--  search bar at top of page on search results page -->*/}
@@ -22,8 +29,9 @@ export default class SearchResultsPage extends React.Component<Props, any> {
                     <input id="re-search-url" type="text" name="url" placeholder="" value="" autoComplete="off" />
                     <button type="submit" value="Load">Search</button>
                 </form>
-                <div id="search-results-title" className="search-results-title">Results</div>
-                <SearchResultListing results={this.props.results} />
+                <div id="search-results-title" className="search-results-title">Results for "{this.props.lastSearch}"</div>
+
+                {sources}
 
                 <div id="manga-info-full-page-container" className="manga-info-full-page-container">
                     <div id="manga-info-container" className="manga-info-container">
