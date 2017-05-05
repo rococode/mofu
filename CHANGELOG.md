@@ -1,3 +1,7 @@
+# 0.1.13 - May 5 2017
+- added chapter page loading - accessor.get needs optimizing, it's ultra slow right now haha
+- added scrollbar to manga info panel
+
 # 0.1.12 - May 3 2017
 - updated npm dependencies
 - manga info & chapter listing now works - a lot of stuff was added to make it work but I won't go into too much detail

@@ -179,7 +179,7 @@ class MangaChapterDisplay extends React.Component<MangaChapterProps, any>{
 
     loadChapter() {
         console.log("loading " + this.props.chapter.url)
-        // this.props.chapter.source.loadChapter(this.props.chapter)
+        this.props.chapter.source.loadChapter(this.props.chapter)
     }
 
     public render() {

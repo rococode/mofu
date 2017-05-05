@@ -585,7 +585,17 @@ img {
     background-color: #323232;
     height: 250px;
     text-align: left;
-    border: 1px solid #555; }
+    border: 1px solid #555;
+    overflow-x: visible;
+    overflow-y: scroll; }
+    .manga-info-container .chapters::-webkit-scrollbar:vertical {
+      width: 10px;
+      background: #272727; }
+    .manga-info-container .chapters::-webkit-scrollbar-thumb {
+      background: #aaa;
+      border-radius: 10px; }
+      .manga-info-container .chapters::-webkit-scrollbar-thumb:hover {
+        background: #ccc; }
   .manga-info-container .chapter-wrapper {
     width: auto;
     padding: 5px 0 5px 5px;

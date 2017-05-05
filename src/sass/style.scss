@@ -728,6 +728,19 @@ $loadingSquareSize: 85px;
         height: 250px;
         text-align: left;
         border: 1px solid $color-text-dark;
+        overflow-x: visible;
+        overflow-y: scroll;
+        &::-webkit-scrollbar:vertical {
+            width: 10px;
+            background: $color-background-dark;
+        }
+        &::-webkit-scrollbar-thumb {
+            &:hover {
+                background: $color-text-main;
+            }
+            background: $color-text-medium-hover;
+            border-radius: 10px;
+        }
     }
     .chapter-wrapper {
         width: auto;

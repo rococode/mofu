@@ -4,6 +4,7 @@ import Dictionary from '../../utils/dictionary'
 import SearchResult from '../../search/search-result'
 import MangaInfo from '../../abstracts/manga-info'
 import MangaChapter from '../../abstracts/manga-chapter'
+import MangaPage from '../../abstracts/manga-page'
 
 const cheerio: CheerioAPI = require('cheerio')
 
@@ -36,7 +37,7 @@ export class MangaHere extends MangaSource {
                     name: $(element).text().trim(),
                     url: href,
                     originalURL: url,
-                    source: this
+                    source: instance
                 }
                 chapters.push(next)
             }
@@ -54,7 +55,7 @@ export class MangaHere extends MangaSource {
             author: authors,
             description: desc,
             sourceName: source,
-            source: this,
+            source: instance,
             chapterCount: chapterCount,
             chapters: chapters,
             artist: artists
@@ -62,7 +63,31 @@ export class MangaHere extends MangaSource {
     }
 
     async loadChapter(chapter: MangaChapter): Promise<MangaChapter> {
-        return undefined
+        let url = chapter.url
+        let s = await get(url, function (s) {
+            return s.indexOf('class="wid60"') > -1;
+        })
+        let $ = cheerio.load(s)
+        let pageURLs = []
+        $("select.wid60 > option").each(function (index, element) {
+            let page = $(element).attr("value");
+            pageURLs.push(page);
+        })
+        let mpages = []
+        for (let k = 0; k < pageURLs.length; k++) {
+            let s = await get(pageURLs[k], function (s) {
+                return s.indexOf('id="image"') > -1
+            })
+            let $ = cheerio.load(s)
+            let url = $("#image").attr("src");
+            let page: MangaPage = {
+                num: (k + 1),
+                url: url
+            }
+            mpages.push(page)
+        }
+        chapter.pages = mpages
+        return chapter;
     }
 
     async search(phrase: string) {
