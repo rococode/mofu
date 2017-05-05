@@ -798,7 +798,7 @@ img {
   -webkit-app-region: drag; }
   .title-bar .title {
     content: url("../gfx/mofumoe-borderless-black.png");
-    padding-top: 12px;
+    padding-top: 9px;
     background-size: contain;
     -webkit-app-region: no-drag;
     color: #eee;

@@ -13,9 +13,7 @@ export async function getLowPriority(url: string, validator?: (s: string) => boo
         await delay(250)
     }
     lowPrioritySearches++
-    // console.log("done waiting, getting url " + url)
     let res = get(url, validator)
-    // console.log("got " + await res);
     lowPrioritySearches--;
     return res;
 }
@@ -45,10 +43,10 @@ export default async function get(url: string, validator?: (s: string) => boolea
     let listener = function (event, message) {
         let id = message.id;
         let doc = message.doc;
-        console.log("got id " + id);
         if (id != myId) {
             return
         }
+        console.log("got id " + id);
         if (!doc || (validator && !validator(doc)))
             return
         promise = doc;

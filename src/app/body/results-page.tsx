@@ -3,6 +3,9 @@ import SearchResult from '../backend/search/search-result'
 import SearchManager from '../backend/search/search-manager';
 import SourceResult from '../backend/search/source-result'
 import SearchResultListing from './search/search-res-listing'
+import MangaSource from '../backend/sources/manga-source'
+import MangaInfo from '../backend/abstracts/manga-info'
+import MangaChapter from '../backend/abstracts/manga-chapter'
 import { BodyState } from '../body'
 const autobind = require('react-autobind')
 
@@ -20,47 +23,6 @@ interface State {
     mangaInfo?: MangaInfo
 }
 
-interface MangaInfo {
-    image: string,
-    title: string,
-    author: string,
-    description: string,
-    source: string,
-    chapterCount: number,
-    chapters: Chapter[]
-    alt?: string,
-    genres?: string,
-    artist?: string
-}
-
-interface Chapter {
-    name: string,
-    url: string
-}
-
-let testMangaInfo: MangaInfo = {
-    image: "http://edasaki.com/i/test-page.png",
-    source: "MangaTest",
-    title: "Mockup Really Super Duper Long Title Just A Little Longer",
-    author: "Edasaki",
-    description: "A really cool thing about stuff. Super exciting stuff. Really great. Super great. Just the greatest. I'm just writing random stuff to try to push this to two lines so I can see how it looks lol. And now I'm just gonna write a whole bunchhhhhh of random stuff to push it beyond the boundary and see how wacky it looks after that. Because by default I think it kinda screwws up the formatting, but I want to make it resize the text automatically.",
-    chapterCount: 10,
-    chapters: [
-        { name: "Chapter 1", url: "#" },
-        { name: "Chapter 2", url: "#" },
-        { name: "Chapter 3", url: "#" },
-        { name: "Chapter 4", url: "#" },
-        { name: "Chapter 5", url: "#" },
-        { name: "Chapter 6", url: "#" },
-        { name: "Chapter 7", url: "#" },
-        { name: "Chapter 8", url: "#" },
-        { name: "Chapter 9", url: "#" },
-        { name: "Chapter 10", url: "#" }
-    ],
-    genres: "Fun, Cool, Happy",
-    alt: "Test Alt Title",
-    artist: "Art Vandelay"
-}
 
 export default class SearchResultsPage extends React.Component<Props, State> {
 
@@ -75,8 +37,8 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         container: null
     }
 
-    loadURL(url: string): void {
-        this.setState({ showInfo: true, mangaInfo: testMangaInfo })
+    async loadInfo(info: MangaInfo) {
+        this.setState({ showInfo: true, mangaInfo: info })
     }
 
     checkCloseFull(e) {
@@ -97,14 +59,18 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         let counter = 0
         this.props.results.forEach(source => {
             sources.push(
-                <SearchResultListing callback={this.loadURL} results={source.results} sourceName={source.sourceName} key={++counter} />
+                <SearchResultListing callback={this.loadInfo} results={source.results} source={source.source} sourceName={source.sourceName} key={++counter} />
             )
         });
         let infoContainer = undefined
 
         if (this.state.showInfo && this.state.mangaInfo) {
-
             let info = this.state.mangaInfo
+            let chapters = []
+            let counter = 1;
+            info.chapters.forEach(element => {
+                chapters.push(<MangaChapterDisplay key={counter++} chapter={element} />)
+            });
             infoContainer = (
                 <div id="manga-info-full-page-container" className="manga-info-full-page-container" onClick={this.checkCloseFull}>
                     <div ref={(c) => { this.references.container = c }} id="manga-info-container" className="manga-info-container">
@@ -114,7 +80,7 @@ export default class SearchResultsPage extends React.Component<Props, State> {
                                 <div className="title">{info.title}</div>
                                 {info.alt && <div className="alt">Alternate Names: {info.alt}</div>}
                                 {info.genres && <div className="genre">Genres: {info.genres}</div>}
-                                <div className="author">Author(s): Edasaki</div>
+                                <div className="author">Author(s): {info.author}</div>
                                 {info.artist && <div className="artist">Artist(s): {info.artist}</div>}
                                 <div className="manga-description-container">
                                     <div className="desc">{info.description}</div>
@@ -123,13 +89,13 @@ export default class SearchResultsPage extends React.Component<Props, State> {
                         </div>
                         <div className="divider"></div>
                         <div className="chapter-header">
-                            {info.chapterCount} Chapters available from {info.source}
+                            {info.chapterCount} Chapters available from {info.sourceName}
                             <div className="download-menu-button">
                                 <span className="fa fa-download"></span>
                                 <div className="arrow_box">Download!</div>
                             </div>
                         </div>
-                        <div id="chapter-pane" className="chapters">{info.chapters.join(", ")}</div>
+                        <div id="chapter-pane" className="chapters">{chapters}</div>
                     </div>
                 </div>
             )
@@ -196,5 +162,33 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         this.props.callback(BodyState.Loading);
         this.props.lastSearchCallback(searchPhrase);
         SearchManager.search(this.props.callback, searchPhrase);
+    }
+}
+
+
+interface MangaChapterProps {
+    chapter: MangaChapter
+}
+
+class MangaChapterDisplay extends React.Component<MangaChapterProps, any>{
+
+    constructor(props) {
+        super(props)
+        autobind(this);
+    }
+
+    loadChapter() {
+        console.log("loading " + this.props.chapter.url)
+        // this.props.chapter.source.loadChapter(this.props.chapter)
+    }
+
+    public render() {
+        return (
+            <div className="chapter-wrapper" onClick={this.loadChapter}>
+                <div className="chapter">
+                    Chapter {this.props.chapter.name}
+                </div>
+            </div>
+        )
     }
 }

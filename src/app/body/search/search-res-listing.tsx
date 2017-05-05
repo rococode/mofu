@@ -2,12 +2,15 @@ import React from 'react'
 import SearchResult from '../../backend/search/search-result'
 const autobind = require('react-autobind');
 import { getLowPriority } from '../../backend/utils/accessor'
+import MangaSource from '../../backend/sources/manga-source'
+import MangaInfo from '../../backend/abstracts/manga-info'
 const cheerio: CheerioAPI = require('cheerio')
 
 interface Props {
     results: SearchResult[],
     sourceName: string,
-    callback: (url: string) => void
+    callback: (info: MangaInfo) => void,
+    source: MangaSource
 }
 
 export default class SearchResultListing extends React.Component<Props, any> {
@@ -19,7 +22,7 @@ export default class SearchResultListing extends React.Component<Props, any> {
         let listings = []
         let counter = 0;
         this.props.results.forEach(res => {
-            listings.push(<IndividualListing title={res.title} url={res.url} altNames={res.altNames} key={++counter} callback={this.props.callback}/>)
+            listings.push(<IndividualListing title={res.title} url={res.url} source={this.props.source} altNames={res.altNames} key={++counter} callback={this.props.callback}/>)
         });
 
         return (
@@ -42,12 +45,14 @@ interface IndividualListingProps {
     title: string,
     altNames: string[],
     url: string, 
-    callback: (url: string) => void
+    callback: (info: MangaInfo) => void,
+    source: MangaSource
 }
 
 interface IndividualListingState {
     imageURL: string,
-    fetchedImage: boolean
+    fetchedInfo: boolean,
+    info?: MangaInfo
 }
 
 class IndividualListing extends React.Component<IndividualListingProps, IndividualListingState> {
@@ -57,24 +62,24 @@ class IndividualListing extends React.Component<IndividualListingProps, Individu
         console.log("here " + this.props.url);
         this.state = {
             imageURL: "http://edasaki.com/i/test-page.png",
-            fetchedImage: false
+            fetchedInfo: false
         }
         autobind(this)
     }
 
-    async fetchImage() {
-        let res = await getLowPriority(this.props.url, function (x) {
-            return x.indexOf('manga_detail_top') > -1
-        });
-        let $ = cheerio.load(res);
-        let url = cheerio('.manga_detail_top', res).first().children('img.img').first().attr("src")
-        console.log("got url " + url)
-        this.setState({ imageURL: url, fetchedImage: true });
+    async loadInfo() {
+        await this.state.info
+        this.props.callback(this.state.info)
+    }
+
+    async fetchInfo() {
+        let res = await this.props.source.getInfo(this.props.url);
+        this.setState({ imageURL: res.image, fetchedInfo: true, info: res});
     }
 
     public render() {
-        if (!this.state.fetchedImage) {
-            this.fetchImage();
+        if (!this.state.fetchedInfo) {
+            this.fetchInfo();
         }
         let id = listingCounter++;
         return (
@@ -90,9 +95,5 @@ class IndividualListing extends React.Component<IndividualListingProps, Individu
         )
     }
 
-    loadInfo() {
-        let url = this.props.url
-        this.props.callback(url)
-    }
 
 }

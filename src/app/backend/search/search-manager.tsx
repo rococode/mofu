@@ -15,7 +15,8 @@ class SearchManager {
         let res: SourceResult[] = []
         res.push({
             sourceName: "MangaHere",
-            results: await this.timeout(MangaHere.search(s))
+            results: await this.timeout(MangaHere.search(s)),
+            source: MangaHere
         })
         callback(BodyState.SearchResults, res);
     }
