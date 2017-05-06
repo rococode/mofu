@@ -169,12 +169,13 @@ img {
           color: #59d933; }
 
 .reader-title {
-  font-family: 'Crimson Text', serif;
-  display: block;
+  display: inline-block;
   text-align: center;
-  font-size: 2em;
   padding: 5px 0 8px 0;
   background-color: #272727; }
+  .reader-title .text {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.6em; }
 
 .reader-nav-container {
   width: 100%;

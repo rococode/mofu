@@ -11,8 +11,19 @@
         {
             "taskName": "build-all",
             "args": [],
-            "isBuildCommand": true,
+            // "isBuildCommand": true,
             "isBackground": false,
+            "problemMatcher": [
+                "$lessCompile",
+                "$tsc",
+                "$jshint"
+            ]
+        },
+        {
+            "taskName": "watch",
+            "args": [],
+            "isBuildCommand": true,
+            "isBackground": true,
             "problemMatcher": [
                 "$lessCompile",
                 "$tsc",

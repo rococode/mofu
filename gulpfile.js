@@ -1,11 +1,12 @@
-var gulp = require('gulp'),
-    inSequence = require('run-sequence'),
-    del = require('del'),
-    inject = require('gulp-inject'),
-    rename = require('gulp-rename'),
-    concat = require('gulp-concat'),
-    sourcemaps = require('gulp-sourcemaps'),
-    typescript = require('gulp-typescript');
+var gulp = require('gulp');
+var inSequence = require('run-sequence');
+var del = require('del');
+var inject = require('gulp-inject');
+var rename = require('gulp-rename');
+var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
+var typescript = require('gulp-typescript');
+var sass = require('gulp-sass');
 
 gulp.task('build-all', function (done) {
     inSequence(
@@ -22,9 +23,15 @@ gulp.task('build-all', function (done) {
     );
 });
 
-// Sass configuration
-var gulp = require('gulp');
-var sass = require('gulp-sass');
+gulp.task('watch', function () {
+    gulp.watch('./src/sass/*.scss', ['sass']);
+    gulp.watch('./src/app/**/*', ['build-app']);
+    gulp.watch('./src/app.package.json', ['copy-app-package-file']);
+    gulp.watch('./src/main.js', ['copy-app-main-file']);
+    gulp.watch('./src/assets/**/*', ['copy-assets']);
+    gulp.watch('./src/index.html', ['build-html']);
+
+});
 
 gulp.task('sass', function () {
     gulp.src('./src/sass/*.scss')
@@ -32,10 +39,6 @@ gulp.task('sass', function () {
         .pipe(gulp.dest(function (f) {
             return "./src/assets/css/";
         }))
-});
-
-gulp.task('default', ['sass'], function () {
-    gulp.watch('*.scss', ['sass']);
 });
 
 gulp.task('clear', function (done) {
@@ -59,30 +62,23 @@ gulp.task('copy-assets', function () {
 });
 
 gulp.task('build-vendor', function () {
-
-    return gulp.src([
-        "node_modules/systemjs/dist/system.src.js",
-    ])
+    return gulp.src(["node_modules/systemjs/dist/system.src.js"])
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('build-app', function () {
     var project = typescript.createProject('tsconfig.json');
-
     var tsResult = project.src()
         .pipe(sourcemaps.init())
         .pipe(project());
-
     return tsResult.js
-        .pipe(sourcemaps.write('../maps', {sourceRoot: "../../src/app"}))
+        .pipe(sourcemaps.write('../maps', { sourceRoot: "../../src/app" }))
         .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('build-html', function () {
-
     var sources = gulp.src(['dist/js/vendor.js', 'dist/js/app.js'], { read: false });
-
     return gulp.src('src/index.html')
         .pipe(inject(sources, { ignorePath: 'dist', addRootSlash: false }))
         .pipe(gulp.dest('dist'));

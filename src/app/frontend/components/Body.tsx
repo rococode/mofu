@@ -24,6 +24,22 @@ export default class Body extends React.Component<Props, State> {
         autobind(this)
     }
 
+    componentDidMount() {
+        document.addEventListener("keydown", this.keyDown);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.keyDown);
+    }
+
+    keyDown(e: KeyboardEvent) {
+        if (e.key == 'F5') {
+            e.preventDefault();
+            location.reload();
+        }
+        console.log(e.key);
+    }
+
     changeState(state: BodyState, result?: SourceResult[]) {
         this.setState({ bodyState: state, latestResults: result });
     }

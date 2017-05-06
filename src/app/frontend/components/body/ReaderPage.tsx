@@ -27,9 +27,11 @@ export default class ReaderPage extends React.Component<Props, {}> {
         return (
             <div id="reader-container" className="reader-container">
 
-                <span id="to-page-top" className="fa fa-arrow-left"></span>
-                <div id="reader-title" className="reader-title">{chapter.name}</div>
-                <span id="to-page-top" className="fa fa-arrow-right"></span>
+                <div className="reader-title">
+                    <span id="to-page-top" className="fa fa-arrow-left"></span>
+                    <div className="text">{chapter.name}</div>
+                    <span id="to-page-top" className="fa fa-arrow-right"></span>
+                </div>
                 <div id="reader-pages" className="reader-pages">
                     {pages}
                 </div>

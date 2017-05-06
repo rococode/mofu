@@ -1,3 +1,6 @@
+# 0.1.16 - May 5 2017
+- started a bit of work towards a new build system (for hopefully faster iteration on styling and stuff)
+
 # 0.1.15 - May 5 2017
 - added double validation check for redundancy
 - improved async execution of accessor stuff

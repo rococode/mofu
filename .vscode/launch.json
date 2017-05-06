@@ -6,7 +6,7 @@
             "type": "node",
             "request": "launch",
             "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
-            "preLaunchTask": "build-all",
+            // "preLaunchTask": "watch",
             "runtimeArgs": [
                 "${workspaceRoot}",
                 // "--enable-logging",
