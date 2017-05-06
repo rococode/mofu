@@ -1,6 +1,6 @@
 import React from 'react';
 import autobind from 'autobind'
-import electron from 'electron'
+import electron from 'moelectron'
 import open from 'open'
 
 interface Props {

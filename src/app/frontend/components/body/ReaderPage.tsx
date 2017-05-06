@@ -1,37 +1,37 @@
 import React from 'react';
+import { MangaChapter } from 'backend/abstracts'
 
-export default class ReaderPage extends React.Component<{}, {}> {
+interface Props {
+    chapter: MangaChapter
+}
+
+export default class ReaderPage extends React.Component<Props, {}> {
     public render() {
+        let chapter = this.props.chapter
+        let pages = []
+
+        chapter.pages.forEach((element, index) => {
+            let page = (
+                <div className="reader-page" >
+                    <img src={element.url} />
+                </div>
+            )
+            let num = (
+                <div className="reader-page-number-container">
+                    <div className="reader-page-number">{element.num + "/" + chapter.pages.length}</div>
+                </div>
+            )
+            pages.push(page)
+            pages.push(num)
+        })
         return (
             <div id="reader-container" className="reader-container">
-                <div id="reader-title" className="reader-title">Gekkan Shoujo Nozaki</div>
-                <div id="info-source" className="hidden-info"></div>
-                <div id="info-chapter" className="hidden-info"></div>
-                <div className="reader-nav-container">
-                    <div className="reader-nav">
-                        <div className="reader-nav-el">Prev Chapter</div>
-                        <div className="reader-nav-div"></div>
-                        <div className="reader-nav-el">Chapter 0/?</div>
-                        <div className="reader-nav-div"></div>
-                        <div className="reader-nav-el">Next Chapter</div>
-                    </div>
-                </div>
+
+                <span id="to-page-top" className="fa fa-arrow-left"></span>
+                <div id="reader-title" className="reader-title">{chapter.name}</div>
+                <span id="to-page-top" className="fa fa-arrow-right"></span>
                 <div id="reader-pages" className="reader-pages">
-                    <div className="reader-page">
-                        <img src="http://i.edasaki.com/test-page.png" />
-                    </div>
-                    <div className="reader-page">
-                        <img src="http://i.edasaki.com/test-page.png" />
-                    </div>
-                </div>
-                <div className="reader-nav-container">
-                    <div className="reader-nav">
-                        <div className="reader-nav-el">Prev Chapter</div>
-                        <div className="reader-nav-div"></div>
-                        <div className="reader-nav-el">Chapter 0/?</div>
-                        <div className="reader-nav-div"></div>
-                        <div className="reader-nav-el">Next Chapter</div>
-                    </div>
+                    {pages}
                 </div>
                 <div id="top-bottom-buttons" className="top-bottom-buttons">
                     <span id="to-page-top" className="fa fa-arrow-up"></span>

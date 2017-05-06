@@ -1,4 +1,4 @@
-import electron from 'electron'
+import electron from 'moelectron'
 
 let uniqueId = 0;
 
@@ -8,9 +8,11 @@ let uniqueId = 0;
 let lowPrioritySearches = 0;
 const lowPriorityMax = 10;
 
+let windows = []
+
 class Accessor {
 
-    async  getLowPriority(url: string, validator?: (s: string) => boolean): Promise<string> {
+    async getLowPriority(url: string, validator?: (s: string) => boolean): Promise<string> {
         while (lowPrioritySearches >= lowPriorityMax) {
             await this.delay(250)
         }
@@ -20,15 +22,23 @@ class Accessor {
         return res;
     }
 
-    async  get(url: string, validator?: (s: string) => boolean): Promise<string> {
+    async getAll(urls: string[], validator?: (s: string) => boolean): Promise<string[]> {
+        let res : Promise<string>[] = []
+        urls.forEach((element, index) => {
+            res.push(this.get(element, validator));
+        })
+        return Promise.all(res)
+    }
+
+    async get(url: string, validator?: (s: string) => boolean): Promise<string> {
         let win = new electron.BrowserWindow({
             center: false,
             x: 0,
             y: 0,
-            skipTaskbar: true,
             autoHideMenuBar: true,
-            width: 10,
-            height: 10,
+            width: 100,
+            height: 100,
+            skipTaskbar: true,
             show: false,
             title: "mofu searcher",
             webPreferences: {
@@ -42,6 +52,7 @@ class Accessor {
         win.setTitle("mofu searcher")
         let myId = uniqueId++
         let promise: Promise<string> = undefined
+        let firstValidate = false;
         let listener = function (event, message) {
             let id = message.id;
             let doc = message.doc;
@@ -51,6 +62,11 @@ class Accessor {
             console.log("got id " + id);
             if (!doc || (validator && !validator(doc)))
                 return
+            if(!firstValidate) { 
+                // an extra 100ms won't hurt, and a second check adds a great layer of redundancy
+                firstValidate = true;
+                return    
+            }
             promise = doc;
             try {
                 win.close();
@@ -58,12 +74,11 @@ class Accessor {
             electron.ipcMain.removeListener('page-html', listener);
         }
         electron.ipcMain.on('page-html', listener)
-        await this.delay(100)
         let js = `require('electron').ipcRenderer.send('page-html', {id: ` + myId + `, doc: document.documentElement.outerHTML});`
         while (promise === undefined) {
             win.webContents.executeJavaScript(js)
             console.log("Waiting for validation... " + url)
-            await this.delay(250);
+            await this.delay(100);
         }
         return promise
     }

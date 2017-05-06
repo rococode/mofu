@@ -1,6 +1,7 @@
 import React from 'react'
 import { BodyState } from 'frontend/enums'
 import { SearchResult, SourceResult } from 'backend/search'
+import { MangaChapter } from 'backend/abstracts'
 import { SearchResultsPage, HomePage, ReaderPage, LoadingPage } from 'frontend/components'
 import autobind from 'autobind'
 
@@ -11,7 +12,8 @@ interface Props {
 interface State {
     bodyState: BodyState,
     latestResults?: SourceResult[],
-    lastSearch?: string
+    lastSearch?: string,
+    readingChapter?: MangaChapter,
 }
 
 export default class Body extends React.Component<Props, State> {
@@ -30,6 +32,11 @@ export default class Body extends React.Component<Props, State> {
         this.setState({ lastSearch: s });
     }
 
+    openReader(chapter: MangaChapter) {
+        console.log(chapter)
+        this.setState({ bodyState: BodyState.Reader, readingChapter: chapter })
+    }
+
     public render() {
         let res;
         switch (this.state.bodyState) {
@@ -37,10 +44,10 @@ export default class Body extends React.Component<Props, State> {
                 res = <HomePage callback={this.changeState} lastSearchCallback={this.setLastSearch} />
                 break;
             case BodyState.SearchResults:
-                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults} callback={this.changeState} lastSearchCallback={this.setLastSearch} />
+                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults} callback={this.changeState} lastSearchCallback={this.setLastSearch} readerCallback={this.openReader} />
                 break;
             case BodyState.Reader:
-                res = <ReaderPage />
+                res = <ReaderPage chapter={this.state.readingChapter} />
                 break;
             case BodyState.Loading:
                 res = <LoadingPage />

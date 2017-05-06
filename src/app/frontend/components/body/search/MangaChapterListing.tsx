@@ -3,7 +3,8 @@ import autobind from 'autobind'
 import { MangaChapter } from 'backend/abstracts'
 
 interface MangaChapterProps {
-    chapter: MangaChapter
+    chapter: MangaChapter,
+    readerCallback
 }
 
 export default class MangaChapterListing extends React.Component<MangaChapterProps, any>{
@@ -13,8 +14,9 @@ export default class MangaChapterListing extends React.Component<MangaChapterPro
         autobind(this);
     }
 
-    loadChapter() {
-        this.props.chapter.source.loadChapter(this.props.chapter)
+    async loadChapter() {
+        let chapter = await this.props.chapter.source.loadChapter(this.props.chapter)
+        this.props.readerCallback(chapter)
     }
 
     public render() {

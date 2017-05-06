@@ -2,8 +2,6 @@ import { BodyState } from 'frontend/enums'
 import { MangaHere } from 'backend/sources'
 import { SearchResult, SourceResult } from 'backend/search'
 
-const electron = require('electron').remote
-
 class SearchManager {
 
     constructor() {

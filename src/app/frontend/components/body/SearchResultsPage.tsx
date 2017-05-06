@@ -10,7 +10,8 @@ interface Props {
     results: SourceResult[],
     lastSearch: string,
     callback: (state: BodyState) => void,
-    lastSearchCallback
+    lastSearchCallback,
+    readerCallback
 }
 
 interface State {
@@ -63,9 +64,9 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         if (this.state.showInfo && this.state.mangaInfo) {
             let info = this.state.mangaInfo
             let chapters = []
-            let counter = 1;
+            let c = 1;
             info.chapters.forEach(element => {
-                chapters.push(<MangaChapterListing key={counter++} chapter={element} />)
+                chapters.push(<MangaChapterListing key={c++} chapter={element} readerCallback={this.props.readerCallback} />)
             });
             infoContainer = (
                 <div id="manga-info-full-page-container" className="manga-info-full-page-container" onClick={this.checkCloseFull}>

@@ -69,10 +69,11 @@ export class MangaHere extends MangaSource {
             pageURLs.push(page);
         })
         let mpages = []
-        for (let k = 0; k < pageURLs.length; k++) {
-            let s = await Accessor.get(pageURLs[k], function (s) {
+        let allPages = await Accessor.getAll(pageURLs, function (s) {
                 return s.indexOf('id="image"') > -1
-            })
+            });
+        for (let k = 0; k < allPages.length; k++) {
+            let s = allPages[k];
             let $ = cheerio.load(s)
             let url = $("#image").attr("src");
             let page: MangaPage = {

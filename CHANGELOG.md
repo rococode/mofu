@@ -1,3 +1,8 @@
+# 0.1.15 - May 5 2017
+- added double validation check for redundancy
+- improved async execution of accessor stuff
+- basic chapter loading works now! so *technically* this is functional now haha
+
 # 0.1.14 - May 5 2017
 - huge refactor in progress
 
