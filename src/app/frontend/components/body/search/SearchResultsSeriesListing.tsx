@@ -1,43 +1,7 @@
 import React from 'react'
-import SearchResult from '../../backend/search/search-result'
-const autobind = require('react-autobind');
-import { getLowPriority } from '../../backend/utils/accessor'
-import MangaSource from '../../backend/sources/manga-source'
-import MangaInfo from '../../backend/abstracts/manga-info'
-const cheerio: CheerioAPI = require('cheerio')
-
-interface Props {
-    results: SearchResult[],
-    sourceName: string,
-    callback: (info: MangaInfo) => void,
-    source: MangaSource
-}
-
-export default class SearchResultListing extends React.Component<Props, any> {
-    constructor(props) {
-        super(props)
-    }
-
-    public render() {
-        let listings = []
-        let counter = 0;
-        this.props.results.forEach(res => {
-            listings.push(<IndividualListing title={res.title} url={res.url} source={this.props.source} altNames={res.altNames} key={++counter} callback={this.props.callback}/>)
-        });
-
-        return (
-            <div className="search-results">
-                <div className="search-source">
-                    <div className="search-source-name">
-                        <a href="#">{this.props.sourceName}</a>
-                        <i className="search-source-toggle fa fa-angle-double-up"></i>
-                    </div>
-                    {listings}
-                </div>
-            </div>
-        )
-    }
-}
+import autobind from 'autobind'
+import {MangaInfo} from 'backend/abstracts'
+import {MangaSource} from 'backend/sources'
 
 let listingCounter = 1;
 
@@ -55,7 +19,7 @@ interface IndividualListingState {
     info?: MangaInfo
 }
 
-class IndividualListing extends React.Component<IndividualListingProps, IndividualListingState> {
+export default class SearchResultsSeriesListing extends React.Component<IndividualListingProps, IndividualListingState> {
 
     constructor(props) {
         super(props)

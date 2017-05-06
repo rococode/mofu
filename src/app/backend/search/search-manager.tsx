@@ -1,7 +1,6 @@
-import { BodyState } from '../../body'
-import MangaHere from '../sources/english/mangahere'
-import SearchResult from './search-result'
-import SourceResult from './source-result'
+import { BodyState } from 'frontend/enums'
+import { MangaHere } from 'backend/sources'
+import { SearchResult, SourceResult } from 'backend/search'
 
 const electron = require('electron').remote
 
@@ -23,7 +22,7 @@ class SearchManager {
 
     // forces a timeout of 10 seconds
     timeout(x) {
-        return Promise.race([x, new Promise(function(resolve, reject) {
+        return Promise.race([x, new Promise(function (resolve, reject) {
             setTimeout(resolve, 10000, [])
         })]);
     }

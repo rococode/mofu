@@ -1,3 +1,6 @@
+# 0.1.14 - May 5 2017
+- huge refactor in progress
+
 # 0.1.13 - May 5 2017
 - added chapter page loading - accessor.get needs optimizing, it's ultra slow right now haha
 - added scrollbar to manga info panel

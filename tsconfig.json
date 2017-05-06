@@ -3,6 +3,7 @@
     "rootDir" : "src/app",
     "target": "es2015",
     "module": "system",
+    "baseUrl": "./src/app",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,

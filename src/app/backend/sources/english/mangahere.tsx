@@ -1,10 +1,7 @@
-import MangaSource from '../manga-source'
-import get from '../../utils/accessor'
-import Dictionary from '../../utils/dictionary'
-import SearchResult from '../../search/search-result'
-import MangaInfo from '../../abstracts/manga-info'
-import MangaChapter from '../../abstracts/manga-chapter'
-import MangaPage from '../../abstracts/manga-page'
+import { MangaSource } from 'backend/sources'
+import Accessor from 'backend/utils/accessor'
+import { SearchResult } from 'backend/search'
+import { MangaInfo, MangaChapter, MangaPage } from 'backend/abstracts'
 
 const cheerio: CheerioAPI = require('cheerio')
 
@@ -13,14 +10,12 @@ export class MangaHere extends MangaSource {
     searchPre = "http://www.mangahere.co/search.php?name_method=cw&author_method=cw&artist_method=cw&advopts=1&name="
 
     async getInfo(url: string): Promise<MangaInfo> {
-        let s: string = await get(url, function (s) {
+        let s: string = await Accessor.get(url, function (s) {
             return s.indexOf('manga_detail_top') > -1;
         });
         let $ = cheerio.load(s)
         let image = cheerio('.manga_detail_top', s).first().children('img.img').first().attr("src")
         let title = $('meta[property="og:title"]').attr('content')
-        // let title = $('.detail_topText').first().text()
-        // let authors = $("a[href=http://www.mangahere.co/author/]").first().text();
         let authors = $('.manga_detail_top').find("a").filter(function (index, element) {
             return $(element).attr("href").indexOf("/author/") > -1
         }).first().text();
@@ -64,7 +59,7 @@ export class MangaHere extends MangaSource {
 
     async loadChapter(chapter: MangaChapter): Promise<MangaChapter> {
         let url = chapter.url
-        let s = await get(url, function (s) {
+        let s = await Accessor.get(url, function (s) {
             return s.indexOf('class="wid60"') > -1;
         })
         let $ = cheerio.load(s)
@@ -75,7 +70,7 @@ export class MangaHere extends MangaSource {
         })
         let mpages = []
         for (let k = 0; k < pageURLs.length; k++) {
-            let s = await get(pageURLs[k], function (s) {
+            let s = await Accessor.get(pageURLs[k], function (s) {
                 return s.indexOf('id="image"') > -1
             })
             let $ = cheerio.load(s)
@@ -92,7 +87,7 @@ export class MangaHere extends MangaSource {
 
     async search(phrase: string) {
         let url = this.searchPre + phrase;
-        let s: string = await get(url, function (s) {
+        let s: string = await Accessor.get(url, function (s) {
             return s.indexOf("result_search") >= 0
         });
         let $ = cheerio.load(s);

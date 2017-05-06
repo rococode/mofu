@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Reader extends React.Component<{}, {}> {
+export default class ReaderPage extends React.Component<{}, {}> {
     public render() {
         return (
             <div id="reader-container" className="reader-container">

@@ -50,13 +50,17 @@
                 'react': '../node_modules/react/dist/react.js',
                 'react-dom': '../node_modules/react-dom/dist/react-dom.js'
             },
+            baseURL: "js",
             packages: {
                 js: {
+                    defaultExtension: 'js'
+                },
+                '.': {
                     defaultExtension: 'js'
                 }
             }
         });
-        System.import('js/index.js').then(null, console.error.bind(console));
+        System.import('index.js').then(null, console.error.bind(console));
 
 </script>
 

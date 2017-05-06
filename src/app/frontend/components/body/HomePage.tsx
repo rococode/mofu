@@ -1,7 +1,7 @@
 import React from 'react';
 import Tracker from './home/tracker';
-import SearchManager from '../backend/search/search-manager';
-import { BodyState } from '../body'
+import { SearchManager } from 'backend/search';
+import { BodyState } from 'frontend/enums'
 
 const autoBind = require('react-autobind');
 
@@ -14,7 +14,7 @@ interface HomeProps {
     lastSearchCallback
 }
 
-export default class Home extends React.Component<HomeProps, HomeState> {
+export default class HomePage extends React.Component<HomeProps, HomeState> {
 
     constructor(props) {
         super(props);

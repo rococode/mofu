@@ -1,13 +1,10 @@
 import React from 'react';
-import SearchResult from '../backend/search/search-result'
-import SearchManager from '../backend/search/search-manager';
-import SourceResult from '../backend/search/source-result'
-import SearchResultListing from './search/search-res-listing'
-import MangaSource from '../backend/sources/manga-source'
-import MangaInfo from '../backend/abstracts/manga-info'
-import MangaChapter from '../backend/abstracts/manga-chapter'
-import { BodyState } from '../body'
-const autobind = require('react-autobind')
+import { SearchResult, SearchManager, SourceResult } from 'backend/search'
+import { MangaSource } from 'backend/sources'
+import { MangaInfo, MangaChapter } from 'backend/abstracts'
+import { SearchResultsSourceListing, MangaChapterListing } from 'frontend/components'
+import { BodyState } from 'frontend/enums'
+import autobind from 'autobind'
 
 interface Props {
     results: SourceResult[],
@@ -25,7 +22,6 @@ interface State {
 
 
 export default class SearchResultsPage extends React.Component<Props, State> {
-
     constructor(props) {
         super(props)
         autobind(this)
@@ -59,7 +55,7 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         let counter = 0
         this.props.results.forEach(source => {
             sources.push(
-                <SearchResultListing callback={this.loadInfo} results={source.results} source={source.source} sourceName={source.sourceName} key={++counter} />
+                <SearchResultsSourceListing callback={this.loadInfo} results={source.results} source={source.source} sourceName={source.sourceName} key={++counter} />
             )
         });
         let infoContainer = undefined
@@ -69,7 +65,7 @@ export default class SearchResultsPage extends React.Component<Props, State> {
             let chapters = []
             let counter = 1;
             info.chapters.forEach(element => {
-                chapters.push(<MangaChapterDisplay key={counter++} chapter={element} />)
+                chapters.push(<MangaChapterListing key={counter++} chapter={element} />)
             });
             infoContainer = (
                 <div id="manga-info-full-page-container" className="manga-info-full-page-container" onClick={this.checkCloseFull}>
@@ -162,33 +158,5 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         this.props.callback(BodyState.Loading);
         this.props.lastSearchCallback(searchPhrase);
         SearchManager.search(this.props.callback, searchPhrase);
-    }
-}
-
-
-interface MangaChapterProps {
-    chapter: MangaChapter
-}
-
-class MangaChapterDisplay extends React.Component<MangaChapterProps, any>{
-
-    constructor(props) {
-        super(props)
-        autobind(this);
-    }
-
-    loadChapter() {
-        console.log("loading " + this.props.chapter.url)
-        this.props.chapter.source.loadChapter(this.props.chapter)
-    }
-
-    public render() {
-        return (
-            <div className="chapter-wrapper" onClick={this.loadChapter}>
-                <div className="chapter">
-                    Chapter {this.props.chapter.name}
-                </div>
-            </div>
-        )
     }
 }

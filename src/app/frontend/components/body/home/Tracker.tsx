@@ -1,8 +1,7 @@
 import React from 'react';
-import TrackerItem from './tracker-item';
-import { TrackerItemProps } from './tracker-item';
-import * as DB from '../../backend/db/database-manager';
-const autobind = require('react-autobind');
+import { TrackerItemProps } from './TrackerItem';
+import { TrackerItem } from 'frontend/components'
+import autobind from 'autobind'
 
 interface TrackerState {
     isOnRecentTab: boolean,
@@ -54,17 +53,17 @@ export default class Tracker extends React.Component<any, TrackerState> {
     }
 
     clickRecent() {
-        if(this.state.isOnRecentTab) {
+        if (this.state.isOnRecentTab) {
             return
         }
-        this.setState({isOnRecentTab: true})
+        this.setState({ isOnRecentTab: true })
     }
 
     clickFavorites() {
-        if(!this.state.isOnRecentTab) {
+        if (!this.state.isOnRecentTab) {
             return
         }
-        this.setState({isOnRecentTab: false})
+        this.setState({ isOnRecentTab: false })
     }
 
     public getRecentListings(): TrackerItemProps[] {

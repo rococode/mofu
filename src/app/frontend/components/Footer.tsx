@@ -1,5 +1,5 @@
 import React from 'react';
-const open = require('open');
+import open from 'open';
 
 export default class Footer extends React.Component<{}, {}> {
     public render() {

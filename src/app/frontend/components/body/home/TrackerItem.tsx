@@ -1,5 +1,5 @@
 import React from 'react';
-import * as tracker from './tracker'
+import * as tracker from './Tracker'
 const autobind = require('react-autobind')
 
 export interface TrackerItemProps {

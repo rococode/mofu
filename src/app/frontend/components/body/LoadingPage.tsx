@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Loading extends React.Component<{}, {}> {
+export default class LoadingPage extends React.Component<{}, {}> {
     public render() {
         return (
             <div id="loading-container" className="loading-container">

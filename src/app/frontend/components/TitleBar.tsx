@@ -1,7 +1,7 @@
 import React from 'react';
-const autoBind =  require('react-autobind');
-const electron = require('electron').remote;
-const open = require('open');
+import autobind from 'autobind'
+import electron from 'electron'
+import open from 'open'
 
 interface Props {
     zoomOut,
@@ -12,7 +12,7 @@ export default class TitleBar extends React.Component<Props, {}> {
 
     constructor(props) {
         super(props);
-        autoBind(this);
+        autobind(this);
     }
 
     public render() {
