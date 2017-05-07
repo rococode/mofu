@@ -54,11 +54,13 @@ export default class SearchResultsPage extends React.Component<Props, State> {
     public render() {
         let sources = []
         let counter = 0
-        this.props.results.forEach(source => {
-            sources.push(
-                <SearchResultsSourceListing callback={this.loadInfo} results={source.results} source={source.source} sourceName={source.sourceName} key={++counter} />
-            )
-        });
+        if (this.props.results) {
+            this.props.results.forEach(source => {
+                sources.push(
+                    <SearchResultsSourceListing callback={this.loadInfo} results={source.results} source={source.source} sourceName={source.sourceName} key={++counter} />
+                )
+            });
+        }
         let infoContainer = undefined
 
         if (this.state.showInfo && this.state.mangaInfo) {
@@ -156,7 +158,6 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         if (!this.state || !this.state.searchPhrase)
             return;
         let searchPhrase = this.state.searchPhrase
-        this.props.callback(BodyState.Loading);
         this.props.lastSearchCallback(searchPhrase);
         SearchManager.search(this.props.callback, searchPhrase);
     }

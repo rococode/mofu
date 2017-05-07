@@ -2,7 +2,6 @@ import React from 'react';
 import Tracker from './home/tracker';
 import { SearchManager } from 'backend/search';
 import { BodyState } from 'frontend/enums'
-
 const autoBind = require('react-autobind');
 
 interface HomeState {
@@ -63,7 +62,6 @@ export default class HomePage extends React.Component<HomeProps, HomeState> {
         if (!this.state || !this.state.searchPhrase)
             return;
         let searchPhrase = this.state.searchPhrase
-        this.props.callback(BodyState.Loading);
         this.props.lastSearchCallback(searchPhrase);
         SearchManager.search(this.props.callback, searchPhrase);
     }

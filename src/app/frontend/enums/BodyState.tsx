@@ -1,8 +1,7 @@
 export enum BodyState {
     Home,
     SearchResults,
-    Reader,
-    Loading
+    Reader
 }
 
 export default BodyState

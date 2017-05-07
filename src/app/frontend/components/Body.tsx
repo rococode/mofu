@@ -14,7 +14,13 @@ interface State {
     latestResults?: SourceResult[],
     lastSearch?: string,
     readingChapter?: MangaChapter,
+    isLoading?: boolean,
+    loadingProgress?: number,
+    loadingMessage?: string
 }
+
+export let loading : (progress?: number, message? : string) => void;
+export let stoploading : () => void;
 
 export default class Body extends React.Component<Props, State> {
 
@@ -22,6 +28,8 @@ export default class Body extends React.Component<Props, State> {
         super(props);
         this.state = { bodyState: BodyState.Home };
         autobind(this)
+        loading = this.loading
+        stoploading = this.stoploading
     }
 
     componentDidMount() {
@@ -33,11 +41,32 @@ export default class Body extends React.Component<Props, State> {
     }
 
     keyDown(e: KeyboardEvent) {
-        if (e.key == 'F5') {
-            e.preventDefault();
-            location.reload();
+        switch (e.key) {
+            case 'F5':
+                e.preventDefault();
+                location.reload();
+                break;
+            case 'F1':
+                e.preventDefault();
+                this.changeState(BodyState.Home);
+                break;
+            case 'F2':
+                e.preventDefault();
+                this.changeState(BodyState.Reader);
+                break;
+            case 'F3':
+                e.preventDefault();
+                this.changeState(BodyState.SearchResults);
+                break;
+            case 'F6':
+                e.preventDefault();
+                this.loading(0.5, "testing")
+                break;
+            case 'F7':
+                e.preventDefault();
+                this.stoploading()
+                break;
         }
-        console.log(e.key);
     }
 
     changeState(state: BodyState, result?: SourceResult[]) {
@@ -53,6 +82,15 @@ export default class Body extends React.Component<Props, State> {
         this.setState({ bodyState: BodyState.Reader, readingChapter: chapter })
     }
 
+    loading(progress?: number, message?: string) {
+        this.setState({ isLoading: true, loadingProgress: progress, loadingMessage: message })
+    }
+
+    stoploading() {
+        console.log("here")
+        this.setState({ isLoading: false, loadingMessage: undefined, loadingProgress: undefined })
+    }
+
     public render() {
         let res;
         switch (this.state.bodyState) {
@@ -65,13 +103,14 @@ export default class Body extends React.Component<Props, State> {
             case BodyState.Reader:
                 res = <ReaderPage chapter={this.state.readingChapter} />
                 break;
-            case BodyState.Loading:
-                res = <LoadingPage />
-                break;
         }
         const s = {
             zoom: this.props.zoomFactor
         }
-        return <div style={s}>{res}</div>;
+        return (
+            <div style={s}>
+                {res}
+                {this.state.isLoading && <LoadingPage message={this.state.loadingMessage} progress={this.state.loadingProgress}/>}
+            </div>)
     }
 }

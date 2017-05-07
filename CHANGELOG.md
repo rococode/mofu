@@ -1,3 +1,11 @@
+# 0.1.17 - May 6 2017
+- added some debugging hotkeys - F5 to refresh, F1 to go to Home, F2 to go to Reader, F3 to go to Search Results
+- loading panel is now an overlay rather than a separate page
+- fixed up loading panel to work in react instead of javascript
+- added message capability for loading panel
+- refactored loadingpage to be something that's overlaid over the actual body pages
+- restyled loading panel to be much slimmer and nicer looking (in my opinion)
+
 # 0.1.16 - May 5 2017
 - started a bit of work towards a new build system (for hopefully faster iteration on styling and stuff)
 

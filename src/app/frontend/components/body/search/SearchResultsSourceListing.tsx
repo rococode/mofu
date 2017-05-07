@@ -30,8 +30,9 @@ export default class SearchResultListing extends React.Component<Props, any> {
             <div className="search-results">
                 <div className="search-source">
                     <div className="search-source-name">
-                        <a href="#">{this.props.sourceName}</a>
-                        <i className="search-source-toggle fa fa-angle-double-up"></i>
+                        <div className="toggle left"><i className="fa fa-angle-double-up"></i></div>
+                        <a href="#">{this.props.sourceName + ' ('  + this.props.results.length + ') '}</a>
+                        <div className="toggle right"><i className="fa fa-angle-double-up"></i></div>
                     </div>
                     {listings}
                 </div>

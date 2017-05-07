@@ -23,7 +23,7 @@ class Accessor {
     }
 
     async getAll(urls: string[], validator?: (s: string) => boolean): Promise<string[]> {
-        let res : Promise<string>[] = []
+        let res: Promise<string>[] = []
         urls.forEach((element, index) => {
             res.push(this.get(element, validator));
         })
@@ -54,30 +54,30 @@ class Accessor {
         let promise: Promise<string> = undefined
         let firstValidate = false;
         let listener = function (event, message) {
-            let id = message.id;
-            let doc = message.doc;
-            if (id != myId) {
-                return
+            if (message) {
+                let id = message.id;
+                let doc = message.doc;
+                if (id != myId) {
+                    return
+                }
+                if (!doc || (validator && !validator(doc)))
+                    return
+                if (!firstValidate) {
+                    // an extra 100ms won't hurt, and a second check adds a great layer of redundancy
+                    firstValidate = true;
+                    return
+                }
+                promise = doc;
+                try {
+                    win.close();
+                } catch (e) { }
+                electron.ipcMain.removeListener('page-html', listener);
             }
-            console.log("got id " + id);
-            if (!doc || (validator && !validator(doc)))
-                return
-            if(!firstValidate) { 
-                // an extra 100ms won't hurt, and a second check adds a great layer of redundancy
-                firstValidate = true;
-                return    
-            }
-            promise = doc;
-            try {
-                win.close();
-            } catch (e) { }
-            electron.ipcMain.removeListener('page-html', listener);
         }
         electron.ipcMain.on('page-html', listener)
         let js = `require('electron').ipcRenderer.send('page-html', {id: ` + myId + `, doc: document.documentElement.outerHTML});`
         while (promise === undefined) {
             win.webContents.executeJavaScript(js)
-            console.log("Waiting for validation... " + url)
             await this.delay(100);
         }
         return promise

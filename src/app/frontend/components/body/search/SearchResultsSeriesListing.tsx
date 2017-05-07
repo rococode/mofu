@@ -23,7 +23,6 @@ export default class SearchResultsSeriesListing extends React.Component<Individu
 
     constructor(props) {
         super(props)
-        console.log("here " + this.props.url);
         this.state = {
             imageURL: "http://edasaki.com/i/test-page.png",
             fetchedInfo: false

@@ -30,6 +30,7 @@
     "gulp-typescript": "^3.1.6",
     "open": "0.0.5",
     "pouchdb": "^6.2.0",
+    "rc-progress": "^2.1.1",
     "react": "^15.5.4",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.5.4",
