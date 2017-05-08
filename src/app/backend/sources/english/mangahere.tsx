@@ -63,13 +63,13 @@ export class MangaHere extends MangaSource {
             return s.indexOf('class="wid60"') > -1;
         })
         let $ = cheerio.load(s)
-        let pageURLs = []
+        let pageURLs : Set<string>  = new Set([])
         $("select.wid60 > option").each(function (index, element) {
             let page = $(element).attr("value");
-            pageURLs.push(page);
+            pageURLs.add(page);
         })
         let mpages = []
-        let allPages = await Accessor.getAll(pageURLs, function (s) {
+        let allPages = await Accessor.getAll(Array.from(pageURLs), function (s) {
                 return s.indexOf('id="image"') > -1
             });
         for (let k = 0; k < allPages.length; k++) {

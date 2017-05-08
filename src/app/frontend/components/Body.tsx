@@ -19,8 +19,8 @@ interface State {
     loadingMessage?: string
 }
 
-export let loading : (progress?: number, message? : string) => void;
-export let stoploading : () => void;
+export let loading: (progress?: number, message?: string) => void;
+export let stoploading: () => void;
 
 export default class Body extends React.Component<Props, State> {
 
@@ -87,7 +87,6 @@ export default class Body extends React.Component<Props, State> {
     }
 
     stoploading() {
-        console.log("here")
         this.setState({ isLoading: false, loadingMessage: undefined, loadingProgress: undefined })
     }
 
@@ -110,7 +109,7 @@ export default class Body extends React.Component<Props, State> {
         return (
             <div style={s}>
                 {res}
-                {this.state.isLoading && <LoadingPage message={this.state.loadingMessage} progress={this.state.loadingProgress}/>}
+                {this.state.isLoading && <LoadingPage message={this.state.loadingMessage} progress={this.state.loadingProgress} />}
             </div>)
     }
 }

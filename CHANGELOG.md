@@ -1,3 +1,8 @@
+# 0.1.18 - May 7 2017
+- added zoom factor display (which can be clicked to reset to 100%)
+- fixed some stuff with loading bar not updating properly
+- mofu now shows a progress bar while loading pages
+
 # 0.1.17 - May 6 2017
 - added some debugging hotkeys - F5 to refresh, F1 to go to Home, F2 to go to Reader, F3 to go to Search Results
 - loading panel is now an overlay rather than a separate page

@@ -1,4 +1,5 @@
 import electron from 'moelectron'
+import { loading, stoploading } from 'frontend/loading'
 
 let uniqueId = 0;
 
@@ -22,15 +23,38 @@ class Accessor {
         return res;
     }
 
-    async getAll(urls: string[], validator?: (s: string) => boolean): Promise<string[]> {
+    startPageNum: number
+    pagesLeft: number
+
+    setLoading(total: number) {
+        loading(0, "Loading page 1 of " + total + "...")
+        this.startPageNum = total;
+        this.pagesLeft = total;
+    }
+
+    finishPage() {
+        this.pagesLeft--;
+        if (this.pagesLeft <= 0) {
+            stoploading();
+        } else {
+            let rem = (this.startPageNum - this.pagesLeft + 1)
+            let percent = 100 - (this.pagesLeft / this.startPageNum * 100.0)
+            loading(percent, "Loading page " + rem + " of " + this.startPageNum + "...")
+        }
+    }
+
+    getAll(urls: string[], validator?: (s: string) => boolean): Promise<string[]> {
+        this.setLoading(urls.length)
+        this.delay(20) // so we make sure the loading thing pops up
+        urls = Array.from(new Set(urls)) // force filter dupes
         let res: Promise<string>[] = []
         urls.forEach((element, index) => {
-            res.push(this.get(element, validator));
+            res.push(this.get(element, validator, this));
         })
         return Promise.all(res)
     }
 
-    async get(url: string, validator?: (s: string) => boolean): Promise<string> {
+    async get(url: string, validator?: (s: string) => boolean, callbackObj?: Accessor): Promise<string> {
         let win = new electron.BrowserWindow({
             center: false,
             x: 0,
@@ -67,6 +91,9 @@ class Accessor {
                     firstValidate = true;
                     return
                 }
+                if (callbackObj) {
+                    callbackObj.finishPage();
+                }
                 promise = doc;
                 try {
                     win.close();
@@ -74,6 +101,7 @@ class Accessor {
                 electron.ipcMain.removeListener('page-html', listener);
             }
         }
+        electron.ipcMain.setMaxListeners(1000);
         electron.ipcMain.on('page-html', listener)
         let js = `require('electron').ipcRenderer.send('page-html', {id: ` + myId + `, doc: document.documentElement.outerHTML});`
         while (promise === undefined) {

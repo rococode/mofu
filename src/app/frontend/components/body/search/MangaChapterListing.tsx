@@ -1,6 +1,7 @@
 import React from 'react'
 import autobind from 'autobind'
 import { MangaChapter } from 'backend/abstracts'
+import {loading} from 'frontend/loading'
 
 interface MangaChapterProps {
     chapter: MangaChapter,
@@ -15,6 +16,7 @@ export default class MangaChapterListing extends React.Component<MangaChapterPro
     }
 
     async loadChapter() {
+        loading(0, "Loading pages...")
         let chapter = await this.props.chapter.source.loadChapter(this.props.chapter)
         this.props.readerCallback(chapter)
     }

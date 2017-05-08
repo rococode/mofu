@@ -5,7 +5,9 @@ import open from 'open'
 
 interface Props {
     zoomOut,
-    zoomIn
+    zoomIn,
+    resetZoom,
+    currZoom
 }
 
 export default class TitleBar extends React.Component<Props, {}> {
@@ -22,6 +24,7 @@ export default class TitleBar extends React.Component<Props, {}> {
                 <div className="left">
                     <div className="button zoom-out" onClick={this.props.zoomOut}>-</div>
                     <div className="button zoom-in" onClick={this.props.zoomIn}>+</div>
+                    <div className="zoomText" onClick={this.props.resetZoom}>{this.props.currZoom + "%"}</div>
                 </div>
                 <div className="title" onClick={this.mofumoe}></div>
                 <div className="right">

@@ -811,6 +811,13 @@ img {
       .title-bar .left .button:hover {
         color: #eee;
         cursor: pointer !important; }
+    .title-bar .left .zoomText {
+      display: inline-block;
+      -webkit-app-region: no-drag;
+      font-size: 1.2em; }
+      .title-bar .left .zoomText:hover {
+        color: #eee;
+        cursor: pointer !important; }
   .title-bar .right {
     position: absolute;
     right: 5px;
