@@ -9,7 +9,7 @@ import autobind from 'autobind'
 interface Props {
     results: SourceResult[],
     lastSearch: string,
-    callback: (state: BodyState) => void,
+    callback: (result: SourceResult[]) => void,
     lastSearchCallback,
     readerCallback
 }

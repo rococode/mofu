@@ -2,3 +2,5 @@ node_modules
 dist
 typings
 _ignore
+packaged
+npm-debug.log

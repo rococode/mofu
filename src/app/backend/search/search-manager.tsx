@@ -9,7 +9,7 @@ class SearchManager {
 
     }
 
-    public async search(callback: (state: BodyState, results?: SourceResult[]) => void, s: string) {
+    public async search(callback: (results: SourceResult[]) => void, s: string) {
         let curr = 0.0
         loading(0.50, "Searching MangaHere...");
         let res: SourceResult[] = []
@@ -19,7 +19,7 @@ class SearchManager {
             source: MangaHere
         })
         stoploading()
-        callback(BodyState.SearchResults, res);
+        callback(res);
     }
 
     // forces a timeout of 10 seconds

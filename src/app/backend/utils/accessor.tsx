@@ -9,6 +9,8 @@ let uniqueId = 0;
 let lowPrioritySearches = 0;
 const lowPriorityMax = 10;
 
+let htmlCache = new Map<string, [string, Date]>();
+
 let windows = []
 
 class Accessor {
@@ -55,6 +57,22 @@ class Accessor {
     }
 
     async get(url: string, validator?: (s: string) => boolean, callbackObj?: Accessor): Promise<string> {
+            console.log(htmlCache)
+        if (htmlCache.has(url)) {
+            let tup = htmlCache.get(url)
+            let curr = new Date()
+            console.log("cache hit")
+            // 5 minute cache
+            if (curr.getTime() - tup[1].getTime() < 5 * 60 * 1000) {
+                console.log("cache hit success")
+                if (callbackObj) {
+                    callbackObj.finishPage();
+                }
+                return tup[0];
+            } else {
+                htmlCache.delete(url);
+            }
+        }
         let win = new electron.BrowserWindow({
             center: false,
             x: 0,
@@ -76,6 +94,7 @@ class Accessor {
         win.setTitle("mofu searcher")
         let myId = uniqueId++
         let promise: Promise<string> = undefined
+        let res: string;
         let firstValidate = false;
         let listener = function (event, message) {
             if (message) {
@@ -94,6 +113,7 @@ class Accessor {
                 if (callbackObj) {
                     callbackObj.finishPage();
                 }
+                res = doc;
                 promise = doc;
                 try {
                     win.close();
@@ -108,6 +128,7 @@ class Accessor {
             win.webContents.executeJavaScript(js)
             await this.delay(100);
         }
+        htmlCache.set(url, [res, new Date()])
         return promise
     }
 

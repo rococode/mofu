@@ -21,6 +21,7 @@ interface State {
 
 export let loading: (progress?: number, message?: string) => void;
 export let stoploading: () => void;
+export let changeState: (state: BodyState, sourceResult?: SourceResult[]) => void;
 
 export default class Body extends React.Component<Props, State> {
 
@@ -30,6 +31,7 @@ export default class Body extends React.Component<Props, State> {
         autobind(this)
         loading = this.loading
         stoploading = this.stoploading
+        changeState = this.changeState;
     }
 
     componentDidMount() {
@@ -69,8 +71,12 @@ export default class Body extends React.Component<Props, State> {
         }
     }
 
-    changeState(state: BodyState, result?: SourceResult[]) {
-        this.setState({ bodyState: state, latestResults: result });
+    changeState(state: BodyState) {
+        this.setState({ bodyState: state });
+    }
+
+    setSourceResults(result: SourceResult[]) {
+        this.setState({latestResults: result, bodyState: BodyState.SearchResults});
     }
 
     setLastSearch(s: string) {
@@ -94,10 +100,10 @@ export default class Body extends React.Component<Props, State> {
         let res;
         switch (this.state.bodyState) {
             case BodyState.Home:
-                res = <HomePage callback={this.changeState} lastSearchCallback={this.setLastSearch} />
+                res = <HomePage callback={this.setSourceResults} lastSearchCallback={this.setLastSearch} />
                 break;
             case BodyState.SearchResults:
-                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults} callback={this.changeState} lastSearchCallback={this.setLastSearch} readerCallback={this.openReader} />
+                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults} callback={this.setSourceResults} lastSearchCallback={this.setLastSearch} readerCallback={this.openReader} />
                 break;
             case BodyState.Reader:
                 res = <ReaderPage chapter={this.state.readingChapter} />

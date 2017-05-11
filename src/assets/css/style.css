@@ -25,7 +25,8 @@ img {
   margin: 0;
   vertical-align: bottom; }
 
-.unselectable, .tracker .title, .reader-title .button, .top-bottom-buttons span, .download-button span, .loading-container, .changelog i:hover, .search-result-title, .search-source-name .toggle, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover, .title-bar {
+.unselectable, .tracker .title, .reader-title .button, .reader-title .back,
+.reader-title .chapters, .top-bottom-buttons span, .download-button span, .loading-container, .changelog i:hover, .search-result-title, .search-source-name .toggle, .manga-info-container .chapter-wrapper .individual-chapter-download-button, .manga-info-container .chapter-wrapper .chapter, .manga-download-container .chapter-header, .manga-download-container .chapter-header .download-back, .manga-download-container .chapter-header .select-all, .manga-download-container .download-selected-button, .manga-download-container .chapter-wrapper, .manga-download-container .chapter-wrapper .individual-chapter-download-button, .manga-download-container .chapter-wrapper .chapter, .download-menu-button, .download-menu-button span:hover, .title-bar {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -178,7 +179,8 @@ img {
   text-align: center;
   padding: 5px 0 8px 0;
   background-color: #272727;
-  vertical-align: middle; }
+  vertical-align: middle;
+  position: relative; }
   .reader-title .text {
     display: inline-block;
     text-align: center;
@@ -193,6 +195,20 @@ img {
     .reader-title .button:hover {
       cursor: pointer;
       color: #eee; }
+  .reader-title .back,
+  .reader-title .chapters {
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    font-variant: small-caps; }
+    .reader-title .back:hover,
+    .reader-title .chapters:hover {
+      color: #eee; }
+  .reader-title .back {
+    left: 15px; }
+  .reader-title .chapters {
+    right: 15px; }
 
 .reader-nav-container {
   width: 100%;

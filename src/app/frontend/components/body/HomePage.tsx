@@ -1,6 +1,6 @@
 import React from 'react';
 import Tracker from './home/tracker';
-import { SearchManager } from 'backend/search';
+import { SearchManager, SourceResult } from 'backend/search';
 import { BodyState } from 'frontend/enums'
 const autoBind = require('react-autobind');
 
@@ -9,7 +9,7 @@ interface HomeState {
 }
 
 interface HomeProps {
-    callback: (state: BodyState) => void,
+    callback: (result: SourceResult[]) => void,
     lastSearchCallback
 }
 

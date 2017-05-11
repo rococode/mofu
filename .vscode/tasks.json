@@ -2,17 +2,17 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "0.1.0",
-    "command": "gulp",
-    "isShellCommand": true,
-    "args": [
-        "--no-color"
-    ],
     "tasks": [
         {
             "taskName": "build-all",
-            "args": [],
-            // "isBuildCommand": true,
+            "isBuildCommand": true,
             "isBackground": false,
+            "isShellCommand": true,
+            "command": "gulp",
+            "args": [
+                "--no-color",
+                "build-all"
+            ],
             "problemMatcher": [
                 "$lessCompile",
                 "$tsc",
@@ -21,13 +21,69 @@
         },
         {
             "taskName": "watch",
-            "args": [],
-            "isBuildCommand": true,
             "isBackground": true,
+            "isShellCommand": true,
+            "command": "gulp",
+            "args": [
+                "--no-color",
+                "watch"
+            ],
             "problemMatcher": [
                 "$lessCompile",
                 "$tsc",
                 "$jshint"
+            ]
+        },
+        // electron-packager --overwrite --platform=darwin --arch=all --out=./packaged/ --ignore=.*gitignore --ignore=.*/_ignore --ignore=.*/pics --ignore=.*/src --ignore=.*/\\.vscode . mofu-moe
+        {
+            "taskName": "package",
+            "command": "electron-packager",
+            "isShellCommand": true,
+            "args": [
+                "--overwrite",
+                "--out=./packaged/",
+                "--ignore=.*.gitignore",
+                "--ignore=.*/_ignore",
+                "--ignore=.*/pics",
+                "--ignore=.*/src",
+                "--ignore=.*/\\.vscode",
+                ".",
+                "mofu-moe"
+            ]
+        },
+        {
+            "taskName": "package-mac",
+            "command": "electron-packager",
+            "isShellCommand": true,
+            "args": [
+                "--overwrite",
+                "--platform=darwin",
+                "--arch=all",
+                "--out=./packaged/",
+                "--ignore=.*.gitignore",
+                "--ignore=.*/_ignore",
+                "--ignore=.*/pics",
+                "--ignore=.*/src",
+                "--ignore=.*/\\.vscode",
+                ".",
+                "mofu-moe"
+            ]
+        },
+        {
+            "taskName": "package-all",
+            "command": "electron-packager",
+            "isShellCommand": true,
+            "args": [
+                "--overwrite",
+                "--all",
+                "--out=./packaged/",
+                "--ignore=.*.gitignore",
+                "--ignore=.*/_ignore",
+                "--ignore=.*/pics",
+                "--ignore=.*/src",
+                "--ignore=.*/\\.vscode",
+                ".",
+                "mofu-moe"
             ]
         }
     ]

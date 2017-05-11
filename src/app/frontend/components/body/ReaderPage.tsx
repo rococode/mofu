@@ -2,6 +2,8 @@ import React from 'react';
 import autobind from 'autobind';
 import { MangaChapter } from 'backend/abstracts'
 import electron from 'moelectron'
+import { changeState } from 'frontend/components/Body'
+import {BodyState} from 'frontend/enums'
 
 interface Props {
     chapter: MangaChapter
@@ -54,9 +56,12 @@ export default class ReaderPage extends React.Component<Props, {}> {
             <div id="reader-container" className="reader-container">
 
                 <div className="reader-title">
+                    <div className="back" onClick={this.backToSearch}>Back to Search</div>
                     <span id="to-page-top" className="button fa fa-arrow-left"></span>
                     <div className="text">{chapter && chapter.name ? chapter.name : "Test Chapter"}</div>
                     <span id="to-page-top" className="button fa fa-arrow-right"></span>
+                    <div className="chapters">Chapters</div>
+                    <div className="dropdown"></div>
                 </div>
                 <div id="reader-pages" className="reader-pages">
                     {pages}
@@ -69,6 +74,10 @@ export default class ReaderPage extends React.Component<Props, {}> {
                 </div>
             </div>
         )
+    }
+
+    backToSearch() {
+        changeState(BodyState.SearchResults)
     }
 
     scrollTop() {

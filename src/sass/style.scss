@@ -224,13 +224,15 @@ img {
     padding: 5px 0 8px 0;
     background-color: $color-background-dark;
     vertical-align: middle;
+    position: relative;
+    $margins: 10px;
     .text {
         display: inline-block;
         text-align: center;
         font-family: 'Comfortaa', cursive;
         font-weight: 300;
         font-size: 1.5em;
-        margin: 0 10px;
+        margin: 0 $margins;
     }
     .button {
         @extend .unselectable;
@@ -241,6 +243,25 @@ img {
             cursor: pointer;
             color: $color-text-hover;
         }
+    }
+    $padding: 15px;
+    .back,
+    .chapters {
+        @extend .unselectable;
+        cursor: pointer;
+        &:hover {
+            color: $color-text-hover;
+        }
+        display: inline-block;
+        position: absolute;
+        top: $margins;
+        font-variant: small-caps;
+    }
+    .back {
+        left: $padding;
+    }
+    .chapters {
+        right: $padding;
     }
 }
 

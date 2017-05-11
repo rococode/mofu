@@ -1,3 +1,9 @@
+# 0.1.19 - May 10 2017
+- added support for packaging into an executable app
+- search results now persist properly
+- added a "back to search results" button on reader
+- added a simple html cache for accessor
+
 # 0.1.18 - May 7 2017
 - added zoom factor display (which can be clicked to reset to 100%)
 - fixed some stuff with loading bar not updating properly
