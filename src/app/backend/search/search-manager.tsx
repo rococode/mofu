@@ -9,32 +9,22 @@ class SearchManager {
 
     }
 
-    public async search(callback: (results: SourceResult[]) => void, s: string) {
+    public async search(callback: (searchPhrase: string, results: SourceResult[]) => void, s: string) {
+        console.log("Searching " + s)
         let curr = 0.0
         loading(0.50, "Searching MangaHere...");
         let res: SourceResult[] = []
+        let r = await MangaHere.search(encodeURI(s))
+        console.log("done to " + r)
         res.push({
             sourceName: "MangaHere",
-            results: await this.timeout(MangaHere.search(s), curr),
+            results: r,
             source: MangaHere
         })
         stoploading()
-        callback(res);
+        callback(s, res);
     }
-
-    // forces a timeout of 10 seconds
-    timeout(x, prog : number) {
-        return Promise.race([x, new Promise(function (resolve, reject) {
-            setTimeout(resolve, 2000, [])
-            setTimeout(resolve, 2000, [])
-            setTimeout(resolve, 2000, [])
-            setTimeout(resolve, 2000, [])
-            setTimeout(resolve, 2000, [])
-        })]);
-    }
-
 }
-
 
 function delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));

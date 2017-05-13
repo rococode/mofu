@@ -1,14 +1,14 @@
 import React from 'react'
 import autobind from 'autobind'
-import {MangaInfo} from 'backend/abstracts'
-import {MangaSource} from 'backend/sources'
+import { MangaInfo } from 'backend/abstracts'
+import { MangaSource } from 'backend/sources'
 
 let listingCounter = 1;
 
 interface IndividualListingProps {
     title: string,
     altNames: string[],
-    url: string, 
+    url: string,
     callback: (info: MangaInfo) => void,
     source: MangaSource
 }
@@ -30,14 +30,28 @@ export default class SearchResultsSeriesListing extends React.Component<Individu
         autobind(this)
     }
 
+    unloaded: boolean = false
+
     async loadInfo() {
         await this.state.info
-        this.props.callback(this.state.info)
+        if (!this.unloaded) {
+            this.props.callback(this.state.info)
+        }
     }
 
     async fetchInfo() {
         let res = await this.props.source.getInfo(this.props.url);
-        this.setState({ imageURL: res.image, fetchedInfo: true, info: res});
+        if (!this.unloaded) {
+            this.setState({ imageURL: res.image, fetchedInfo: true, info: res });
+        }
+    }
+
+    componentDidMount() {
+        this.unloaded = false;
+    }
+
+    componentWillUnmount() {
+        this.unloaded = true
     }
 
     public render() {

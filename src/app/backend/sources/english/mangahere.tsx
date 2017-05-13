@@ -2,6 +2,7 @@ import { MangaSource } from 'backend/sources'
 import Accessor from 'backend/utils/accessor'
 import { SearchResult } from 'backend/search'
 import { MangaInfo, MangaChapter, MangaPage } from 'backend/abstracts'
+import { loading } from 'frontend/loading'
 
 const cheerio: CheerioAPI = require('cheerio')
 
@@ -63,15 +64,15 @@ export class MangaHere extends MangaSource {
             return s.indexOf('class="wid60"') > -1;
         })
         let $ = cheerio.load(s)
-        let pageURLs : Set<string>  = new Set([])
+        let pageURLs: Set<string> = new Set([])
         $("select.wid60 > option").each(function (index, element) {
             let page = $(element).attr("value");
             pageURLs.add(page);
         })
         let mpages = []
         let allPages = await Accessor.getAll(Array.from(pageURLs), function (s) {
-                return s.indexOf('id="image"') > -1
-            });
+            return s.indexOf('id="image"') > -1
+        });
         for (let k = 0; k < allPages.length; k++) {
             let s = allPages[k];
             let $ = cheerio.load(s)
@@ -86,11 +87,24 @@ export class MangaHere extends MangaSource {
         return chapter;
     }
 
+    delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
     async search(phrase: string) {
         let url = this.searchPre + phrase;
         let s: string = await Accessor.get(url, function (s) {
             return s.indexOf("result_search") >= 0
         });
+        let ct = 0;
+        while (s.indexOf("Sorry you have just searched") >= 0) {
+            loading(undefined, "Waiting on MangaHere... (" + ++ct + ")");
+            await this.delay(1000);
+            s = await Accessor.getNoCache(url, function (s) {
+                return s.indexOf("result_search") >= 0
+            });
+            console.log(s);
+        }
+        console.log(s);
         let $ = cheerio.load(s);
         let mainLinks = $('.result_search > dl > dt > a.name_one')
         let res: SearchResult[] = []

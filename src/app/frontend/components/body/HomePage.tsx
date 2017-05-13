@@ -5,13 +5,13 @@ import { BodyState } from 'frontend/enums'
 const autoBind = require('react-autobind');
 
 interface HomeState {
-    searchPhrase: string
 }
 
 interface HomeProps {
-    callback: (result: SourceResult[]) => void,
-    lastSearchCallback
+    searchCallback: (searchPhrase: string, result: SourceResult[]) => void
 }
+
+let searchPhrase: string = "";
 
 export default class HomePage extends React.Component<HomeProps, HomeState> {
 
@@ -55,15 +55,13 @@ export default class HomePage extends React.Component<HomeProps, HomeState> {
     }
 
     searchTextChange(e: React.ChangeEvent<HTMLInputElement>) {
-        this.setState({ searchPhrase: e.target.value });
+        searchPhrase = e.target.value;
     }
 
     search() {
-        if (!this.state || !this.state.searchPhrase)
+        if (!this.state || searchPhrase)
             return;
-        let searchPhrase = this.state.searchPhrase
-        this.props.lastSearchCallback(searchPhrase);
-        SearchManager.search(this.props.callback, searchPhrase);
+        SearchManager.search(this.props.searchCallback, searchPhrase);
     }
 
 }

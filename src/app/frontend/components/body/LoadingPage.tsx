@@ -42,7 +42,6 @@ export default class LoadingPage extends React.Component<Props, State> {
             res = 0;
         }
         res = Math.ceil(res)
-        console.log(res)
         let progress
         if (this.props.progress) {
             progress = <rc_progress.Line percent={res} strokeWidth="2" trailWidth="2" className="progress" strokeColor="#FF52FF" />

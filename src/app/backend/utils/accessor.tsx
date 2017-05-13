@@ -56,15 +56,23 @@ class Accessor {
         return Promise.all(res)
     }
 
+    uncache(url: string) {
+        if (htmlCache.has(url)) {
+            htmlCache.delete(url)
+        }
+    }
+
+    async getNoCache(url: string, validator?: (s: string) => boolean, callbackObj?: Accessor): Promise<string> {
+        this.uncache(url)
+        return this.get(url, validator, callbackObj)
+    }
+
     async get(url: string, validator?: (s: string) => boolean, callbackObj?: Accessor): Promise<string> {
-            console.log(htmlCache)
         if (htmlCache.has(url)) {
             let tup = htmlCache.get(url)
             let curr = new Date()
-            console.log("cache hit")
             // 5 minute cache
             if (curr.getTime() - tup[1].getTime() < 5 * 60 * 1000) {
-                console.log("cache hit success")
                 if (callbackObj) {
                     callbackObj.finishPage();
                 }
@@ -96,7 +104,8 @@ class Accessor {
         let promise: Promise<string> = undefined
         let res: string;
         let firstValidate = false;
-        let listener = function (event, message) {
+        let del = this.delay;
+        let listener = async function (event, message) {
             if (message) {
                 let id = message.id;
                 let doc = message.doc;
@@ -110,6 +119,7 @@ class Accessor {
                     firstValidate = true;
                     return
                 }
+                await del(100)
                 if (callbackObj) {
                     callbackObj.finishPage();
                 }

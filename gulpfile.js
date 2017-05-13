@@ -67,8 +67,9 @@ gulp.task('build-vendor', function () {
         .pipe(gulp.dest('dist/js'));
 });
 
+var project = typescript.createProject('tsconfig.json');
 gulp.task('build-app', function () {
-    var project = typescript.createProject('tsconfig.json');
+    // var tsResult = project.src()
     var tsResult = project.src()
         .pipe(sourcemaps.init())
         .pipe(project());

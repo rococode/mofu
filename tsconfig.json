@@ -18,6 +18,9 @@
   "exclude": [
     "node_modules",
     "_ignore",
-    ".vscode"
+    ".vscode",
+    "build",
+    "dist",
+    "packaged"
   ]
 }

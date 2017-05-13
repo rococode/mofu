@@ -1,3 +1,9 @@
+# 0.1.20 - May 12 2017
+- improved compile speed a bit by properly adding incremental compiles
+- added special handling for mangahere search throttling
+- fixed some weird component recycling issues (was using stale keys in serieslistings)
+- added uncaching url (for situations like mangahere's search throttling)
+
 # 0.1.19 - May 10 2017
 - added support for packaging into an executable app
 - search results now persist properly

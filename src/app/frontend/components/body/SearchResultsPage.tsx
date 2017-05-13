@@ -9,24 +9,23 @@ import autobind from 'autobind'
 interface Props {
     results: SourceResult[],
     lastSearch: string,
-    callback: (result: SourceResult[]) => void,
-    lastSearchCallback,
+    searchCallback: (searchPhrase: string, result: SourceResult[]) => void,
     readerCallback
 }
 
 interface State {
-    searchPhrase: string,
     showInfo: boolean,
     showDownload: boolean,
     mangaInfo?: MangaInfo
 }
 
+let searchPhrase: string = ""
 
 export default class SearchResultsPage extends React.Component<Props, State> {
     constructor(props) {
         super(props)
         autobind(this)
-        this.state = { showDownload: false, showInfo: false, searchPhrase: "" }
+        this.state = { showDownload: false, showInfo: false }
     }
 
     references: { input: HTMLInputElement, container: HTMLDivElement } = {
@@ -42,13 +41,9 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         if (this.references.container) {
             let res = this.references.container.contains(e.target);
             if (!res) {
-                this.closeFull()
+                this.setState({ showInfo: false, showDownload: false })
             }
         }
-    }
-
-    closeFull() {
-        this.setState({ showInfo: false, showDownload: false })
     }
 
     public render() {
@@ -120,10 +115,10 @@ export default class SearchResultsPage extends React.Component<Props, State> {
         return (
             <div id="search-result-container" className="search-result-container">
                 {/*<!--  search bar at top of page on search results page -->*/}
-                <form id="re-search-form" className="re-search-form">
+                <div id="re-search-form" className="re-search-form">
                     <input ref={(element) => { this.references.input = element; }} id="re-search-url" type="text" name="url" autoComplete="off" onChange={this.searchTextChange} />
-                    <button type="submit" value="Load">Search</button>
-                </form>
+                    <button type="submit" value="Load" onClick={this.search}>Search</button>
+                </div>
                 <div id="search-results-title" className="search-results-title">Results for "{this.props.lastSearch}"</div>
                 {sources}
                 {infoContainer}
@@ -141,7 +136,6 @@ export default class SearchResultsPage extends React.Component<Props, State> {
 
     keyDown(e: KeyboardEvent) {
         if (e.key == 'Tab') {
-            console.log("tab key");
             e.preventDefault();
             this.references.input.focus();
         } if (e.key == 'Enter') {
@@ -151,14 +145,12 @@ export default class SearchResultsPage extends React.Component<Props, State> {
     }
 
     searchTextChange(e: React.ChangeEvent<HTMLInputElement>) {
-        this.setState({ searchPhrase: e.target.value });
+        searchPhrase = e.target.value
     }
 
     search() {
-        if (!this.state || !this.state.searchPhrase)
+        if (!this.state || !searchPhrase)
             return;
-        let searchPhrase = this.state.searchPhrase
-        this.props.lastSearchCallback(searchPhrase);
-        SearchManager.search(this.props.callback, searchPhrase);
+        SearchManager.search(this.props.searchCallback, searchPhrase);
     }
 }

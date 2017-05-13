@@ -75,12 +75,8 @@ export default class Body extends React.Component<Props, State> {
         this.setState({ bodyState: state });
     }
 
-    setSourceResults(result: SourceResult[]) {
-        this.setState({latestResults: result, bodyState: BodyState.SearchResults});
-    }
-
-    setLastSearch(s: string) {
-        this.setState({ lastSearch: s });
+    setSearchResults(searchPhrase: string, result: SourceResult[]) {
+        this.setState({lastSearch: searchPhrase , latestResults: result, bodyState: BodyState.SearchResults});
     }
 
     openReader(chapter: MangaChapter) {
@@ -89,7 +85,7 @@ export default class Body extends React.Component<Props, State> {
     }
 
     loading(progress?: number, message?: string) {
-        this.setState({ isLoading: true, loadingProgress: progress, loadingMessage: message })
+        this.setState({ isLoading: true, loadingProgress: (progress && progress != undefined ? progress : this.state.loadingProgress), loadingMessage: message })
     }
 
     stoploading() {
@@ -100,10 +96,10 @@ export default class Body extends React.Component<Props, State> {
         let res;
         switch (this.state.bodyState) {
             case BodyState.Home:
-                res = <HomePage callback={this.setSourceResults} lastSearchCallback={this.setLastSearch} />
+                res = <HomePage searchCallback={this.setSearchResults} />
                 break;
             case BodyState.SearchResults:
-                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults} callback={this.setSourceResults} lastSearchCallback={this.setLastSearch} readerCallback={this.openReader} />
+                res = <SearchResultsPage lastSearch={this.state.lastSearch} results={this.state.latestResults} searchCallback={this.setSearchResults} readerCallback={this.openReader} />
                 break;
             case BodyState.Reader:
                 res = <ReaderPage chapter={this.state.readingChapter} />
