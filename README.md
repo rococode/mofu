@@ -16,7 +16,7 @@ Once I've finished rewriting most of the features, this notice will disappear :)
 
 # Notice #2
 
-I often get caught up with other projects (I tend to be doing a lot of things at once), so if this seems inactive, it's probably only *kinda* inactive. I very rarely drop a project entirely, and when I do it'll be absolutely clear that I've stopped working on it. So even if mofu hasn't been updated in a while, expect it to be updated again at some point :) It may not be for a while, but the point is I'm *probably* (hopefully) not dead.
+I often get caught up with other projects (I tend to be doing a lot of things at once), so if this seems inactive, it's probably only *kinda* inactive. I very rarely drop a project entirely, and when I do it'll be absolutely clear that I've stopped working on it, i.e. I'll probably say so. So even if mofu hasn't been updated in a while, expect it to be updated again at some point :) It may not be for a while, but the point is I'm *probably* (hopefully) not dead.
 
 ---
 
