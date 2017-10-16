@@ -1,4 +1,7 @@
-## 0.2.0 - Oct 16 2017
+## 0.2.1 - Oct 16 2017
+- began working on stuff, will most likely be moving to closed-source, but this repo will remain as an info page and bug/issue tracker
+
+# 0.2.0 - Oct 15 2017
 - project has been transferred to rococo and is back in business!
 - mofu will be rewritten (once again...) into a Java backend, with a web frontend (but this time on an actual website)
 - more details coming soon as I figure out some structural stuff
