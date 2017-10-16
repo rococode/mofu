@@ -1,21 +1,29 @@
-# 0.1.20 - May 12 2017
+## 0.2.0 - Oct 16 2017
+- project has been transferred to rococo and is back in business!
+- mofu will be rewritten (once again...) into a Java backend, with a web frontend (but this time on an actual website)
+- more details coming soon as I figure out some structural stuff
+
+-----
+-----
+
+## 0.1.20 - May 12 2017
 - improved compile speed a bit by properly adding incremental compiles
 - added special handling for mangahere search throttling
 - fixed some weird component recycling issues (was using stale keys in serieslistings)
 - added uncaching url (for situations like mangahere's search throttling)
 
-# 0.1.19 - May 10 2017
+## 0.1.19 - May 10 2017
 - added support for packaging into an executable app
 - search results now persist properly
 - added a "back to search results" button on reader
 - added a simple html cache for accessor
 
-# 0.1.18 - May 7 2017
+## 0.1.18 - May 7 2017
 - added zoom factor display (which can be clicked to reset to 100%)
 - fixed some stuff with loading bar not updating properly
 - mofu now shows a progress bar while loading pages
 
-# 0.1.17 - May 6 2017
+## 0.1.17 - May 6 2017
 - added some debugging hotkeys - F5 to refresh, F1 to go to Home, F2 to go to Reader, F3 to go to Search Results
 - loading panel is now an overlay rather than a separate page
 - fixed up loading panel to work in react instead of javascript
@@ -23,38 +31,38 @@
 - refactored loadingpage to be something that's overlaid over the actual body pages
 - restyled loading panel to be much slimmer and nicer looking (in my opinion)
 
-# 0.1.16 - May 5 2017
+## 0.1.16 - May 5 2017
 - started a bit of work towards a new build system (for hopefully faster iteration on styling and stuff)
 
-# 0.1.15 - May 5 2017
+## 0.1.15 - May 5 2017
 - added double validation check for redundancy
 - improved async execution of accessor stuff
 - basic chapter loading works now! so *technically* this is functional now haha
 
-# 0.1.14 - May 5 2017
+## 0.1.14 - May 5 2017
 - huge refactor in progress
 
-# 0.1.13 - May 5 2017
+## 0.1.13 - May 5 2017
 - added chapter page loading - accessor.get needs optimizing, it's ultra slow right now haha
 - added scrollbar to manga info panel
 
-# 0.1.12 - May 3 2017
+## 0.1.12 - May 3 2017
 - updated npm dependencies
 - manga info & chapter listing now works - a lot of stuff was added to make it work but I won't go into too much detail
 
-# 0.1.11 - May 1 2017
+## 0.1.11 - May 1 2017
 - fixed a bug with unregistering key listeners
 - added functionality to search bar on the search results page - it works now
 - info popup now appears on clicking a manga title
 - clicking outside of the popup closes it (surprisingly hard to do with React...)
 - info and download popups are now visible by default (since they aren't on DOM at all unless needed, thanks to React)
 
-# 0.1.10 - May 1 2017
+## 0.1.10 - May 1 2017
 - abstracted source names and listings to separate properties/components
 - search results page now shows the original query at the time
 - image loading for series covers now works! runs in the background using hidden electron windows
 
-# 0.1.9 - Apr 30 2017
+## 0.1.9 - Apr 30 2017
 - added cheerio dependency for DOM parsing
 - search callback now takes SearchResult[]
 - MangaHere searching works (returns a Promise<SearchResult[]>)
@@ -65,7 +73,7 @@
 - added string-key dictionary; currently unused, turns out you can't iterate it very easily so it's not all that useful...
 - added search result listing component (currently combines all listings from one source into a single component, may need to eventually split further)
 
-# 0.1.8 - Apr 29 2017
+## 0.1.8 - Apr 29 2017
 - forced scrollbars to have no style for now (might use custom styling in the future since electron is webkit)
 - got MangaHere backend searching working! (backend as in, it doesn't display anything yet)
 - searching from home now goes to loading page, then search results
@@ -73,37 +81,37 @@
 - added accessor to fetch html using a hidden electron window
 - added manga series abstract
 
-# 0.1.7 - Apr 29 2017
+## 0.1.7 - Apr 29 2017
 - tweaked tracker styling to remove the ugly border around it
 - fixed sourcemaps
 - added debug launch task for vscode (requires chrome debugger extension)
 - tracker listing modularized more and clicking to toggle fav/alert now works
 - added pouchDB dependency for local db
 
-# 0.1.6 - Apr 28 2017
+## 0.1.6 - Apr 28 2017
 - dev tools no longer open on launch
 - redesigned home page - tracker now is automatically open and shows directly below the search button
 - Enter and Tab now work on the home page to search and focus the search box, respectively
 - started a bit of work on basic backend structure
 - abstracted tracker and trackeritem into separate components
 
-# 0.1.5 - Apr 25 2017
+## 0.1.5 - Apr 25 2017
 - loading panel is now unselectable as intended
 - added new logo to title bar
 - made all main containers visible by default - we're using react now so they aren't rendered together
 - unmaximizing (whatever thats called) now works properly
 - add zoom in/out on title bar
 
-# 0.1.4 - Apr 24 2017
+## 0.1.4 - Apr 24 2017
 - added Home component (incomplete)
 
-# 0.1.3 - Apr 24 2017
+## 0.1.3 - Apr 24 2017
 - after almost a full day, I FINALLY figured out how to import electron lmao
 
-# 0.1.2 - Apr 24 2017
+## 0.1.2 - Apr 24 2017
 - various small fixes, still working on environment setup
 
-# 0.1.1 - Apr 24 2017
+## 0.1.1 - Apr 24 2017
 - stuff seems to mostly work now? idk lol at least there don't appear to be any warnings/errors
 
 # 0.1.0 - Apr 23 2017

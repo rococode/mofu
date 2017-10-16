@@ -1,1 +1,0 @@
-export { loading, stoploading } from './components/Body'
