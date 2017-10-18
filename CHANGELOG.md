@@ -1,3 +1,7 @@
+## 0.2.2 - Oct 16 2017
+- some styling stuff, working on home page
+- fixed a lot of web build task things
+
 ## 0.2.1 - Oct 16 2017
 - began working on stuff, will most likely be moving to closed-source, but this repo will remain as an info page and bug/issue tracker
 
