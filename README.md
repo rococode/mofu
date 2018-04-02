@@ -1,22 +1,12 @@
-<p align="center"><img src="src/assets/gfx/mofumoe.png" width="450px" /></p align="center">
+<p align="center"><img src="logo.png" width="450px" /></p align="center">
 
-## Notice - PLEASE READ ULTRA IMPORTANT!!!
+### Notice 1
 
-mofu (previously known as misakachan) is currently being rewritten with a completely new codebase (Electron/Typescript/React). This means that **most features are currently broken**.
+I often get caught up with other projects (I tend to be doing a lot of things at once). So if this seems inactive, it's most likely only *kinda* inactive. I very rarely drop a project entirely, and when I do it'll be absolutely clear that I've stopped working on it, i.e. I'll say so somewhere like on this readme. So even if mofu hasn't been updated in a while, expect it to be updated again at some point :) Just potentially kinda far in the future. It may not be for a while, but the point is I'm *probably* (hopefully) not dead.
 
-Versions 0.1.x are on the new codebase, and 0.0.x are the old one (Java core).
+### Notice 2
 
-There is a working Java JAR file release on the releases page, but it will not be supported in the future. Consider it a sneak peek :)
-
-**Until this notice disappears, I can't guarantee the accuracy of the stuff below!**
-
-**In particular, the setup/installation instructions and features are almost CERTAINLY outdated and inaccurate.**
-
-Once I've finished rewriting most of the features, this notice will disappear :)
-
-# Notice #2
-
-I often get caught up with other projects (I tend to be doing a lot of things at once). So if this seems inactive, it's most likely only *kinda* inactive. I very rarely drop a project entirely, and when I do it'll be absolutely clear that I've stopped working on it, i.e. I'll say so somewhere like on this readme. So even if mofu hasn't been updated in a while, expect it to be updated again at some point :) It may not be for a while, but the point is I'm *probably* (hopefully) not dead.
+mofu is currently being completely rewritten, so it doesn't work. If you want a somewhat working version, please visit the [releases](https://github.com/rococode/mofu/releases) page which has some barebones versions of mofu.
 
 ---
 
