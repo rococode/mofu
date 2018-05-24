@@ -1,12 +1,10 @@
 <p align="center"><img src="logo.png" width="450px" /></p align="center">
 
-### Notice 1
+## Notice
 
-I often get caught up with other projects (I tend to be doing a lot of things at once). So if this seems inactive, it's most likely only *kinda* inactive. I very rarely drop a project entirely, and when I do it'll be absolutely clear that I've stopped working on it, i.e. I'll say so somewhere like on this readme. So even if mofu hasn't been updated in a while, expect it to be updated again at some point :) Just potentially kinda far in the future. It may not be for a while, but the point is I'm *probably* (hopefully) not dead.
+This project is inactive until further notice :'(
 
-### Notice 2
-
-mofu is currently being completely rewritten, so it doesn't work. If you want a somewhat working version, please visit the [releases](https://github.com/rococode/mofu/releases) page which has some barebones versions of mofu.
+In the meantime, people have recommended https://github.com/manga-download/hakuneko. I haven't used it myself, but it seems quite good!
 
 ---
 
@@ -115,13 +113,6 @@ Probably, if it's nothing too wild. The best way to make sure your suggestion is
 
 ### Do you accept pull requests?
 Yes! But in the current stage the code is not very well structured and changes frequently, so please keep that in mind.
-
-### Hey! This is mean to scanlators; people should always read off of scanlator's official websites. 
-Everyone acknowledges that scanlators do all the hard work when it comes to translating manga. I say this as a translator myself - I (very infrequently) TL a couple Japanese web novels in my spare time at [Project Accelerator](http://project-accelerator.net/) and have worked on a few manga translations as well.
-
-For the average reader, although scanlators' efforts are certainly appreciated, it's more convenient to use an aggregate site than to find the scanlator's official website and read from there. It's not ideal, but it's just the way the world works. Many, many people use aggregate sites exclusively (they wouldn't exist if it weren't a viable business model), but the majority of those sites don't give any credit to the scanlators. 
-
-With that unfortunate truth in mind, mofu has code written specifically to combine convenience with proper credit. Whenever you load up a manga in mofu, mofu will try to find the manga on [MangaUpdates](https://www.mangaupdates.com/) to locate the scanlators who've done hard work translating that manga, and then credits them in the reader interface, along with a link to their site if one can be found.
 
 ## Tech Stack
 
