@@ -2,9 +2,9 @@
 
 ## Notice
 
-This project is inactive until further notice :'(
+This project is inactive until further notice 😢
 
-In the meantime, people have recommended https://github.com/manga-download/hakuneko. I haven't used it myself, but it seems quite good!
+In the meantime, people have recommended https://github.com/manga-download/hakuneko. I haven't used it myself, but it seems quite good.
 
 ---
 
